@@ -1,21 +1,10 @@
 const express = require('express');
 const path = require('path');
-const serverless = require('serverless-http');
 const app = express();
-const bodyParser = require('body-parser');
-const router = express.Router();
+const PORT = 3000;
 
-router.get('/', (req, res) => {
-    res.writeHead(200, { 'Content-Type': 'text/html' });
-    res.write('<h1>Hello World</h1>');
-    res.end();
-});
-router.get('/another', (req, res) => res.json({ route: req.originalUrl }));
-router.post('/', (req, res) => res.json({ postBody: req.body }));
+app.use(express.static(path.join(__dirname, 'static')));
 
-app.use(bodyParser.json());
-app.use('mf.messenger.praktikum.yandex/.netlify/functions/server', router);  // path must route to lambda
-app.use('/', (req, res) => res.sendFile(path.join(__dirname, 'static', 'login.html')));
+app.get('/', (req, res) => res.send('Hello'));
 
-module.exports = app;
-module.exports.handler = serverless(app);
+app.listen(PORT, () => { console.log(`${PORT} is serving...`)});
