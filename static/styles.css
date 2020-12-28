@@ -1,0 +1,32 @@
+html {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+*, *:before, *:after {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+:root {
+    --blue: #3369F3;
+    --white: #FFFFFF;
+}
+
+.default-button {
+    height: 37px;
+    width: 280px;
+    border-radius: 8px;
+    color: var(--white);
+    background-color: var(--blue);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
