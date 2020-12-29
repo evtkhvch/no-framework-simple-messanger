@@ -15,6 +15,12 @@ body {
 :root {
     --blue: #3369F3;
     --white: #FFFFFF;
+    --black: #1E1E1E;
+    --red: #ff1744;
+    --grey: #999999;
+
+    --large: 20px;
+    --small: 13px;
 }
 
 .default-button {
@@ -23,7 +29,7 @@ body {
     border-radius: 8px;
     color: var(--white);
     background-color: var(--blue);
-    font-size: 13px;
+    font-size: var(--small);
     font-style: normal;
     font-weight: 500;
     display: flex;
