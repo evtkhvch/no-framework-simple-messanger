@@ -24,8 +24,8 @@ ul[class], ol[class] {
     list-style: none;
 }
 
-a:not([class]) {
-    text-decoration-skip-ink: auto;
+a {
+    text-decoration: none;
 }
 
 img {

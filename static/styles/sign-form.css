@@ -1,4 +1,4 @@
-.login {
+.sign {
     width: 100%;
     height: 100vh;
     display: flex;
@@ -7,8 +7,7 @@
     align-items: center;
 }
 
-.login__box {
-    height: 450px;
+.sign__box {
     width: 340px;
     border-radius: 12px;
     display: flex;
@@ -17,7 +16,7 @@
     padding: 30px;
 }
 
-.login__title {
+.sign__title {
     height: 80px;
     display: flex;
     align-items: center;
@@ -26,26 +25,22 @@
     font-size: var(--large);
 }
 
-.login__login-field {
-    margin-bottom: 32px;
-}
-
-.login__content {
+.sign__content {
     flex-grow: 1;
 }
 
-.login__footer {
+.sign__footer {
     display: flex;
     align-items: center;
     flex-direction: column;
 }
 
-.login__account {
+.sign__account {
     cursor: pointer;
     color: var(--blue);
     font-size: var(--medium);
 }
 
-.login__submit {
+.sign__submit {
     margin-bottom: 14px;
 }

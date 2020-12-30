@@ -9,4 +9,9 @@
 
 .index__link {
     text-decoration: none;
+    margin-bottom: 10px;
+}
+
+.index__link:last-child {
+    margin-bottom: 0;
 }
