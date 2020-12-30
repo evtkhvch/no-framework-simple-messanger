@@ -11,24 +11,26 @@
     <link rel="stylesheet" href="login.css">
 </head>
 <body>
-    <div class="sign">
-        <div class="sign__box login__box">
-            <div class="sign__content">
-                <div class="sign__title">Вход</div>
-                <div class="form-item login__field">
-                    <input type="text" id="login" placeholder="&nbsp;">
-                    <label for="login" data-label="Логин"></label>
-                </div>
-                <div class="form-item">
-                    <input type="text" id="pass" placeholder="&nbsp;">
-                    <label for="pass" data-label="Пароль"></label>
-                </div>
+<div class="sign">
+    <form class="sign__box login__box">
+        <div class="sign__content">
+            <div class="sign__title">Вход</div>
+            <div class="form-item login__field">
+                <input type="text" id="login" placeholder="&nbsp;">
+                <label for="login" data-label="Логин"></label>
             </div>
-            <div class="sign__footer">
-                <button class="sign__submit default-button">Авторизоваться</button>
-                <a class="sign__account">Нет аккаунта?</a>
+            <div class="form-item">
+                <input type="text" id="pass" placeholder="&nbsp;">
+                <label for="pass" data-label="Пароль"></label>
             </div>
         </div>
-    </div>
+        <div class="sign__footer">
+            <button type="button" onclick="location.href='../select-chat/select-chat.html'"
+                    class="sign__submit default-button">Авторизоваться
+            </button>
+            <a class="sign__account" href="../registration/registration.html">Нет аккаунта?</a>
+        </div>
+    </form>
+</div>
 </body>
 </html>
