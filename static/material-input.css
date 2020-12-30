@@ -1,7 +1,10 @@
 :root {
-    --primary-color: rgba(72, 207, 173, 1);
-    --font-color: #9e9e9e;
-    --border-color: #ddd;
+    --primary-color: #1E1E1E;
+    --font-color: #999999;
+    --border-color: #3369F3;
+
+    --font-size: 9px;
+    --primary-font-size: 13px;
 }
 
 .form-item {
@@ -12,13 +15,13 @@
     display: block;
     width: 100%;
     height: 34px;
-    font-size: 14px;
+    font-size: var(--primary-font-size);
     line-height: 1.4;
-    color: var(--font-color);
+    color: var(--primary-color);
     background-color: transparent;
     background-image: none;
     border: none;
-    border-bottom: 2px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
     padding: 6px 12px 6px 0;
 }
 
@@ -29,7 +32,7 @@
 }
 
 .form-item input:focus~label:before {
-    font-size: 12px;
+    font-size: var(--font-size);
     bottom: 34px;
     color: var(--primary-color);
 }
@@ -41,12 +44,14 @@
 }
 
 .form-item input:not(:placeholder-shown)~label:before {
-    font-size: 12px;
+    font-size: var(--font-size);
     bottom: 34px;
 }
 
 .form-item label:before {
     content: attr(data-label);
+    color: var(--font-color);
+    font-size: var(--primary-font-size);
     display: block;
     position: absolute;
     left: 0;

@@ -25,3 +25,27 @@
     color: var(--black);
     font-size: var(--large);
 }
+
+.login__login-field {
+    margin-bottom: 32px;
+}
+
+.login__content {
+    flex-grow: 1;
+}
+
+.login__footer {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.login__account {
+    cursor: pointer;
+    color: var(--blue);
+    font-size: var(--medium);
+}
+
+.login__submit {
+    margin-bottom: 14px;
+}

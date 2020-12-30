@@ -12,6 +12,31 @@ body {
     box-sizing: inherit;
 }
 
+ul[class], ol[class] {
+    padding: 0;
+}
+
+body, h1, h2, h3, h4, p, ul[class], ol[class], li, figure, figcaption, blockquote, dl, dd {
+    margin: 0;
+}
+
+ul[class], ol[class] {
+    list-style: none;
+}
+
+a:not([class]) {
+    text-decoration-skip-ink: auto;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+input, button, textarea, select {
+    font: inherit;
+}
+
 :root {
     --blue: #3369F3;
     --white: #FFFFFF;
@@ -20,19 +45,26 @@ body {
     --grey: #999999;
 
     --large: 20px;
-    --small: 13px;
+    --medium: 13px;
 }
 
 .default-button {
+    outline: none;
+    border: none;
+    cursor: pointer;
     height: 37px;
     width: 280px;
     border-radius: 8px;
     color: var(--white);
     background-color: var(--blue);
-    font-size: var(--small);
+    font-size: var(--medium);
     font-style: normal;
     font-weight: 500;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.default-button:hover, .default-button:active {
+    opacity: .7;
 }
