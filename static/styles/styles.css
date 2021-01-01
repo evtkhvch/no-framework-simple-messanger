@@ -4,6 +4,7 @@ html {
 
 body {
     font-family: 'Inter', sans-serif;
+    font-weight: 500;
 }
 
 *, *:before, *:after {
@@ -43,6 +44,7 @@ input, button, textarea, select {
     --black: #1E1E1E;
     --red: #ff1744;
     --grey: #999999;
+    --light-grey: #FBFBFB;
 
     --large: 20px;
     --medium: 13px;
@@ -59,7 +61,6 @@ input, button, textarea, select {
     background-color: var(--blue);
     font-size: var(--medium);
     font-style: normal;
-    font-weight: 500;
     display: flex;
     align-items: center;
     justify-content: center;

@@ -6,9 +6,23 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="../styles/search-bar.css">
     <link rel="stylesheet" href="select-chat.css">
 </head>
 <body>
-    <div class="chat"></div>
+    <div class="chat">
+        <div class="chats-bar">
+            <div class="chats-bar__header">
+                <span class="chats-bar__header-title">Профиль</span>
+            </div>
+            <div class="search-bar">
+                <input type="text" id="search" placeholder="&nbsp;">
+                <label for="search">Поиск</label>
+            </div>
+        </div>
+        <div class="dialog">
+            <span class="dialog__title">Выберите чат чтобы отправить сообщение</span>
+        </div>
+    </div>
 </body>
 </html>
