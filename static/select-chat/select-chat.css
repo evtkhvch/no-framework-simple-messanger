@@ -31,6 +31,16 @@
     height: 15px;
 }
 
+.chats-bar__search-bar {
+    margin-bottom: 14px;
+}
+
+.chats-bar__user {
+    border-top: 1px solid #EAEAEA;
+    height: 70px;
+    display: flex;
+}
+
 .dialog {
     flex-grow: 1;
     display: flex;
