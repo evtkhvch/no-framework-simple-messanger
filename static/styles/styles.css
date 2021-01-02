@@ -48,6 +48,7 @@ input, button, textarea, select {
 
     --large: 20px;
     --medium: 13px;
+    --small: 9px;
 }
 
 .default-button {
