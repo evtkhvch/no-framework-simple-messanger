@@ -1,0 +1,110 @@
+.chat {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+}
+
+.chats-bar {
+    display: flex;
+    flex-direction: column;
+    padding: 0 10px;
+    width: 310px;
+    background-color: var(--light-grey);
+}
+
+.chats-bar__header {
+    height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.chats-bar__header-title {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 12px;
+    color: var(--grey);
+}
+
+.chats-bar__header-title:after {
+    content: url("../assets/icons/chevron-right.svg");
+    margin-left: 8px;
+    height: 15px;
+}
+
+.chats-bar__search-bar {
+    margin-bottom: 14px;
+}
+
+.user-card__list {
+    overflow: auto;
+}
+
+.user-card {
+    padding: 12px 0;
+    border-top: 1px solid #EAEAEA;
+    height: 70px;
+    display: grid;
+    column-gap: 10px;
+    grid-template-columns: 1fr 190px 1fr;
+}
+
+.user-card__avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-card__dot {
+    height: 47px;
+    width: 47px;
+    background-color: #EFEFEF;
+    border-radius: 50%;
+}
+
+.user-card__time {
+    font-size: var(--small);
+    color: var(--grey);
+}
+
+.user-card__name {
+    font-size: var(--medium);
+    margin-bottom: 4px;
+}
+
+.user-card__text {
+    font-size: 12px;
+    color: var(--grey);
+}
+
+.user-card__count {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--white);
+    font-size: 11px;
+    height: 20px;
+    width: 20px;
+    background-color: var(--blue);
+    border-radius: 50%;
+}
+
+.user-card__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.dialog {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dialog__title {
+    font-size: 12px;
+    color: var(--grey);
+}
