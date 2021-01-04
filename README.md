@@ -1,4 +1,4 @@
-https://travis-ci.com/evtkhvch/mf.messenger.praktikum.yandex.svg?token=scbVAVx9wp9QLfnvc4eM&branch=deploy
+![travis](https://travis-ci.com/evtkhvch/mf.messenger.praktikum.yandex.svg?token=scbVAVx9wp9QLfnvc4eM&branch=deploy)
 
 Даже законченный проект остаётся только заготовкой, пока им не начнут пользоваться. Но сначала пользователь должен понять, зачем ему пользоваться вашим кодом. В этом помогает файл README.
 
