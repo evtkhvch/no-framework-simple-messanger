@@ -17,4 +17,4 @@
 
 ## **Примеры использования**
 
-![DEMO Netlify](https://xenodochial-lichterman-2d4fe3.netlify.app)
+DEMO Netlify: https://xenodochial-lichterman-2d4fe3.netlify.app
