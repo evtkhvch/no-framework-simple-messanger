@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.com/evtkhvch/mf.messenger.praktikum.yandex.svg?token=scbVAVx9wp9QLfnvc4eM&branch=deploy)](https://travis-ci.com/evtkhvch/mf.messenger.praktikum.yandex)
 
-[![evtkhvch](https://circleci.com/github/evtkhvch/mf.messenger.praktikum.yandex.svg?style=svg)](<LINK>)
+[![evtkhvch](https://circleci.com/github/evtkhvch/mf.messenger.praktikum.yandex.svg?style=svg)](https://app.circleci.com/pipelines/github/evtkhvch/mf.messenger.praktikum.yandex)
 
 Даже законченный проект остаётся только заготовкой, пока им не начнут пользоваться. Но сначала пользователь должен понять, зачем ему пользоваться вашим кодом. В этом помогает файл README.
 
