@@ -1,5 +1,5 @@
-[ci-image]: https://travis-ci.org/bahmutov/mocha-banner.svg?branch=master
-[ci-url]: https://travis-ci.org/bahmutov/mocha-banner
+[ci-image]: https://travis-ci.com/github/evtkhvch/mf.messenger.praktikum.yandex?branch=deploy
+[ci-url]: https://travis-ci.com/github/evtkhvch/mf.messenger.praktikum.yandex
 
 Даже законченный проект остаётся только заготовкой, пока им не начнут пользоваться. Но сначала пользователь должен понять, зачем ему пользоваться вашим кодом. В этом помогает файл README.
 
