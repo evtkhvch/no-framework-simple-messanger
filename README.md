@@ -7,6 +7,10 @@
 
 ## Описание
 
-### H3 [DEMO Netlify](https://xenodochial-lichterman-2d4fe3.netlify.app)
+#### [DEMO](https://xenodochial-lichterman-2d4fe3.netlify.app)
+
+#### [Прототипы экранов](https://www.figma.com/file/Fw4ZvmCMuridYDJRSGodY2/%5BPRACTICUM%5D-CHAT?node-id=0%3A1)
+
+##### Веб приложение "Чат"
 
 ![Описание](https://github.com/evtkhvch/mf.messenger.praktikum.yandex/blob/deploy/images/chat.png)
