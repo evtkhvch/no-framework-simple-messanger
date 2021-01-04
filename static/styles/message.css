@@ -1,0 +1,39 @@
+.message {
+    display: flex;
+}
+
+.message__text {
+    position: relative;
+    font-size: 12px;
+    color: #1E1E1E;
+}
+
+.message__date {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: var(--small);
+    color: var(--grey);
+}
+
+.message__content {
+    max-width: 400px;
+    margin-bottom: 10px;
+    padding: 11px;
+}
+
+.outgoing.message {
+    flex-direction: row-reverse;
+}
+
+.outgoing .message__content {
+    background-color: #E4EDFD;
+}
+
+.incoming.message {
+    flex-direction: row;
+}
+
+.incoming .message__content {
+    background-color: #F8F8F8;
+}
