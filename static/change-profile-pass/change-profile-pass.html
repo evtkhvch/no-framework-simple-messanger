@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Change Profile Pass</title>
+    <meta charset="utf-8">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="../styles/profile.css">
+    <link rel="stylesheet" href="change-profile-data.css">
+</head>
+<body>
+<div class="profile">
+    <div class="profile__nav">
+        <button type="button" class="profile__nav-button" onclick="location.href='../profile/profile.html'"></button>
+    </div>
+    <div class="profile__info">
+        <div class="profile__avatar"></div>
+        <div class="profile__name">Иван</div>
+        <form class="profile__form profile__container">
+            <div class="profile__form-item">
+                <span class="profile__form-text">Старый пароль</span>
+                <input type="password" class="profile__form-input" value="pochta@yandex.ru">
+            </div>
+            <div class="profile__form-item">
+                <span class="profile__form-text">Новый пароль</span>
+                <input type="password" class="profile__form-input" value="ivanivanov">
+            </div>
+            <div class="profile__form-item">
+                <span class="profile__form-text">Повторите новый пароль</span>
+                <input type="password" class="profile__form-input" value="Иван">
+            </div>
+        </form>
+        <button class="default-button" onclick="location.href='../profile/profile.html'">Сохранить</button>
+    </div>
+</div>
+</body>
+</html>

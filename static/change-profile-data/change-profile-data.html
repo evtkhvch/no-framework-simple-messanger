@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Profile</title>
+    <title>Change Profile</title>
     <meta charset="utf-8">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles/styles.css">
     <link rel="stylesheet" href="../styles/profile.css">
-    <link rel="stylesheet" href="profile.css">
+    <link rel="stylesheet" href="change-profile-data.css">
 </head>
 <body>
 <div class="profile">
     <div class="profile__nav">
-        <button type="button" class="profile__nav-button" onclick="location.href='../chat/chat.html'"></button>
+        <button type="button" class="profile__nav-button" onclick="location.href='../profile/profile.html'"></button>
     </div>
     <div class="profile__info">
         <div class="profile__avatar"></div>
@@ -43,20 +43,7 @@
                 <input type="text" class="profile__form-input" value="+7 (909) 967 30 30">
             </div>
         </form>
-        <ul class="profile__options profile__container">
-            <li class="profile__option">
-                <button class="profile__option-button profile__option-change"
-                        onclick="location.href='../change-profile-data/change-profile-data.html'">Изменить данные</button>
-            </li>
-            <li class="profile__option">
-                <button class="profile__option-button profile__option-change"
-                        onclick="location.href='../change-profile-pass/change-profile-pass.html'">Изменить пароль</button>
-            </li>
-            <li class="profile__option">
-                <button class="profile__option-button profile__option-exit"
-                        onclick="location.href='../login/login.html'">Выйти</button>
-            </li>
-        </ul>
+        <button class="default-button" onclick="location.href='../profile/profile.html'">Сохранить</button>
     </div>
 </div>
 </body>
