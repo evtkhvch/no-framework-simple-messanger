@@ -90,3 +90,7 @@
     outline: none;
     color: var(--grey);
 }
+
+.profile__form-input:disabled {
+    background-color: inherit;
+}
