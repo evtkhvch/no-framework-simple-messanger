@@ -16,41 +16,47 @@
         <div class="sign__content">
             <div class="sign__title">Регистрация</div>
             <div class="form-item registration__field">
-                <input type="text" id="mail" placeholder="&nbsp;">
+                <input name="mail" type="text" id="mail" placeholder="&nbsp;">
                 <label for="mail" data-label="Почта"></label>
             </div>
             <div class="form-item registration__field">
-                <input type="text" id="login" placeholder="&nbsp;">
+                <input name="login" type="text" id="login" placeholder="&nbsp;">
                 <label for="login" data-label="Логин"></label>
             </div>
             <div class="form-item registration__field">
-                <input type="text" id="name" placeholder="&nbsp;">
+                <input name="name" type="text" id="name" placeholder="&nbsp;">
                 <label for="name" data-label="Имя"></label>
             </div>
             <div class="form-item registration__field">
-                <input type="text" id="surname" placeholder="&nbsp;">
+                <input name="surname" type="text" id="surname" placeholder="&nbsp;">
                 <label for="surname" data-label="Фамилия"></label>
             </div>
             <div class="form-item registration__field">
-                <input type="text" id="phone" placeholder="&nbsp;">
+                <input name="phone" type="text" id="phone" placeholder="&nbsp;">
                 <label for="phone" data-label="Телефон"></label>
             </div>
             <div class="form-item registration__field">
-                <input type="text" id="pass" placeholder="&nbsp;">
+                <input name="pass" type="text" id="pass" placeholder="&nbsp;">
                 <label for="pass" data-label="Пароль"></label>
             </div>
             <div class="form-item registration__field">
-                <input type="text" id="passOneMoreTime" placeholder="&nbsp;">
+                <input name="passOneMoreTime" type="text" id="passOneMoreTime" placeholder="&nbsp;">
                 <label for="passOneMoreTime" data-label="Пароль (еще раз)"></label>
             </div>
         </div>
         <div class="sign__footer">
-            <button type="button" class="sign__submit default-button"
-                    onclick="location.href='../chat-list/chat-list.html'">Зарегистрироваться
-            </button>
+            <button type="button" class="sign__submit default-button">Зарегистрироваться</button>
             <a class="sign__account" href="../login/login.html">Войти</a>
         </div>
     </form>
 </div>
+<script>
+    const { mail, login, surname, phone, pass, passOneMoreTime } = document.querySelector('.sign__box.registration__box');
+    const button = document.querySelector('.sign__submit.default-button');
+
+    button.onclick = () => {
+        console.log(mail.value, login.value, surname.value, phone.value, pass.value, passOneMoreTime.value);
+    };
+</script>
 </body>
 </html>

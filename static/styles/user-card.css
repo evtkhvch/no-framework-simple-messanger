@@ -3,6 +3,7 @@
 }
 
 .user-card {
+    cursor: pointer;
     padding: 12px 0;
     border-top: 1px solid #EAEAEA;
     height: 70px;

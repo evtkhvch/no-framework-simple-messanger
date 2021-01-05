@@ -55,7 +55,8 @@ input, button, textarea, select {
     outline: none;
     border: none;
     cursor: pointer;
-    height: 37px;
+    min-height: 37px;
+    max-height: 37px;
     width: 280px;
     border-radius: 8px;
     color: var(--white);
