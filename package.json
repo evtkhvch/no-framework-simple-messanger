@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "compile": "tsc -w",
     "start": "node index.js"
   },
   "dependencies": {},
   "devDependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "handlebars": "^4.7.6",
+    "typescript": "^4.1.3"
   }
 }
