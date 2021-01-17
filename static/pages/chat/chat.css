@@ -41,7 +41,7 @@
 }
 
 .chat__options:after {
-    content: url("../assets/icons/more.svg");
+    content: url("../../assets/icons/more.svg");
 }
 
 .chat__dialog {
@@ -66,7 +66,7 @@
 }
 
 .chat__footer-icon:after {
-    content: url("../assets/icons/pin.svg");
+    content: url("../../assets/icons/pin.svg");
 }
 
 .chat__footer-message {
@@ -93,7 +93,7 @@
 }
 
 .chat__footer-submit:after {
-    content: url("../assets/icons/arrow-right.svg");
+    content: url("../../assets/icons/arrow-right.svg");
 }
 
 .chat__date {
