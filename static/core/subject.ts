@@ -1,7 +1,7 @@
 export class Subject {
     private listeners: { [name: string]: Function[] } = {};
 
-    public subscribe(event: string, callback: Function) {
+    public subscribe(event: string, callback: Function): void {
         if (!this.listeners[event]) {
             this.listeners[event] = [];
         }
@@ -9,7 +9,7 @@ export class Subject {
         this.listeners[event].push(callback);
     }
 
-    public unsubscribe(event: string, callback: Function) {
+    public unsubscribe(event: string, callback: Function): void {
         if (!this.listeners[event]) {
             throw new Error(`Нет события: ${event}`);
         }
@@ -19,13 +19,11 @@ export class Subject {
         );
     }
 
-    public next(event: string, ...args: Function[]) {
+    public next(event: string, ...args: Function[]): void {
         if (!this.listeners[event]) {
             throw new Error(`Нет события: ${event}`);
         }
 
-        this.listeners[event].forEach(function (listener) {
-            listener(...args);
-        });
+        this.listeners[event].forEach(listener => listener(...args));
     }
 }

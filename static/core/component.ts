@@ -12,17 +12,22 @@ export interface Props {
     [prop: string]: unknown
 }
 
-export class Component {
+abstract class IComponent {
+    abstract init(): void;
+    abstract componentDidMount(oldProps: Props): void;
+    abstract setProps(nextProps: Props): void;
+    abstract componentDidUpdate(oldProps: Props, newProps: Props): boolean;
+    abstract render(): string;
+    abstract show(): void;
+    abstract hide(): void;
+    abstract get element(): HTMLElement | null;
+}
+
+export class Component implements IComponent {
     private _element: HTMLElement | null = null;
     private readonly _meta: { tagName: string; props: Props } | null = null;
     private eventBus: Subject;
 
-    /** JSDoc
-     * @param {string} tagName
-     * @param {Object} props
-     *
-     * @returns {void}
-     */
     constructor(public tagName = 'div', public props: Props = {}) {
         const subject = new Subject();
 
@@ -58,7 +63,6 @@ export class Component {
         this.eventBus.next(EVENTS.FLOW_RENDER);
     }
 
-    // Может переопределять пользователь, необязательно трогать
     public componentDidMount(oldProps: Props): void {
     }
 
@@ -72,7 +76,6 @@ export class Component {
         }
     }
 
-    // Может переопределять пользователь, необязательно трогать
     public componentDidUpdate(oldProps: Props, newProps: Props): boolean {
         return true;
     }
@@ -92,16 +95,12 @@ export class Component {
 
     private _render(): void {
         const block = this.render();
-        // Этот небезопасный метод для упрощения логики
-        // Используйте шаблонизатор из npm или напишите свой безопасный
-        // Нужно не в строку компилировать (или делать это правильно),
-        // либо сразу в DOM-элементы возвращать из compile DOM-ноду
+
         if (this._element) {
             this._element.innerHTML = templateCompiler(block, this.props);
         }
     }
 
-    // Может переопределять пользователь, необязательно трогать
     public render(): string {
         return '';
     }
@@ -115,7 +114,6 @@ export class Component {
     }
 
     private static _createDocumentElement(tagName: string): HTMLElement {
-        // Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
         return document.createElement(tagName);
     }
 
