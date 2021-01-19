@@ -100,6 +100,10 @@ export class Component implements IComponent {
         return this._element;
     }
 
+    public get elementToString(): string {
+        return this._element ? this._element.innerHTML : '';
+    }
+
     private _render(): void {
         const block = this.render();
 

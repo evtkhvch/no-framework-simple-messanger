@@ -65,6 +65,9 @@ export class Component {
     get element() {
         return this._element;
     }
+    get elementToString() {
+        return this._element ? this._element.innerHTML : '';
+    }
     _render() {
         const block = this.render();
         if (this._element) {

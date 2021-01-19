@@ -1,5 +1,4 @@
 import { Component, Props } from '../../core/component.js';
-import { buttonTemplate } from './button.template.js'
 
 export class Button extends Component {
     constructor(public props: Props) {
@@ -7,6 +6,6 @@ export class Button extends Component {
     }
 
     public render(): string {
-        return buttonTemplate;
+        return `<button type="button" class="sign__submit default-button">{{ name }}</button>`;
     }
 }
