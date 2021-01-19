@@ -1,1 +1,1 @@
-{"version":3,"file":"button.js","sourceRoot":"","sources":["button.ts"],"names":[],"mappings":""}
+{"version":3,"file":"button.js","sourceRoot":"","sources":["button.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,SAAS,EAAS,MAAM,yBAAyB,CAAC;AAC3D,OAAO,EAAE,cAAc,EAAE,MAAM,sBAAsB,CAAA;AAErD,MAAM,OAAO,MAAO,SAAQ,SAAS;IACjC,YAAmB,KAAY;QAC3B,KAAK,CAAC,KAAK,EAAE,KAAK,CAAC,CAAC;QADL,UAAK,GAAL,KAAK,CAAO;IAE/B,CAAC;IAEM,MAAM;QACT,OAAO,cAAc,CAAC;IAC1B,CAAC;CACJ"}

@@ -1,6 +1,7 @@
 import { Component, Props } from '../../core/component.js';
 import { loginTemplate } from './login.template.js';
 import { render } from '../../core/render.js';
+import { Button } from '../../components/button/button.js';
 
 class Login extends Component {
     constructor(public props: Props) {
@@ -27,6 +28,11 @@ class Login extends Component {
     }
 }
 
-const loginComponent = new Login({ button: 'asasdas' });
+const loginComponent = new Login({
+    button: new Button({
+        name: 'Авторизоваться',
+        class: 'sign__submit default-button'
+    }).render()
+});
 
 render('.app', loginComponent);

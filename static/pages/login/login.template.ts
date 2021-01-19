@@ -12,7 +12,7 @@ export const loginTemplate = `
             </div>
         </div>
         <div class="sign__footer">
-            <button type="button" class="sign__submit default-button">Авторизоваться</button>
+            {{{ button }}}
             <a class="sign__account" href="../registration/registration.html">Нет аккаунта?</a>
         </div>
     </form>

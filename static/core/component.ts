@@ -131,7 +131,9 @@ export class Component implements IComponent {
     }
 
     private static _setClass(element: HTMLElement, className: string): void {
-        element.classList.add(className);
+        if (className) {
+            element.classList.add(className);
+        }
     }
 
     public show(): void {

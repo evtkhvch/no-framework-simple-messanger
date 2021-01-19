@@ -89,7 +89,9 @@ export class Component {
         return document.createElement(tagName);
     }
     static _setClass(element, className) {
-        element.classList.add(className);
+        if (className) {
+            element.classList.add(className);
+        }
     }
     show() {
         if (this._element) {
