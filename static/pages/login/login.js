@@ -4,11 +4,11 @@ import { Button } from '../../components/button/button.js';
 import { LoginForm } from './components/login-form/login-form.js';
 class Login extends Component {
     constructor(props) {
-        super('div', props);
+        super('div', props, 'sign');
         this.props = props;
     }
     render() {
-        return `<div class="sign">{{{ loginForm }}}</div>`;
+        return `{{{ loginForm }}}`;
     }
 }
 const loginComponent = new Login({

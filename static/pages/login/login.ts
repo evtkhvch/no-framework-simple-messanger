@@ -5,11 +5,11 @@ import { LoginForm } from './components/login-form/login-form.js';
 
 class Login extends Component {
     constructor(public props: Props) {
-        super('div', props);
+        super('div', props, 'sign');
     }
 
     public render(): string {
-        return `<div class="sign">{{{ loginForm }}}</div>`;
+        return `{{{ loginForm }}}`;
     }
 }
 
