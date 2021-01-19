@@ -110,7 +110,6 @@ export class Component implements IComponent {
         if (this._element) {
             this._element.innerHTML = templateCompiler(block, this.props);
         }
-
         setTimeout(() => { this._afterViewInit(); });
     }
 
