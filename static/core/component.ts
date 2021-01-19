@@ -1,11 +1,11 @@
-import {Subject} from "./subject.js";
-import {templateCompiler} from "./template-compiler.js";
+import { Subject } from './subject.js';
+import { templateCompiler } from './template-compiler.js';
 
 enum EVENTS {
-    INIT = "init",
-    FLOW_CDM = "flow:component-did-mount",
-    FLOW_CDU = "flow:component-did-update",
-    FLOW_RENDER = "flow:render"
+    INIT = 'init',
+    FLOW_CDM = 'flow:component-did-mount',
+    FLOW_CDU = 'flow:component-did-update',
+    FLOW_RENDER = 'flow:render'
 }
 
 export interface Props {
@@ -23,10 +23,10 @@ export class Component {
      *
      * @returns {void}
      */
-    constructor(public tagName = "div", public props: Props = {}) {
+    constructor(public tagName = 'div', public props: Props = {}) {
         const subject = new Subject();
 
-        this._meta = {tagName, props};
+        this._meta = { tagName, props };
         this.props = this._makePropsProxy(props);
         this.eventBus = subject;
         this._registerEvents(subject);
@@ -43,7 +43,7 @@ export class Component {
 
     private _createResources(): void {
         if (this._meta) {
-            const {tagName} = this._meta;
+            const { tagName } = this._meta;
             this._element = Component._createDocumentElement(tagName);
         }
     }
@@ -81,7 +81,7 @@ export class Component {
         if (!nextProps) {
             return;
         }
-        const props = {...this.props, ...nextProps};
+        const props = { ...this.props, ...nextProps };
 
         this._componentDidUpdate(this.props, props);
     };
@@ -114,18 +114,18 @@ export class Component {
         });
     }
 
-    private static _createDocumentElement(tagName: string) {
+    private static _createDocumentElement(tagName: string): HTMLElement {
         // Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
         return document.createElement(tagName);
     }
 
-    public show() {
+    public show(): void {
         if (this._element) {
             this._element.style.display = 'block';
         }
     }
 
-    public hide() {
+    public hide(): void {
         if (this._element) {
             this._element.style.display = 'none';
         }

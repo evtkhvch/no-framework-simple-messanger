@@ -1,10 +1,10 @@
-import {Component, Props} from "../../core/component.js";
-import {template} from './login.template.js';
-import {render} from "../../core/render.js";
+import { Component, Props } from '../../core/component.js';
+import { template } from './login.template.js';
+import { render } from '../../core/render.js';
 
 class Login extends Component {
     constructor(public props: Props) {
-        super("div", props);
+        super('div', props);
     }
 
     render() {
@@ -12,13 +12,11 @@ class Login extends Component {
     }
 }
 
-const loginComponent = new Login({
-    text: 'Click me',
-});
+const loginComponent = new Login({});
 
 render('.app', loginComponent);
 
-const {login, pass} = <HTMLFormElement>document.querySelector('.sign__box.login__box');
+const { login, pass } = <HTMLFormElement>document.querySelector('.sign__box.login__box');
 const button: HTMLElement | null = document.querySelector('.sign__submit.default-button');
 
 if (button) {

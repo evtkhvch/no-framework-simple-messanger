@@ -1,4 +1,4 @@
-import {Component} from "./component.js";
+import { Component } from './component.js';
 
 export function render(query: string, component: Component): HTMLElement | null {
     const root: HTMLElement | null = document.querySelector(query);
