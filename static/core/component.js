@@ -1,5 +1,5 @@
-import { Subject } from "./subject.js";
-import { templateCompiler } from "./template-compiler.js";
+import { Subject } from './subject.js';
+import { templateCompiler } from './template-compiler.js';
 var EVENTS;
 (function (EVENTS) {
     EVENTS["INIT"] = "init";
@@ -7,16 +7,13 @@ var EVENTS;
     EVENTS["FLOW_CDU"] = "flow:component-did-update";
     EVENTS["FLOW_RENDER"] = "flow:render";
 })(EVENTS || (EVENTS = {}));
+class IComponent {
+}
 export class Component {
-    /** JSDoc
-     * @param {string} tagName
-     * @param {Object} props
-     *
-     * @returns {void}
-     */
-    constructor(tagName = "div", props = {}) {
+    constructor(tagName = 'div', props = {}, className = '') {
         this.tagName = tagName;
         this.props = props;
+        this.className = className;
         this._element = null;
         this._meta = null;
         this.setProps = (nextProps) => {
@@ -27,9 +24,9 @@ export class Component {
             this._componentDidUpdate(this.props, props);
         };
         const subject = new Subject();
-        this._meta = { tagName, props };
+        this._meta = { tagName, className, props };
         this.props = this._makePropsProxy(props);
-        this.eventBus = subject;
+        this.subject = subject;
         this._registerEvents(subject);
         subject.next(EVENTS.INIT);
     }
@@ -41,29 +38,27 @@ export class Component {
     }
     _createResources() {
         if (this._meta) {
-            const { tagName } = this._meta;
+            const { tagName, className } = this._meta;
             this._element = Component._createDocumentElement(tagName);
+            Component._setClass(this._element, className);
         }
     }
     init() {
         this._createResources();
-        this.eventBus.next(EVENTS.FLOW_CDM);
+        this.subject.next(EVENTS.FLOW_RENDER);
     }
     _componentDidMount() {
-        this.componentDidMount(this.props);
-        this.eventBus.next(EVENTS.FLOW_RENDER);
+        this.componentDidMount();
     }
-    // Может переопределять пользователь, необязательно трогать
-    componentDidMount(oldProps) {
+    componentDidMount() {
     }
     _componentDidUpdate(oldProps, newProps) {
         const response = this.componentDidUpdate(oldProps, newProps);
         this.props = newProps;
         if (response) {
-            this.eventBus.next(EVENTS.FLOW_RENDER);
+            this.subject.next(EVENTS.FLOW_RENDER);
         }
     }
-    // Может переопределять пользователь, необязательно трогать
     componentDidUpdate(oldProps, newProps) {
         return true;
     }
@@ -72,15 +67,14 @@ export class Component {
     }
     _render() {
         const block = this.render();
-        // Этот небезопасный метод для упрощения логики
-        // Используйте шаблонизатор из npm или напишите свой безопасный
-        // Нужно не в строку компилировать (или делать это правильно),
-        // либо сразу в DOM-элементы возвращать из compile DOM-ноду
         if (this._element) {
             this._element.innerHTML = templateCompiler(block, this.props);
         }
+        setTimeout(() => { this._afterViewInit(); });
     }
-    // Может переопределять пользователь, необязательно трогать
+    _afterViewInit() {
+        this.subject.next(EVENTS.FLOW_CDM);
+    }
     render() {
         return '';
     }
@@ -92,8 +86,10 @@ export class Component {
         });
     }
     static _createDocumentElement(tagName) {
-        // Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
         return document.createElement(tagName);
+    }
+    static _setClass(element, className) {
+        element.classList.add(className);
     }
     show() {
         if (this._element) {

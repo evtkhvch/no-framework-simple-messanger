@@ -18,9 +18,7 @@ export class Subject {
         if (!this.listeners[event]) {
             throw new Error(`Нет события: ${event}`);
         }
-        this.listeners[event].forEach(function (listener) {
-            listener(...args);
-        });
+        this.listeners[event].forEach(listener => listener(...args));
     }
 }
 //# sourceMappingURL=subject.js.map

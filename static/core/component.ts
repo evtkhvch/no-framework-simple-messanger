@@ -12,9 +12,15 @@ export interface Props {
     [prop: string]: unknown
 }
 
+export interface Meta {
+    tagName: string;
+    className: string;
+    props: Props;
+}
+
 abstract class IComponent {
     abstract init(): void;
-    abstract componentDidMount(oldProps: Props): void;
+    abstract componentDidMount(): void;
     abstract setProps(nextProps: Props): void;
     abstract componentDidUpdate(oldProps: Props, newProps: Props): boolean;
     abstract render(): string;
@@ -25,15 +31,15 @@ abstract class IComponent {
 
 export class Component implements IComponent {
     private _element: HTMLElement | null = null;
-    private readonly _meta: { tagName: string; props: Props } | null = null;
-    private eventBus: Subject;
+    private readonly _meta: Meta | null = null;
+    private subject: Subject;
 
-    constructor(public tagName = 'div', public props: Props = {}) {
+    constructor(public tagName = 'div', public props: Props = {}, public className: string = '') {
         const subject = new Subject();
 
-        this._meta = { tagName, props };
+        this._meta = { tagName, className, props };
         this.props = this._makePropsProxy(props);
-        this.eventBus = subject;
+        this.subject = subject;
         this._registerEvents(subject);
 
         subject.next(EVENTS.INIT);
@@ -48,22 +54,23 @@ export class Component implements IComponent {
 
     private _createResources(): void {
         if (this._meta) {
-            const { tagName } = this._meta;
+            const { tagName, className } = this._meta;
+
             this._element = Component._createDocumentElement(tagName);
+            Component._setClass(this._element, className);
         }
     }
 
     public init(): void {
         this._createResources();
-        this.eventBus.next(EVENTS.FLOW_CDM);
+        this.subject.next(EVENTS.FLOW_RENDER);
     }
 
     private _componentDidMount(): void {
-        this.componentDidMount(this.props);
-        this.eventBus.next(EVENTS.FLOW_RENDER);
+        this.componentDidMount();
     }
 
-    public componentDidMount(oldProps: Props): void {
+    public componentDidMount(): void {
     }
 
     private _componentDidUpdate(oldProps: Props, newProps: Props): void {
@@ -72,7 +79,7 @@ export class Component implements IComponent {
         this.props = newProps;
 
         if (response) {
-            this.eventBus.next(EVENTS.FLOW_RENDER);
+            this.subject.next(EVENTS.FLOW_RENDER);
         }
     }
 
@@ -99,6 +106,12 @@ export class Component implements IComponent {
         if (this._element) {
             this._element.innerHTML = templateCompiler(block, this.props);
         }
+
+        setTimeout(() => { this._afterViewInit(); });
+    }
+
+    private _afterViewInit(): void {
+        this.subject.next(EVENTS.FLOW_CDM);
     }
 
     public render(): string {
@@ -115,6 +128,10 @@ export class Component implements IComponent {
 
     private static _createDocumentElement(tagName: string): HTMLElement {
         return document.createElement(tagName);
+    }
+
+    private static _setClass(element: HTMLElement, className: string): void {
+        element.classList.add(className);
     }
 
     public show(): void {
