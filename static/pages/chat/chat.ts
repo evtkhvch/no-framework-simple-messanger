@@ -4,6 +4,7 @@ import { chat } from './chat.template.js';
 import { ChatsBar } from './components/chats-bar/chats-bar.js';
 import { UserCard } from './components/user-card/user-card.js';
 import { CHAT_LIST } from '../../core/chat-list.js';
+import { ChatFooter } from './components/chat-footer/chat-footer.js';
 
 class ChatComponent extends Component {
     constructor(public props: Props) {
@@ -35,7 +36,8 @@ const cardList = CHAT_LIST.map(item => new UserCard({...item}).elementToString).
 const chatComponent = new ChatComponent({
     chatsBar: new ChatsBar({
         cardList: cardList
-    }).elementToString
+    }).elementToString,
+    footer: new ChatFooter({}).elementToString
 });
 
 render('.app', chatComponent);
