@@ -3,8 +3,9 @@ import { render } from '../../core/render.js';
 import { chat } from './chat.template.js';
 import { ChatsBar } from './components/chats-bar/chats-bar.js';
 import { UserCard } from './components/user-card/user-card.js';
-import { CHAT_LIST } from '../../core/chat-list.js';
+import { CHAT_LIST, MESSAGE_LIST } from '../../core/mock.js';
 import { ChatFooter } from './components/chat-footer/chat-footer.js';
+import { Message } from './components/message/message.js';
 class ChatComponent extends Component {
     constructor(props) {
         super('div', props, 'chat-list');
@@ -27,7 +28,11 @@ class ChatComponent extends Component {
     }
 }
 const cardList = CHAT_LIST.map(item => new UserCard(Object.assign({}, item)).elementToString).join('');
+const messageList = MESSAGE_LIST.map(item => new Message(Object.assign({}, item)).elementToString).join('');
 const chatComponent = new ChatComponent({
+    name: 'Вадим',
+    isChat: true,
+    messageList,
     chatsBar: new ChatsBar({
         cardList: cardList
     }).elementToString,

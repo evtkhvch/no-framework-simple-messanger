@@ -51,6 +51,10 @@
     overflow: auto;
 }
 
+.chat__dialog .message:first-child {
+    margin-top: 10px;
+}
+
 .chat__footer {
     padding: 11px 0;
     border-top: 1px solid #EAEAEA;
@@ -102,5 +106,17 @@
     justify-content: center;
     font-size: 12px;
     padding: 20px 0;
+    color: var(--grey);
+}
+
+.dialog {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dialog__title {
+    font-size: 12px;
     color: var(--grey);
 }

@@ -6,11 +6,11 @@ export class Message extends Component {
     }
     render() {
         return `
-            <div class="message {{ class }}">
+            <div class="message {{ className }}">
                 <div class="message__content">
                     <div class="message__text">
                         {{ text }}
-                        <div class="message__date">{{ text }}</div>
+                        <div class="message__date">{{ date }}</div>
                     </div>
                 </div>
             </div>
