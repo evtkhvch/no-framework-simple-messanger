@@ -13,6 +13,7 @@ class ChatComponent extends Component {
 
     public componentDidMount() {
         this.initForm();
+        this.initListener();
     }
 
     private initForm(): void {
@@ -24,6 +25,12 @@ class ChatComponent extends Component {
                 console.log(message?.value);
             };
         }
+    }
+
+    private initListener(): void {
+        const userCardList: HTMLElement | null = document.querySelector('.user-card__list');
+
+        userCardList?.addEventListener('click', () => { this.setProps({ ...this.props, isChat: true }) });
     }
 
     public render(): string {
@@ -58,7 +65,7 @@ const messageList = CHAT.messageList.map(item => new Message({...item}).elementT
 
 const chatComponent = new ChatComponent({
     name: CHAT.name,
-    isChat: true,
+    isChat: false,
     messageList,
     chatsBar: new ChatsBar({
         cardList: cardList

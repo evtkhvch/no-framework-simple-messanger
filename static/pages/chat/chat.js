@@ -12,6 +12,7 @@ class ChatComponent extends Component {
     }
     componentDidMount() {
         this.initForm();
+        this.initListener();
     }
     initForm() {
         const message = document.querySelector('.chat__footer-message');
@@ -21,6 +22,10 @@ class ChatComponent extends Component {
                 console.log(message === null || message === void 0 ? void 0 : message.value);
             };
         }
+    }
+    initListener() {
+        const userCardList = document.querySelector('.user-card__list');
+        userCardList === null || userCardList === void 0 ? void 0 : userCardList.addEventListener('click', () => { this.setProps(Object.assign(Object.assign({}, this.props), { isChat: true })); });
     }
     render() {
         return `
@@ -52,7 +57,7 @@ const cardList = DIALOG_LIST.map(item => new UserCard(Object.assign({}, item)).e
 const messageList = CHAT.messageList.map(item => new Message(Object.assign({}, item)).elementToString).join('');
 const chatComponent = new ChatComponent({
     name: CHAT.name,
-    isChat: true,
+    isChat: false,
     messageList,
     chatsBar: new ChatsBar({
         cardList: cardList
