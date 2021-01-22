@@ -39,8 +39,7 @@ export class LoginForm extends Component {
                     </div>
                 </div>
                 <div class="sign__footer">
-                    <input type="submit" class="button" value="Create account">
-                   
+                    {{{ button }}}
                     <a class="sign__account" href="../registration/registration.html">Нет аккаунта?</a>
                 </div>
             </form>

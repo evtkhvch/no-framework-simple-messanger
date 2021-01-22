@@ -6,6 +6,6 @@ export class Button extends Component {
     }
 
     public render(): string {
-        return `<button type="button" class="{{ class }}">{{ name }}</button>`;
+        return `<button type="{{ type }}" class="{{ class }}">{{ name }}</button>`;
     }
 }

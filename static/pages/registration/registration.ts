@@ -16,6 +16,7 @@ class Registration extends Component {
 const registrationComponent = new Registration({
     registrationForm: new RegistrationForm({
         button: new Button({
+            type: 'submit',
             name: 'Зарегистрироваться',
             class: 'sign__submit default-button'
         }).elementToString

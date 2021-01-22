@@ -14,6 +14,7 @@ class Login extends Component {
 const loginComponent = new Login({
     loginForm: new LoginForm({
         button: new Button({
+            type: 'submit',
             name: 'Авторизоваться',
             class: 'sign__submit default-button'
         }).elementToString

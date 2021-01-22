@@ -5,7 +5,7 @@ export class Button extends Component {
         this.props = props;
     }
     render() {
-        return `<button type="button" class="{{ class }}">{{ name }}</button>`;
+        return `<button type="{{ type }}" class="{{ class }}">{{ name }}</button>`;
     }
 }
 //# sourceMappingURL=button.js.map
