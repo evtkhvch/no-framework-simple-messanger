@@ -9,14 +9,17 @@ export default `
             <div class="profile__form-item">
                 <span class="profile__form-text">Старый пароль</span>
                 <input id="pass" name="pass" type="password" class="profile__form-input">
+                <span class="error-message"></span>
             </div>
             <div class="profile__form-item">
                 <span class="profile__form-text">Новый пароль</span>
                 <input id="newPass" name="newPass" type="password" class="profile__form-input">
+                <span class="error-message"></span>
             </div>
             <div class="profile__form-item">
                 <span class="profile__form-text">Повторите новый пароль</span>
                 <input id="newPassMore" name="newPassMore" type="password" class="profile__form-input">
+                <span class="error-message"></span>
             </div>
         </form>
         {{{ button }}}

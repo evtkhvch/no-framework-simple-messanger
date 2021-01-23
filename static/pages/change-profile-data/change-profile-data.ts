@@ -1,7 +1,7 @@
 import { Component, Props } from '../../core/component.js';
 import { render } from '../../core/render.js';
 import template from './change-data-template.js';
-import { EmptyValidator, FormControl, FormState } from '../../core/validator.js';
+import { EmailValidator, EmptyValidator, FormControl, FormState, ValidatorComposer } from '../../core/validator.js';
 import { FormValidator } from '../../core/form-validator.js';
 import { Button } from '../../components/button/button.js';
 
@@ -17,7 +17,7 @@ class ChangeProfileData extends Component {
     private static initForm(): void {
         const formElement = document.querySelector('.profile__form.profile__container') as HTMLFormElement;
         const formState: FormState = {
-            mail: new FormControl('pochta@yandex.ru', false, new EmptyValidator()),
+            mail: new FormControl('pochta@yandex.ru', false, new ValidatorComposer([ new EmailValidator(), new EmptyValidator() ])),
             login: new FormControl('ivanivanov', false, new EmptyValidator()),
             userName: new FormControl('Иван', false, new EmptyValidator()),
             surname: new FormControl('Иванов', false, new EmptyValidator()),

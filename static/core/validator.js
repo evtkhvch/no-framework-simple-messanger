@@ -13,6 +13,15 @@ export class EmptyValidator {
         return 'Поле должно быть заполнено';
     }
 }
+export class EmailValidator {
+    isValid(value) {
+        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(value).toLowerCase());
+    }
+    getDescription() {
+        return 'Не валидный email';
+    }
+}
 export class MaxLengthValidator {
     constructor(maxLength) {
         this.maxLength = maxLength;
