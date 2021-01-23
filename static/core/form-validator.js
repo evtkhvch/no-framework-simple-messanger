@@ -17,6 +17,10 @@ export class FormValidator {
     }
     listen(field, validator, type) {
         const input = document.querySelector(`#${field}`);
+        if (input) {
+            input.value = this.state[field].value;
+            input.disabled = this.state[field].isDisabled;
+        }
         input === null || input === void 0 ? void 0 : input.addEventListener(type, () => {
             this.state = Object.assign(Object.assign({}, this.state), { [field]: Object.assign(Object.assign({}, this.state[field]), { value: input === null || input === void 0 ? void 0 : input.value }) });
             if (validator === null || validator === void 0 ? void 0 : validator.isValid(input === null || input === void 0 ? void 0 : input.value)) {

@@ -12,13 +12,13 @@ export class RegistrationForm extends Component {
     static initForm() {
         const formElement = document.querySelector('.sign__box.login__box');
         const formState = {
-            mail: new FormControl('', new EmptyValidator()),
-            login: new FormControl('', new EmptyValidator()),
-            userName: new FormControl('', new EmptyValidator()),
-            surname: new FormControl('', new EmptyValidator()),
-            phone: new FormControl('', new EmptyValidator()),
-            pass: new FormControl('', new EmptyValidator()),
-            passOneMoreTime: new FormControl('', new EmptyValidator())
+            mail: new FormControl('', false, new EmptyValidator()),
+            login: new FormControl('', false, new EmptyValidator()),
+            userName: new FormControl('', false, new EmptyValidator()),
+            surname: new FormControl('', false, new EmptyValidator()),
+            phone: new FormControl('', false, new EmptyValidator()),
+            pass: new FormControl('', false, new EmptyValidator()),
+            passOneMoreTime: new FormControl('', false, new EmptyValidator())
         };
         const validator = new FormValidator(formElement, formState);
         validator.initialize();

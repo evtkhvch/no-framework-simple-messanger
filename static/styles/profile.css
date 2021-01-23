@@ -69,6 +69,7 @@
 }
 
 .profile__form-item {
+    position: relative;
     height: 33px;
     border-bottom: 1px solid #EAEAEA;
     display: flex;
@@ -78,6 +79,15 @@
 
 .profile__form-item:last-child {
     border-bottom: none;
+}
+
+.profile__form-item .error-message {
+    font-size: 9px;
+    display: block;
+    position: absolute;
+    right: 0;
+    transform: translate(0, 20px);
+    color: var(--red);
 }
 
 .profile__form-text {

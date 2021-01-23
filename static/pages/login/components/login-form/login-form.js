@@ -12,8 +12,8 @@ export class LoginForm extends Component {
     static initForm() {
         const formElement = document.querySelector('.sign__box.login__box');
         const formState = {
-            login: new FormControl('', new EmptyValidator()),
-            pass: new FormControl('', new ValidatorComposer([new EmptyValidator(), new MinLengthValidator(8)]))
+            login: new FormControl('', false, new EmptyValidator()),
+            pass: new FormControl('', false, new ValidatorComposer([new EmptyValidator(), new MinLengthValidator(8)]))
         };
         const validator = new FormValidator(formElement, formState);
         validator.initialize();

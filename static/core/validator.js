@@ -1,6 +1,7 @@
 export class FormControl {
-    constructor(value, validator) {
+    constructor(value, isDisabled, validator) {
         this.value = value;
+        this.isDisabled = isDisabled;
         this.validator = validator;
     }
 }

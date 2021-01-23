@@ -4,31 +4,37 @@ export default `
     </nav>
     <div class="profile__info">
         <div class="profile__avatar"></div>
-        <div class="profile__name">Иван</div>
+        <div class="profile__name">{{ name }}</div>
         <form class="profile__form profile__container">
             <div class="profile__form-item">
                 <span class="profile__form-text">Почта</span>
-                <input disabled type="text" class="profile__form-input" value="pochta@yandex.ru">
+                <input id="mail" name="mail" type="text" class="profile__form-input">
+                <span class="error-message"></span>
             </div>
             <div class="profile__form-item">
                 <span class="profile__form-text">Логин</span>
-                <input disabled type="text" class="profile__form-input" value="ivanivanov">
+                <input id="login" name="login" type="text" class="profile__form-input">
+                <span class="error-message"></span>
             </div>
             <div class="profile__form-item">
                 <span class="profile__form-text">Имя</span>
-                <input disabled type="text" class="profile__form-input" value="Иван">
+                <input id="userName" name="userName" type="text" class="profile__form-input">
+                <span class="error-message"></span>
             </div>
             <div class="profile__form-item">
                 <span class="profile__form-text">Фамилия</span>
-                <input disabled type="text" class="profile__form-input" value="Иванов">
+                <input id="surname" name="surname" type="text" class="profile__form-input">
+                <span class="error-message"></span>
             </div>
             <div class="profile__form-item">
                 <span class="profile__form-text">Имя в чате</span>
-                <input disabled type="text" class="profile__form-input" value="Иван">
+                <input id="nameInChat" name="nameInChat" type="text" class="profile__form-input">
+                <span class="error-message"></span>
             </div>
             <div class="profile__form-item">
                 <span class="profile__form-text">Телефон</span>
-                <input disabled type="text" class="profile__form-input" value="+7 (909) 967 30 30">
+                <input id="phone" name="phone" type="text" class="profile__form-input">
+                <span class="error-message"></span>
             </div>
         </form>
         <ul class="profile__options profile__container">

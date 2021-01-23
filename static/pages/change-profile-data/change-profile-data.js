@@ -1,27 +1,41 @@
 import { Component } from '../../core/component.js';
 import { render } from '../../core/render.js';
 import template from './change-data-template.js';
+import { EmptyValidator, FormControl } from '../../core/validator.js';
+import { FormValidator } from '../../core/form-validator.js';
+import { Button } from '../../components/button/button.js';
 class ChangeProfileData extends Component {
     constructor(props) {
         super('div', props, 'profile');
         this.props = props;
     }
     componentDidMount() {
-        this.initForm();
+        ChangeProfileData.initForm();
     }
-    initForm() {
-        const { mail, login, userName, surname, nameInChat, phone } = document.querySelector('.profile__form.profile__container');
-        const button = document.querySelector('.profile__form-submit.default-button');
-        if (button) {
-            button.onclick = () => {
-                console.log(mail.value, login.value, userName.value, surname.value, nameInChat.value, phone.value);
-            };
-        }
+    static initForm() {
+        const formElement = document.querySelector('.profile__form.profile__container');
+        const formState = {
+            mail: new FormControl('pochta@yandex.ru', false, new EmptyValidator()),
+            login: new FormControl('ivanivanov', false, new EmptyValidator()),
+            userName: new FormControl('Иван', false, new EmptyValidator()),
+            surname: new FormControl('Иванов', false, new EmptyValidator()),
+            nameInChat: new FormControl('Иван', false, new EmptyValidator()),
+            phone: new FormControl('+7 (909) 967 30 30', false, new EmptyValidator()),
+        };
+        const validator = new FormValidator(formElement, formState);
+        validator.initialize();
     }
     render() {
         return template;
     }
 }
-const changeProfileDataComponent = new ChangeProfileData({});
+const changeProfileDataComponent = new ChangeProfileData({
+    name: 'Иван',
+    button: new Button({
+        type: 'submit',
+        class: 'profile__form-submit default-button',
+        name: 'Сохранить'
+    }).elementToString
+});
 render('.app', changeProfileDataComponent);
 //# sourceMappingURL=change-profile-data.js.map

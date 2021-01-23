@@ -4,21 +4,21 @@ export default `
     </nav>
     <div class="profile__info">
         <div class="profile__avatar"></div>
-        <div class="profile__name">Иван</div>
+        <div class="profile__name">{{ name }}</div>
         <form class="profile__form profile__container">
             <div class="profile__form-item">
                 <span class="profile__form-text">Старый пароль</span>
-                <input name="pass" type="password" class="profile__form-input" value="pochta@yandex.ru">
+                <input id="pass" name="pass" type="password" class="profile__form-input">
             </div>
             <div class="profile__form-item">
                 <span class="profile__form-text">Новый пароль</span>
-                <input name="newPass" type="password" class="profile__form-input" value="ivanivanov">
+                <input id="newPass" name="newPass" type="password" class="profile__form-input">
             </div>
             <div class="profile__form-item">
                 <span class="profile__form-text">Повторите новый пароль</span>
-                <input name="newPassMore" type="password" class="profile__form-input" value="Иван">
+                <input id="newPassMore" name="newPassMore" type="password" class="profile__form-input">
             </div>
         </form>
-        <button class="profile__form-submit default-button" onclick="location.href='../profile/profile.html'">Сохранить</button>
+        {{{ button }}}
     </div>
 `;

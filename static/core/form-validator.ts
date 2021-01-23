@@ -22,6 +22,11 @@ export class FormValidator {
     private listen(field: string, validator: Validator<unknown>, type: string): void {
         const input = document.querySelector(`#${field}`) as HTMLInputElement | null;
 
+        if (input) {
+            input.value = this.state[field].value;
+            input.disabled = this.state[field].isDisabled;
+        }
+
         input?.addEventListener(type, () => {
             this.state = { ...this.state, [field]: { ...this.state[field], value: input?.value } };
 

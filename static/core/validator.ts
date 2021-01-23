@@ -9,7 +9,7 @@ export interface FormState {
 }
 
 export class FormControl {
-    constructor(public value: string, public validator: Validator<unknown>) {
+    constructor(public value: string, public isDisabled: boolean, public validator: Validator<unknown>) {
     }
 }
 
