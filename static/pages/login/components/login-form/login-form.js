@@ -1,6 +1,6 @@
 import { Component } from '../../../../core/component.js';
+import { EmptyValidator, FormControl, MinLengthValidator, ValidatorComposer } from '../../../../core/validator.js';
 import { FormValidator } from '../../../../core/form-validator.js';
-import { EmptyValidator, FormField, MaxLengthValidator, ValidatorComposer } from '../../../../core/validator.js';
 export class LoginForm extends Component {
     constructor(props) {
         super('div', props);
@@ -10,10 +10,12 @@ export class LoginForm extends Component {
         LoginForm.initForm();
     }
     static initForm() {
-        const form = document.querySelector('.sign__box.login__box');
-        const composer = new ValidatorComposer([new EmptyValidator(), new MaxLengthValidator(8)]);
-        const fields = [new FormField('login', composer), new FormField('pass')];
-        const validator = new FormValidator(form, fields);
+        const formElement = document.querySelector('.sign__box.login__box');
+        const formState = {
+            login: new FormControl('', new EmptyValidator()),
+            pass: new FormControl('', new ValidatorComposer([new EmptyValidator(), new MinLengthValidator(8)]))
+        };
+        const validator = new FormValidator(formElement, formState);
         validator.initialize();
     }
     render() {

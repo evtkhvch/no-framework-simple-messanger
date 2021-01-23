@@ -1,4 +1,4 @@
-export class Subject {
+export class Observable {
     constructor() {
         this.listeners = {};
     }
@@ -21,4 +21,4 @@ export class Subject {
         this.listeners[event].forEach(listener => listener(...args));
     }
 }
-//# sourceMappingURL=subject.js.map
+//# sourceMappingURL=observable.js.map

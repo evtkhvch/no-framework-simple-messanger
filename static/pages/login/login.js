@@ -16,7 +16,7 @@ const loginComponent = new Login({
         button: new Button({
             type: 'submit',
             name: 'Авторизоваться',
-            class: 'sign__submit default-button'
+            class: 'sign__submit default-button',
         }).elementToString
     }).elementToString
 });

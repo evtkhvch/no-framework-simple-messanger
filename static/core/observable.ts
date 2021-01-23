@@ -1,4 +1,4 @@
-export class Subject {
+export class Observable {
     private listeners: { [name: string]: Function[] } = {};
 
     public subscribe(event: string, callback: Function): void {
@@ -19,7 +19,7 @@ export class Subject {
         );
     }
 
-    public next(event: string, ...args: Function[]): void {
+    public next(event: string, ...args: unknown[]): void {
         if (!this.listeners[event]) {
             throw new Error(`Нет события: ${event}`);
         }

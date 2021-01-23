@@ -1,4 +1,4 @@
-import { Subject } from './subject.js';
+import { Observable } from './observable.js';
 import { templateCompiler } from './template-compiler.js';
 
 enum EVENTS {
@@ -32,10 +32,10 @@ abstract class IComponent {
 export class Component implements IComponent {
     private _element: HTMLElement | null = null;
     private readonly _meta: Meta | null = null;
-    private subject: Subject;
+    private subject: Observable;
 
     constructor(public tagName = 'div', public props: Props = {}, public className: string = '') {
-        const subject = new Subject();
+        const subject = new Observable();
 
         this._meta = { tagName, className, props };
         this.props = this._makePropsProxy(props);
@@ -45,7 +45,7 @@ export class Component implements IComponent {
         subject.next(EVENTS.INIT);
     }
 
-    private _registerEvents(subject: Subject): void {
+    private _registerEvents(subject: Observable): void {
         subject.subscribe(EVENTS.INIT, this.init.bind(this));
         subject.subscribe(EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
         subject.subscribe(EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
@@ -63,7 +63,7 @@ export class Component implements IComponent {
 
     public init(): void {
         this._createResources();
-        this.subject.next(EVENTS.FLOW_RENDER);
+        this.subject.next(EVENTS.FLOW_RENDER, true);
     }
 
     private _componentDidMount(): void {
@@ -79,7 +79,7 @@ export class Component implements IComponent {
         this.props = newProps;
 
         if (response) {
-            this.subject.next(EVENTS.FLOW_RENDER);
+            this.subject.next(EVENTS.FLOW_RENDER, false);
         }
     }
 
@@ -104,13 +104,15 @@ export class Component implements IComponent {
         return this._element ? this._element.innerHTML : '';
     }
 
-    private _render(): void {
+    private _render(isInit: boolean): void {
         const block = this.render();
 
         if (this._element) {
             this._element.innerHTML = templateCompiler(block, this.props);
         }
-        setTimeout(() => { this._afterViewInit(); });
+        if (isInit) {
+            setTimeout(() => { this._afterViewInit(); });
+        }
     }
 
     private _afterViewInit(): void {

@@ -4,8 +4,12 @@ export interface Validator<T> {
     getDescription(): string;
 }
 
-export class FormField {
-    constructor(public name: string, public validator?: Validator<unknown>) {
+export interface FormState {
+    [name: string]: FormControl;
+}
+
+export class FormControl {
+    constructor(public value: string, public validator: Validator<unknown>) {
     }
 }
 
@@ -28,7 +32,20 @@ export class MaxLengthValidator implements Validator<string> {
     }
 
     public getDescription(): string {
-        return `Длинна строки не должна быть больше ${this.maxLength}`;
+        return `Длинна должна быть больше ${this.maxLength}`;
+    }
+}
+
+export class MinLengthValidator implements Validator<string> {
+    constructor(public minLength: number) {
+    }
+
+    public isValid(value: string): boolean {
+        return value.length > this.minLength;
+    }
+
+    public getDescription(): string {
+        return `Длинна должна быть больше ${this.minLength}`;
     }
 }
 

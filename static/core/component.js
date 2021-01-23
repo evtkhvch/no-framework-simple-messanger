@@ -1,4 +1,4 @@
-import { Subject } from './subject.js';
+import { Observable } from './observable.js';
 import { templateCompiler } from './template-compiler.js';
 var EVENTS;
 (function (EVENTS) {
@@ -23,7 +23,7 @@ export class Component {
             const props = Object.assign(Object.assign({}, this.props), nextProps);
             this._componentDidUpdate(this.props, props);
         };
-        const subject = new Subject();
+        const subject = new Observable();
         this._meta = { tagName, className, props };
         this.props = this._makePropsProxy(props);
         this.subject = subject;
@@ -45,7 +45,7 @@ export class Component {
     }
     init() {
         this._createResources();
-        this.subject.next(EVENTS.FLOW_RENDER);
+        this.subject.next(EVENTS.FLOW_RENDER, true);
     }
     _componentDidMount() {
         this.componentDidMount();
@@ -56,7 +56,7 @@ export class Component {
         const response = this.componentDidUpdate(oldProps, newProps);
         this.props = newProps;
         if (response) {
-            this.subject.next(EVENTS.FLOW_RENDER);
+            this.subject.next(EVENTS.FLOW_RENDER, false);
         }
     }
     componentDidUpdate(oldProps, newProps) {
@@ -68,12 +68,14 @@ export class Component {
     get elementToString() {
         return this._element ? this._element.innerHTML : '';
     }
-    _render() {
+    _render(isInit) {
         const block = this.render();
         if (this._element) {
             this._element.innerHTML = templateCompiler(block, this.props);
         }
-        setTimeout(() => { this._afterViewInit(); });
+        if (isInit) {
+            setTimeout(() => { this._afterViewInit(); });
+        }
     }
     _afterViewInit() {
         this.subject.next(EVENTS.FLOW_CDM);

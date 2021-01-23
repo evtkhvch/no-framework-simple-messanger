@@ -1,6 +1,6 @@
-export class FormField {
-    constructor(name, validator) {
-        this.name = name;
+export class FormControl {
+    constructor(value, validator) {
+        this.value = value;
         this.validator = validator;
     }
 }
@@ -20,7 +20,18 @@ export class MaxLengthValidator {
         return value.length < this.maxLength;
     }
     getDescription() {
-        return `Длинна строки не должна быть больше ${this.maxLength}`;
+        return `Длинна должна быть больше ${this.maxLength}`;
+    }
+}
+export class MinLengthValidator {
+    constructor(minLength) {
+        this.minLength = minLength;
+    }
+    isValid(value) {
+        return value.length > this.minLength;
+    }
+    getDescription() {
+        return `Длинна должна быть больше ${this.minLength}`;
     }
 }
 export class ValidatorComposer {
