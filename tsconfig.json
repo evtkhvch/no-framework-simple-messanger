@@ -1,9 +1,13 @@
 {
   "compilerOptions": {
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "module": "commonjs",
-    "target": "ES6",
-    "rootDir": "static"
+    "rootDir": "static",
+    "target": "es2016",
+    "moduleResolution": "node",
+    "declaration": false,
+    "module": "es2015",
+    "strictNullChecks": true,
+    "sourceMap": true,
+    "noImplicitThis": true,
+    "strict": true
   }
 }

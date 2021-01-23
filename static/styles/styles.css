@@ -68,6 +68,10 @@ input, button, textarea, select {
     justify-content: center;
 }
 
+.disabled {
+    background-color: #FBFBFB;
+}
+
 .default-button:hover, .default-button:active {
     opacity: .7;
 }

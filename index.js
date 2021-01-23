@@ -8,3 +8,5 @@ app.use(express.static(path.join(__dirname, 'static')));
 app.get('/', (req, res) => res.send('Hello'));
 
 app.listen(PORT, () => { console.log(`${PORT} is serving...`)});
+
+module.exports = app;
