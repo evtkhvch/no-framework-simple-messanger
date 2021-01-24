@@ -1,16 +1,13 @@
 import { FormState } from './validator.js';
-import { Observable } from './observable.js';
 
 export class FormValidator {
-    private observable = new Observable();
-
     constructor(public form: HTMLElement | null, public state: FormState) {
     }
 
     public initialize(): void {
         this.initControls();
-        this.form?.addEventListener('blur', this.listen.bind(this), true);
-        this.form?.addEventListener('focus', this.listen.bind(this), true);
+        this.setButtonStatus();
+        this.form?.addEventListener('input', this.listen.bind(this), true);
         this.form?.addEventListener('submit', this.listen.bind(this), true);
     }
 
@@ -42,15 +39,23 @@ export class FormValidator {
             this.state = { ...this.state, [field]: { ...this.state[field], value: input?.value } };
         }
 
-        this.observable.next('state', this.state, this.isFormValid());
-
         if (validator?.isValid(input?.value)) {
             FormValidator.setErrorMessage(input, '');
         } else {
             FormValidator.setErrorMessage(input, validator?.getDescription());
         }
+
+        this.setButtonStatus();
     }
 
+    private setButtonStatus(): void {
+        const submit = this.form?.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+        const isFormValid = this.isFormValid();
+
+        if (submit) {
+            submit.disabled = !isFormValid;
+        }
+    }
 
     private static setErrorMessage(field: HTMLElement | null, message: string): void {
         const errorField = field?.parentElement?.querySelector('.error-message') as HTMLElement;
@@ -62,14 +67,5 @@ export class FormValidator {
 
     public isFormValid(): boolean {
         return Object.values(this.state).every(item => item.validator.isValid(item.value));
-    }
-
-    public listenFormState(callback: (state: FormState, isFormValid: boolean) => void): void {
-        this.observable.subscribe('state', callback);
-    }
-
-    public unsubscribe(callback: (state: FormState, isFormValid: boolean) => void): void {
-        this.form?.removeEventListener('input', this.listen.bind(this));
-        this.observable.unsubscribe('state', callback);
     }
 }

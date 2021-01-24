@@ -1,16 +1,14 @@
-import { Observable } from './observable.js';
 export class FormValidator {
     constructor(form, state) {
         this.form = form;
         this.state = state;
-        this.observable = new Observable();
     }
     initialize() {
-        var _a, _b, _c;
+        var _a, _b;
         this.initControls();
-        (_a = this.form) === null || _a === void 0 ? void 0 : _a.addEventListener('blur', this.listen.bind(this), true);
-        (_b = this.form) === null || _b === void 0 ? void 0 : _b.addEventListener('focus', this.listen.bind(this), true);
-        (_c = this.form) === null || _c === void 0 ? void 0 : _c.addEventListener('submit', this.listen.bind(this), true);
+        this.setButtonStatus();
+        (_a = this.form) === null || _a === void 0 ? void 0 : _a.addEventListener('input', this.listen.bind(this), true);
+        (_b = this.form) === null || _b === void 0 ? void 0 : _b.addEventListener('submit', this.listen.bind(this), true);
     }
     initControls() {
         const fields = Object.entries(this.state);
@@ -36,12 +34,20 @@ export class FormValidator {
         if (input) {
             this.state = Object.assign(Object.assign({}, this.state), { [field]: Object.assign(Object.assign({}, this.state[field]), { value: input === null || input === void 0 ? void 0 : input.value }) });
         }
-        this.observable.next('state', this.state, this.isFormValid());
         if (validator === null || validator === void 0 ? void 0 : validator.isValid(input === null || input === void 0 ? void 0 : input.value)) {
             FormValidator.setErrorMessage(input, '');
         }
         else {
             FormValidator.setErrorMessage(input, validator === null || validator === void 0 ? void 0 : validator.getDescription());
+        }
+        this.setButtonStatus();
+    }
+    setButtonStatus() {
+        var _a;
+        const submit = (_a = this.form) === null || _a === void 0 ? void 0 : _a.querySelector('button[type="submit"]');
+        const isFormValid = this.isFormValid();
+        if (submit) {
+            submit.disabled = !isFormValid;
         }
     }
     static setErrorMessage(field, message) {
@@ -53,14 +59,6 @@ export class FormValidator {
     }
     isFormValid() {
         return Object.values(this.state).every(item => item.validator.isValid(item.value));
-    }
-    listenFormState(callback) {
-        this.observable.subscribe('state', callback);
-    }
-    unsubscribe(callback) {
-        var _a;
-        (_a = this.form) === null || _a === void 0 ? void 0 : _a.removeEventListener('input', this.listen.bind(this));
-        this.observable.unsubscribe('state', callback);
     }
 }
 //# sourceMappingURL=form-validator.js.map
