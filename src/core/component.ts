@@ -63,7 +63,7 @@ export class Component implements IComponent {
 
     public init(): void {
         this._createResources();
-        this.subject.next(EVENTS.FLOW_RENDER, true);
+        this.subject.next(EVENTS.FLOW_RENDER);
     }
 
     private _componentDidMount(): void {
@@ -75,11 +75,11 @@ export class Component implements IComponent {
 
     private _componentDidUpdate(oldProps: Props, newProps: Props): void {
         const response = this.componentDidUpdate(oldProps, newProps);
-
+        const wasChange = JSON.stringify(oldProps) !== JSON.stringify(newProps);
         this.props = newProps;
 
-        if (response) {
-            this.subject.next(EVENTS.FLOW_RENDER, false);
+        if (response && wasChange) {
+            this.subject.next(EVENTS.FLOW_RENDER);
         }
     }
 
@@ -104,15 +104,13 @@ export class Component implements IComponent {
         return this._element ? this._element.innerHTML : '';
     }
 
-    private _render(isInit: boolean): void {
+    private _render(): void {
         const block = this.render();
 
         if (this._element) {
             this._element.innerHTML = templateCompiler(block, this.props);
         }
-        if (isInit) {
-            setTimeout(() => { this._afterViewInit(); });
-        }
+        setTimeout(() => { this._afterViewInit(); });
     }
 
     private _afterViewInit(): void {

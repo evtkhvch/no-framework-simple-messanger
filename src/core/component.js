@@ -45,7 +45,7 @@ export class Component {
     }
     init() {
         this._createResources();
-        this.subject.next(EVENTS.FLOW_RENDER, true);
+        this.subject.next(EVENTS.FLOW_RENDER);
     }
     _componentDidMount() {
         this.componentDidMount();
@@ -54,9 +54,10 @@ export class Component {
     }
     _componentDidUpdate(oldProps, newProps) {
         const response = this.componentDidUpdate(oldProps, newProps);
+        const wasChange = JSON.stringify(oldProps) !== JSON.stringify(newProps);
         this.props = newProps;
-        if (response) {
-            this.subject.next(EVENTS.FLOW_RENDER, false);
+        if (response && wasChange) {
+            this.subject.next(EVENTS.FLOW_RENDER);
         }
     }
     componentDidUpdate(oldProps, newProps) {
@@ -68,14 +69,12 @@ export class Component {
     get elementToString() {
         return this._element ? this._element.innerHTML : '';
     }
-    _render(isInit) {
+    _render() {
         const block = this.render();
         if (this._element) {
             this._element.innerHTML = templateCompiler(block, this.props);
         }
-        if (isInit) {
-            setTimeout(() => { this._afterViewInit(); });
-        }
+        setTimeout(() => { this._afterViewInit(); });
     }
     _afterViewInit() {
         this.subject.next(EVENTS.FLOW_CDM);

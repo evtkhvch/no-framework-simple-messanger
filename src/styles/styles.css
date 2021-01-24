@@ -68,8 +68,13 @@ input, button, textarea, select {
     justify-content: center;
 }
 
-.disabled {
-    background-color: #FBFBFB;
+.default-button:disabled {
+    cursor: default;
+    background-color: #b8b8b8;
+}
+
+.default-button:disabled.default-button:hover, .default-button:disabled.default-button:active {
+    opacity: 1;
 }
 
 .default-button:hover, .default-button:active {
