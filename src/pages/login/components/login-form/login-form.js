@@ -7,9 +7,6 @@ export class LoginForm extends Component {
         this.props = props;
     }
     componentDidMount() {
-        LoginForm.initForm();
-    }
-    static initForm() {
         const formElement = document.querySelector('.sign__box.login__box');
         const formState = {
             login: new FormControl('', false, new EmptyValidator()),

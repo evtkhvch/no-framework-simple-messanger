@@ -7,10 +7,7 @@ export class RegistrationForm extends Component {
         this.props = props;
     }
     componentDidMount() {
-        RegistrationForm.initForm();
-    }
-    static initForm() {
-        const formElement = document.querySelector('.sign__box.login__box');
+        const formElement = document.querySelector('.sign__box.registration__box');
         const formState = {
             mail: new FormControl('', false, new EmptyValidator()),
             login: new FormControl('', false, new EmptyValidator()),
