@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "rootDir": "static",
+    "rootDir": "src",
     "target": "es2016",
     "moduleResolution": "node",
     "declaration": false,
