@@ -4,7 +4,7 @@ export class Route {
         this.pathname = pathname;
         this.component = component;
         this.props = props;
-        this._block = null;
+        this._component = null;
     }
     navigate(pathname) {
         if (this.match(pathname)) {
@@ -13,20 +13,20 @@ export class Route {
         }
     }
     leave() {
-        if (this._block) {
-            this._block.hide();
+        if (this._component) {
+            this._component.hide();
         }
     }
     match(pathname) {
         return isEqual(pathname, this.pathname);
     }
     render() {
-        if (!this._block) {
-            this._block = new this.component();
-            render(this.props.rootQuery, this._block);
+        if (!this._component) {
+            this._component = this.component;
+            render(this.props.rootQuery, this._component);
             return;
         }
-        this._block.show();
+        this._component.show();
     }
 }
 const isEqual = (lhs, rhs) => lhs === rhs;

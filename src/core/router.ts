@@ -1,6 +1,5 @@
 import { Route } from './route.js';
 import { Component } from './component';
-import { Constructable } from './interfaces';
 
 export class Router {
     public routes: Route[] = [];
@@ -16,7 +15,7 @@ export class Router {
         Router.__instance = this;
     }
 
-    public use(pathname: string, component: Constructable<Component>): Router {
+    public use(pathname: string, component: Component): Router {
         const route = new Route(pathname, component, { rootQuery: this._rootQuery });
         this.routes.push(route);
 

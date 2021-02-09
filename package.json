@@ -4,7 +4,7 @@
   "main": "index.js",
   "type": "commonjs",
   "scripts": {
-    "compile": "tsc && sass ./src/styles/index.sass ./src/styles/index.css --no-source-map",
+    "compile": "tsc -w & sass ./src/styles/index.sass ./src/styles/index.css --no-source-map --watch",
     "start": "node index.js"
   },
   "devDependencies": {

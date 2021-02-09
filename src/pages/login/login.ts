@@ -1,9 +1,8 @@
 import { Component, Props } from '../../core/component.js';
-import { render } from '../../core/render.js';
 import { Button } from '../../components/button/button.js';
 import { LoginForm } from './components/login-form/login-form.js';
 
-export class LoginComponent extends Component {
+class LoginComponent extends Component {
     constructor(public props: Props) {
         super('div', props, 'sign');
     }
@@ -13,7 +12,7 @@ export class LoginComponent extends Component {
     }
 }
 
-const loginComponent = new LoginComponent({
+export const loginComponent = new LoginComponent({
     loginForm: new LoginForm({
         button: new Button({
             type: 'submit',
@@ -22,5 +21,3 @@ const loginComponent = new LoginComponent({
         }).elementToString
     }).elementToString
 });
-
-render('.app', loginComponent);

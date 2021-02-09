@@ -1,11 +1,10 @@
 import { Component } from './component.js';
 import { render } from './render.js';
-import { Constructable } from './interfaces.js';
 
 export class Route {
-    private _block: Component | null = null;
+    private _component: Component | null = null;
 
-    constructor(private pathname: string, public component: Constructable<Component>, private props: { rootQuery: string }) {
+    constructor(private pathname: string, public component: Component, private props: { rootQuery: string }) {
     }
 
     public navigate(pathname: string): void {
@@ -16,8 +15,8 @@ export class Route {
     }
 
     public leave(): void {
-        if (this._block) {
-            this._block.hide();
+        if (this._component) {
+            this._component.hide();
         }
     }
 
@@ -26,13 +25,13 @@ export class Route {
     }
 
     public render(): void {
-        if (!this._block) {
-            this._block = new this.component();
-            render(this.props.rootQuery, this._block!);
+        if (!this._component) {
+            this._component = this.component;
+            render(this.props.rootQuery, this._component);
             return;
         }
 
-        this._block.show();
+        this._component.show();
     }
 }
 
