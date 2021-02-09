@@ -3,7 +3,7 @@ import { render } from '../../core/render.js';
 import { Button } from '../../components/button/button.js';
 import { LoginForm } from './components/login-form/login-form.js';
 
-class Login extends Component {
+export class LoginComponent extends Component {
     constructor(public props: Props) {
         super('div', props, 'sign');
     }
@@ -13,7 +13,7 @@ class Login extends Component {
     }
 }
 
-const loginComponent = new Login({
+const loginComponent = new LoginComponent({
     loginForm: new LoginForm({
         button: new Button({
             type: 'submit',

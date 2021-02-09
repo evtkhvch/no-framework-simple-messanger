@@ -1,0 +1,117 @@
+@import "variables"
+
+.profile
+  width: 100%
+  height: 100vh
+  display: flex
+
+.profile__nav
+  width: 64px
+  background-color: $light-grey
+  display: flex
+  justify-content: center
+  align-items: center
+
+.profile__nav-button
+  display: flex
+  justify-content: center
+  align-items: center
+  border: 0
+  outline: none
+  height: 28px
+  width: 28px
+  border-radius: 50%
+  cursor: pointer
+  background-color: $blue
+
+.profile__nav-button:after
+  content: url("../assets/icons/arrow-left.svg")
+
+.profile__info
+  overflow: auto
+  padding: 60px 0
+  flex-grow: 1
+  display: flex
+  flex-direction: column
+  align-items: center
+
+.profile__avatar
+  display: flex
+  justify-content: center
+  align-items: center
+  width: 130px
+  min-height: 130px
+  max-height: 130px
+  border-radius: 50%
+  cursor: pointer
+  background-color: #EFEFEF
+  margin-bottom: 21px
+
+.profile__avatar:after
+  content: url("../assets/icons/picture.svg")
+
+.profile__name
+  font-size: 16px
+  margin-bottom: 60px
+
+.profile__container
+  width: 510px
+
+.profile__form
+  margin-bottom: 60px
+
+.profile__form-item
+  position: relative
+  height: 33px
+  border-bottom: 1px solid #EAEAEA
+  display: flex
+  align-items: center
+  font-size: 13px
+
+.profile__form-item:last-child
+  border-bottom: none
+
+.profile__form-item .error-message
+  font-size: 9px
+  display: block
+  position: absolute
+  right: 0
+  transform: translate(0, 20px)
+  color: $red
+
+.profile__form-text
+  white-space: nowrap
+  color: $black
+
+.profile__form-input
+  flex-grow: 1
+  text-align: right
+  width: 100%
+  border: 0
+  outline: none
+  color: $grey
+
+.profile__form-input:disabled
+  background-color: inherit
+
+.profile__option
+  display: flex
+  align-items: center
+  font-size: 13px
+  height: 33px
+  border-bottom: 1px solid #EAEAEA
+
+.profile__option:last-child
+  border-bottom: none
+
+.profile__option-button
+  border: 0
+  outline: none
+  cursor: pointer
+  background-color: $white
+
+.profile__option-exit
+  color: $red
+
+.profile__option-change
+  color: $blue
