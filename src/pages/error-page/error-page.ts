@@ -1,6 +1,4 @@
 import { Component, Props } from '../../core/component.js';
-import { render } from '../../core/render.js';
-
 
 class ErrorPage extends Component {
     constructor(public props: Props) {
@@ -16,6 +14,4 @@ class ErrorPage extends Component {
     }
 }
 
-const errorPage = new ErrorPage({});
-
-render('.app', errorPage);
+export const errorPage = new ErrorPage({});

@@ -1,5 +1,4 @@
 import { Component } from '../../core/component.js';
-import { render } from '../../core/render.js';
 class ErrorPage extends Component {
     constructor(props) {
         super('div', props, 'not-found');
@@ -13,6 +12,5 @@ class ErrorPage extends Component {
         `;
     }
 }
-const errorPage = new ErrorPage({});
-render('.app', errorPage);
+export const errorPage = new ErrorPage({});
 //# sourceMappingURL=error-page.js.map

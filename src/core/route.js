@@ -14,19 +14,15 @@ export class Route {
     }
     leave() {
         if (this._component) {
-            this._component.hide();
+            this._component.remove();
         }
     }
     match(pathname) {
         return isEqual(pathname, this.pathname);
     }
     render() {
-        if (!this._component) {
-            this._component = this.component;
-            render(this.props.rootQuery, this._component);
-            return;
-        }
-        this._component.show();
+        this._component = this.component;
+        render(this.props.rootQuery, this._component);
     }
 }
 const isEqual = (lhs, rhs) => lhs === rhs;

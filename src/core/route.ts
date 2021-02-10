@@ -16,7 +16,7 @@ export class Route {
 
     public leave(): void {
         if (this._component) {
-            this._component.hide();
+            this._component.remove();
         }
     }
 
@@ -25,13 +25,8 @@ export class Route {
     }
 
     public render(): void {
-        if (!this._component) {
-            this._component = this.component;
-            render(this.props.rootQuery, this._component);
-            return;
-        }
-
-        this._component.show();
+        this._component = this.component;
+        render(this.props.rootQuery, this._component);
     }
 }
 

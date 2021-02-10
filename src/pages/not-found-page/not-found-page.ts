@@ -1,6 +1,4 @@
 import { Component, Props } from '../../core/component.js';
-import { render } from '../../core/render.js';
-
 
 class PageNotFound extends Component {
     constructor(public props: Props) {
@@ -16,6 +14,4 @@ class PageNotFound extends Component {
     }
 }
 
-const pageComponent = new PageNotFound({});
-
-render('.app', pageComponent);
+export const notFoundPageComponent = new PageNotFound({});

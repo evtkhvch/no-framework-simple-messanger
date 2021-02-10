@@ -1,5 +1,4 @@
 import { Component } from '../../core/component.js';
-import { render } from '../../core/render.js';
 class PageNotFound extends Component {
     constructor(props) {
         super('div', props, 'not-found');
@@ -13,6 +12,5 @@ class PageNotFound extends Component {
         `;
     }
 }
-const pageComponent = new PageNotFound({});
-render('.app', pageComponent);
+export const notFoundPageComponent = new PageNotFound({});
 //# sourceMappingURL=not-found-page.js.map

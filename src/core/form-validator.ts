@@ -51,7 +51,7 @@ export class FormValidator {
     private setButtonStatus(): void {
         const submit = this.form?.querySelector('button[type="submit"]') as HTMLButtonElement | null;
         const isFormValid = this.isFormValid();
-
+        console.log(submit, isFormValid);
         if (submit) {
             submit.disabled = !isFormValid;
         }
@@ -67,5 +67,10 @@ export class FormValidator {
 
     public isFormValid(): boolean {
         return Object.values(this.state).every(item => item.validator.isValid(item.value));
+    }
+
+    public removeListeners(): void {
+        this.form?.removeEventListener('input', this.listen.bind(this), true);
+        this.form?.removeEventListener('submit', this.listen.bind(this), true);
     }
 }

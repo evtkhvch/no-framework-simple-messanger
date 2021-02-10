@@ -1,8 +1,12 @@
 import { Component, Props } from '../../../../core/component.js';
 import { EmptyValidator, FormControl, MinLengthValidator, ValidatorComposer } from '../../../../core/validator.js';
 import { FormValidator } from '../../../../core/form-validator.js';
+import { Router } from '../../../../core/router.js';
 
 export class LoginForm extends Component {
+    private validator: FormValidator | undefined;
+    private registrationLink: HTMLFormElement | undefined;
+
     constructor(public props: Props) {
         super('div', props);
     }
@@ -13,9 +17,23 @@ export class LoginForm extends Component {
             login: new FormControl('', false, new EmptyValidator()),
             pass: new FormControl('', false, new ValidatorComposer([ new EmptyValidator(), new MinLengthValidator(8) ]))
         };
-        const validator = new FormValidator(formElement, formState);
 
-        validator.initialize();
+        this.validator = new FormValidator(formElement, formState);
+        this.validator.initialize();
+
+        this.registrationLink = document.querySelector('.sign__account') as HTMLFormElement;
+        this.registrationLink.addEventListener('click', LoginForm.linkCallback.bind(this));
+    }
+
+    private static linkCallback(): void {
+        const router = new Router('.app');
+
+        router.go('/registration');
+    }
+
+    public destroy(): void {
+        this.validator?.removeListeners();
+        this.registrationLink?.removeEventListener('click', LoginForm.linkCallback.bind(this))
     }
 
     public render(): string {
@@ -36,7 +54,7 @@ export class LoginForm extends Component {
                 </div>
                 <div class="sign__footer">
                     {{{ button }}}
-                    <a class="sign__account" href="../registration/registration.html">Нет аккаунта?</a>
+                    <a class="sign__account">Нет аккаунта?</a>
                 </div>
             </form>
         `;

@@ -1,5 +1,4 @@
 import { Component } from '../../core/component.js';
-import { render } from '../../core/render.js';
 import template from './change-data-template.js';
 import { EmailValidator, EmptyValidator, FormControl, ValidatorComposer } from '../../core/validator.js';
 import { FormValidator } from '../../core/form-validator.js';
@@ -29,7 +28,7 @@ class ChangeProfileData extends Component {
         return template;
     }
 }
-const changeProfileDataComponent = new ChangeProfileData({
+export const changeProfileDataComponent = new ChangeProfileData({
     name: 'Иван',
     button: new Button({
         type: 'submit',
@@ -37,5 +36,4 @@ const changeProfileDataComponent = new ChangeProfileData({
         name: 'Сохранить'
     }).elementToString
 });
-render('.app', changeProfileDataComponent);
 //# sourceMappingURL=change-profile-data.js.map

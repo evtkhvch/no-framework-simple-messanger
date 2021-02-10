@@ -27,7 +27,6 @@ export class Router {
             // @ts-ignore
             this._onRoute(event.currentTarget.location.pathname);
         };
-
         this._onRoute(window.location.pathname);
     }
 

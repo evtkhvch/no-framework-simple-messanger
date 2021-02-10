@@ -5,7 +5,8 @@ enum EVENTS {
     INIT = 'init',
     FLOW_CDM = 'flow:component-did-mount',
     FLOW_CDU = 'flow:component-did-update',
-    FLOW_RENDER = 'flow:render'
+    FLOW_RENDER = 'flow:render',
+    DESTROY = 'destroy'
 }
 
 export interface Props {
@@ -26,6 +27,8 @@ abstract class IComponent {
     abstract render(): string;
     abstract show(): void;
     abstract hide(): void;
+    abstract remove(): void;
+    abstract destroy(): void;
     abstract get element(): HTMLElement | null;
 }
 
@@ -50,6 +53,7 @@ export class Component implements IComponent {
         subject.subscribe(EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
         subject.subscribe(EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
         subject.subscribe(EVENTS.FLOW_RENDER, this._render.bind(this));
+        subject.subscribe(EVENTS.DESTROY, this.destroy.bind(this));
     }
 
     private _createResources(): void {
@@ -149,5 +153,15 @@ export class Component implements IComponent {
         if (this._element) {
             this._element.style.display = 'none';
         }
+    }
+
+    public remove(): void {
+        if (this._element) {
+            this._element.remove();
+        }
+        this.subject.next(EVENTS.DESTROY);
+    }
+
+    public destroy(): void {
     }
 }

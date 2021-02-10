@@ -1,5 +1,4 @@
 import { Component } from '../../core/component.js';
-import { render } from '../../core/render.js';
 import template from './profile.template.js';
 import { EmptyValidator, FormControl } from '../../core/validator.js';
 import { FormValidator } from '../../core/form-validator.js';
@@ -28,6 +27,5 @@ class Profile extends Component {
         return template;
     }
 }
-const profileComponent = new Profile({ name: 'Иван' });
-render('.app', profileComponent);
+export const profileComponent = new Profile({ name: 'Иван' });
 //# sourceMappingURL=profile.js.map

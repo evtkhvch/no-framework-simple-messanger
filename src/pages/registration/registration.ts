@@ -1,5 +1,4 @@
 import { Component, Props } from '../../core/component.js';
-import { render } from '../../core/render.js';
 import { Button } from '../../components/button/button.js';
 import { RegistrationForm } from './components/registration-form/registration-form.js';
 
@@ -13,7 +12,7 @@ class Registration extends Component {
     }
 }
 
-const registrationComponent = new Registration({
+export const registrationComponent = new Registration({
     registrationForm: new RegistrationForm({
         button: new Button({
             type: 'submit',
@@ -22,5 +21,3 @@ const registrationComponent = new Registration({
         }).elementToString
     }).elementToString
 });
-
-render('.app', registrationComponent);

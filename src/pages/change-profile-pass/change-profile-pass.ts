@@ -1,5 +1,4 @@
 import { Component, Props } from '../../core/component.js';
-import { render } from '../../core/render.js';
 import template from './change-pass.template.js';
 import { Button } from '../../components/button/button.js';
 import { EmptyValidator, FormControl, FormState } from '../../core/validator.js';
@@ -31,7 +30,7 @@ class ChangeProfilePass extends Component {
     }
 }
 
-const changeProfilePassComponent = new ChangeProfilePass({
+export const changeProfilePassComponent = new ChangeProfilePass({
     name: 'Иван',
     button: new Button({
         type: 'submit',
@@ -39,5 +38,3 @@ const changeProfilePassComponent = new ChangeProfilePass({
         name: 'Сохранить'
     }).elementToString
 });
-
-render('.app', changeProfilePassComponent);

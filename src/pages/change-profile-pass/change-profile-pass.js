@@ -1,5 +1,4 @@
 import { Component } from '../../core/component.js';
-import { render } from '../../core/render.js';
 import template from './change-pass.template.js';
 import { Button } from '../../components/button/button.js';
 import { EmptyValidator, FormControl } from '../../core/validator.js';
@@ -26,7 +25,7 @@ class ChangeProfilePass extends Component {
         return template;
     }
 }
-const changeProfilePassComponent = new ChangeProfilePass({
+export const changeProfilePassComponent = new ChangeProfilePass({
     name: 'Иван',
     button: new Button({
         type: 'submit',
@@ -34,5 +33,4 @@ const changeProfilePassComponent = new ChangeProfilePass({
         name: 'Сохранить'
     }).elementToString
 });
-render('.app', changeProfilePassComponent);
 //# sourceMappingURL=change-profile-pass.js.map

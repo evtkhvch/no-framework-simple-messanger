@@ -1,5 +1,4 @@
 import { Component } from '../../core/component.js';
-import { render } from '../../core/render.js';
 import { ChatsBar } from './components/chats-bar/chats-bar.js';
 import { UserCard } from './components/user-card/user-card.js';
 import { DIALOG_LIST, CHAT } from '../../core/mock.js';
@@ -55,7 +54,7 @@ class ChatComponent extends Component {
 }
 const cardList = DIALOG_LIST.map(item => new UserCard(Object.assign({}, item)).elementToString).join('');
 const messageList = CHAT.messageList.map(item => new Message(Object.assign({}, item)).elementToString).join('');
-const chatComponent = new ChatComponent({
+export const chatComponent = new ChatComponent({
     name: CHAT.name,
     isChat: false,
     messageList,
@@ -64,5 +63,4 @@ const chatComponent = new ChatComponent({
     }).elementToString,
     footer: new ChatFooter({}).elementToString
 });
-render('.app', chatComponent);
 //# sourceMappingURL=chat.js.map

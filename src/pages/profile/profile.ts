@@ -1,5 +1,4 @@
 import { Component, Props } from '../../core/component.js';
-import { render } from '../../core/render.js';
 import template from './profile.template.js';
 import { EmptyValidator, FormControl, FormState } from '../../core/validator.js';
 import { FormValidator } from '../../core/form-validator.js';
@@ -33,6 +32,4 @@ class Profile extends Component {
     }
 }
 
-const profileComponent = new Profile({ name: 'Иван' });
-
-render('.app', profileComponent);
+export const profileComponent = new Profile({ name: 'Иван' });
