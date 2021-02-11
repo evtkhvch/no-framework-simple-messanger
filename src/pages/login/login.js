@@ -11,32 +11,31 @@ class LoginComponent extends Component {
         this.router = new Router('.app');
     }
     componentDidMount() {
-        var _a, _b;
-        this.formElement = document.querySelector('.sign__box.login__box');
+        const formElement = document.querySelector('.sign__box.login__box');
         const formState = {
             login: new FormControl('', false, new EmptyValidator()),
             pass: new FormControl('', false, new ValidatorComposer([new EmptyValidator(), new MinLengthValidator(8)]))
         };
-        this.validator = new FormValidator(this.formElement, formState);
+        this.validator = new FormValidator(formElement, formState);
         this.validator.initialize();
-        this.registrationLink = document.querySelector('.login__box .sign__account');
-        (_a = this.registrationLink) === null || _a === void 0 ? void 0 : _a.addEventListener('click', this.linkCallback.bind(this));
-        (_b = this.formElement) === null || _b === void 0 ? void 0 : _b.addEventListener('submit', this.submitCallback.bind(this));
-    }
-    submitCallback(event) {
-        var _a;
-        event.preventDefault();
-        (_a = this.router) === null || _a === void 0 ? void 0 : _a.go('/chat');
-    }
-    linkCallback() {
-        var _a;
-        (_a = this.router) === null || _a === void 0 ? void 0 : _a.go('/registration');
+        const registrationLink = document.querySelector('.login__box .sign__account');
+        if (registrationLink) {
+            registrationLink.onclick = () => {
+                var _a;
+                (_a = this.router) === null || _a === void 0 ? void 0 : _a.go('/registration');
+            };
+        }
+        if (formElement) {
+            formElement.onsubmit = (event) => {
+                var _a;
+                event.preventDefault();
+                (_a = this.router) === null || _a === void 0 ? void 0 : _a.go('/chat');
+            };
+        }
     }
     destroy() {
-        var _a, _b, _c;
+        var _a;
         (_a = this.validator) === null || _a === void 0 ? void 0 : _a.removeListeners();
-        (_b = this.registrationLink) === null || _b === void 0 ? void 0 : _b.removeEventListener('click', this.linkCallback.bind(this));
-        (_c = this.formElement) === null || _c === void 0 ? void 0 : _c.removeEventListener('submit', this.submitCallback.bind(this));
     }
     render() {
         return `{{{ loginForm }}}`;

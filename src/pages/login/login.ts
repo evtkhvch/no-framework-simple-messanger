@@ -7,8 +7,6 @@ import { Router } from '../../core/router.js';
 
 class LoginComponent extends Component {
     private validator: FormValidator | undefined;
-    private registrationLink: HTMLFormElement | undefined | null;
-    private formElement: HTMLFormElement | undefined | null;
     private router: Router | undefined;
 
     constructor(public props: Props) {
@@ -17,34 +15,34 @@ class LoginComponent extends Component {
     }
 
     public componentDidMount(): void {
-        this.formElement = document.querySelector('.sign__box.login__box') as HTMLFormElement;
+        const formElement = document.querySelector('.sign__box.login__box') as HTMLFormElement;
         const formState = {
             login: new FormControl('', false, new EmptyValidator()),
             pass: new FormControl('', false, new ValidatorComposer([ new EmptyValidator(), new MinLengthValidator(8) ]))
         };
 
-        this.validator = new FormValidator(this.formElement, formState);
+        this.validator = new FormValidator(formElement, formState);
         this.validator.initialize();
 
-        this.registrationLink = document.querySelector('.login__box .sign__account') as HTMLFormElement | null;
-        this.registrationLink?.addEventListener('click', this.linkCallback.bind(this));
-        this.formElement?.addEventListener('submit', this.submitCallback.bind(this));
-    }
+        const registrationLink: HTMLFormElement | null = document.querySelector('.login__box .sign__account');
 
-    private submitCallback(event: Event): void {
-        event.preventDefault();
+        if (registrationLink) {
+            registrationLink.onclick = () => {
+                this.router?.go('/registration');
+            }
+        }
 
-        this.router?.go('/chat');
-    }
+        if (formElement) {
+            formElement.onsubmit = (event: Event) => {
+                event.preventDefault();
 
-    private linkCallback(): void {
-        this.router?.go('/registration');
+                this.router?.go('/chat');
+            }
+        }
     }
 
     public destroy(): void {
         this.validator?.removeListeners();
-        this.registrationLink?.removeEventListener('click', this.linkCallback.bind(this))
-        this.formElement?.removeEventListener('submit', this.submitCallback.bind(this));
     }
 
     public render(): string {

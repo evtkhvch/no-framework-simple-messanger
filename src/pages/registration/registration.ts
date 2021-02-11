@@ -7,8 +7,6 @@ import { Router } from '../../core/router.js';
 
 class Registration extends Component {
     private validator: FormValidator | undefined;
-    private registrationLink: HTMLFormElement | undefined | null;
-    private formElement: HTMLFormElement | undefined | null;
     private router: Router | undefined;
 
     constructor(public props: Props) {
@@ -17,7 +15,7 @@ class Registration extends Component {
     }
 
     public componentDidMount(): void {
-        this.formElement = document.querySelector('.sign__box.registration__box') as HTMLFormElement;
+        const formElement = document.querySelector('.sign__box.registration__box') as HTMLFormElement;
         const formState = {
             mail: new FormControl('', false, new EmptyValidator()),
             login: new FormControl('', false, new EmptyValidator()),
@@ -27,28 +25,28 @@ class Registration extends Component {
             pass: new FormControl('', false, new EmptyValidator()),
             passOneMoreTime: new FormControl('', false, new EmptyValidator())
         };
-        this.validator = new FormValidator(this.formElement, formState);
+        this.validator = new FormValidator(formElement, formState);
         this.validator.initialize();
 
-        this.registrationLink = document.querySelector('.registration__box .sign__account') as HTMLFormElement | null;
-        this.registrationLink?.addEventListener('click', this.linkCallback.bind(this));
-        this.formElement?.addEventListener('submit', this.submitCallback.bind(this));
-    }
+        const registrationLink: HTMLFormElement | null = document.querySelector('.registration__box .sign__account');
 
-    private submitCallback(event: Event): void {
-        event.preventDefault();
+        if (registrationLink) {
+            registrationLink.onclick = () => {
+                this.router?.go('/login');
+            };
+        }
 
-        this.router?.go('/chat');
-    }
+        if (formElement) {
+            formElement.onsubmit = (event: Event) => {
+                event.preventDefault();
 
-    private linkCallback(): void {
-        this.router?.go('/login');
+                this.router?.go('/chat');
+            };
+        }
     }
 
     public destroy(): void {
         this.validator?.removeListeners();
-        this.registrationLink?.removeEventListener('click', this.linkCallback.bind(this))
-        this.formElement?.removeEventListener('submit', this.submitCallback.bind(this));
     }
 
     public render(): string {

@@ -4,10 +4,12 @@ import { UserCard } from './components/user-card/user-card.js';
 import { DIALOG_LIST, CHAT } from '../../core/mock.js';
 import { ChatFooter } from './components/chat-footer/chat-footer.js';
 import { Message } from './components/message/message.js';
+import { Router } from '../../core/router.js';
 class ChatComponent extends Component {
     constructor(props) {
         super('div', props, 'chat-list');
         this.props = props;
+        this.router = new Router('.app');
     }
     componentDidMount() {
         this.initForm();
@@ -16,6 +18,13 @@ class ChatComponent extends Component {
     initForm() {
         const message = document.querySelector('.chat__footer-message');
         const button = document.querySelector('.chat__footer-submit');
+        const profileTitle = document.querySelector('.chats-bar__header-title');
+        if (profileTitle) {
+            profileTitle.onclick = () => {
+                var _a;
+                (_a = this.router) === null || _a === void 0 ? void 0 : _a.go('/profile');
+            };
+        }
         if (button) {
             button.onclick = () => {
                 console.log(message === null || message === void 0 ? void 0 : message.value);
