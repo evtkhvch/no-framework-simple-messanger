@@ -74,7 +74,9 @@ export class Component {
     _render() {
         const block = this.render();
         if (this._element) {
-            this._element.innerHTML = templateCompiler(block, this.props);
+            const tmp = templateCompiler(block, this.props);
+            // @ts-ignore
+            this._element.innerHTML = window.DOMPurify.sanitize(tmp);
         }
         setTimeout(() => { this._afterViewInit(); });
     }
