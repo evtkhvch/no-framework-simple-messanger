@@ -25,7 +25,10 @@ export class Route {
     }
 
     public render(): void {
-        this._component = this.component;
+        if (!this._component) {
+            this._component = this.component;
+        }
+        this._component.init();
         render(this.props.rootQuery, this._component);
     }
 }

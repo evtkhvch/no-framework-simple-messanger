@@ -46,7 +46,6 @@ export class FormValidator {
         var _a;
         const submit = (_a = this.form) === null || _a === void 0 ? void 0 : _a.querySelector('button[type="submit"]');
         const isFormValid = this.isFormValid();
-        console.log(submit, isFormValid);
         if (submit) {
             submit.disabled = !isFormValid;
         }

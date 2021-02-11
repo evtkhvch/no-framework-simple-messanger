@@ -1,26 +1,8 @@
 import { Component, Props } from '../../../../core/component.js';
-import { EmptyValidator, FormControl } from '../../../../core/validator.js';
-import { FormValidator } from '../../../../core/form-validator.js';
 
 export class RegistrationForm extends Component {
     constructor(public props: Props) {
         super('div', props);
-    }
-
-    public componentDidMount(): void {
-        const formElement = document.querySelector('.sign__box.registration__box') as HTMLFormElement;
-        const formState = {
-            mail: new FormControl('', false, new EmptyValidator()),
-            login: new FormControl('', false, new EmptyValidator()),
-            userName: new FormControl('', false, new EmptyValidator()),
-            surname: new FormControl('', false, new EmptyValidator()),
-            phone: new FormControl('', false, new EmptyValidator()),
-            pass: new FormControl('', false, new EmptyValidator()),
-            passOneMoreTime: new FormControl('', false, new EmptyValidator())
-        };
-        const validator = new FormValidator(formElement, formState);
-
-        validator.initialize();
     }
 
     public render(): string {
@@ -66,7 +48,7 @@ export class RegistrationForm extends Component {
                 </div>
                 <div class="sign__footer">
                     {{{ button }}}
-                    <a class="sign__account" href="../login/login.html">Войти</a>
+                    <a class="sign__account">Войти</a>
                 </div>
             </form>
         `;
