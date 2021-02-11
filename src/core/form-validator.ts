@@ -66,7 +66,7 @@ export class FormValidator {
     }
 
     public isFormValid(): boolean {
-        return Object.values(this.state).every(item => item.validator.isValid(item.value));
+        return Object.values(this.state).every(item => item.validator?.isValid(item.value));
     }
 
     public removeListeners(): void {
