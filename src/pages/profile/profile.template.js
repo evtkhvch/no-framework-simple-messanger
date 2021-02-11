@@ -1,6 +1,6 @@
 export default `
     <nav class="profile__nav">
-        <a type="button" class="profile__nav-button" href="../chat/chat.html"></a>
+        <a type="button" class="profile__nav-button"></a>
     </nav>
     <div class="profile__info">
         <div class="profile__avatar"></div>
@@ -39,15 +39,13 @@ export default `
         </form>
         <ul class="profile__options profile__container">
             <li class="profile__option">
-                <a class="profile__option-button profile__option-change"
-                   href="../change-profile-data/change-profile-data.html">Изменить данные</a>
+                <a class="profile__option-button profile__option-change profile__option-change-data">Изменить данные</a>
             </li>
             <li class="profile__option">
-                <a class="profile__option-button profile__option-change"
-                   href="../change-profile-pass/change-profile-pass.html">Изменить пароль</a>
+                <a class="profile__option-button profile__option-change profile__option-change-pass">Изменить пароль</a>
             </li>
             <li class="profile__option">
-                <a class="profile__option-button profile__option-exit" href="../login/login.html">Выйти</a>
+                <a class="profile__option-button profile__option-exit">Выйти</a>
             </li>
         </ul>
     </div>
