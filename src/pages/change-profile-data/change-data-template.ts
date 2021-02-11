@@ -1,6 +1,6 @@
 export default `
     <nav class="profile__nav">
-        <a type="button" class="profile__nav-button" href="../chat/chat.html"></a>
+        <a type="button" class="profile__nav-button"></a>
     </nav>
     <div class="profile__info">
         <div class="profile__avatar"></div>
@@ -36,7 +36,9 @@ export default `
                 <input id="phone" name="phone" type="text" class="profile__form-input">
                 <span class="error-message"></span>
             </div>
+            <div class="profile__submit">
+                <button type="submit" class="profile__form-submit default-button">Сохранить</button>
+            </div>
         </form>
-        <button class="profile__form-submit default-button" onclick="location.href='../profile/profile.html'">Сохранить</button>
     </div>
 `;

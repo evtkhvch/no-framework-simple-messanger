@@ -1,21 +1,8 @@
 import { Component, Props } from '../../../../core/component.js';
-import { EmptyValidator, FormControl, MinLengthValidator, ValidatorComposer } from '../../../../core/validator.js';
-import { FormValidator } from '../../../../core/form-validator.js';
 
 export class LoginForm extends Component {
     constructor(public props: Props) {
         super('div', props);
-    }
-
-    public componentDidMount(): void {
-        const formElement = document.querySelector('.sign__box.login__box') as HTMLFormElement;
-        const formState = {
-            login: new FormControl('', false, new EmptyValidator()),
-            pass: new FormControl('', false, new ValidatorComposer([ new EmptyValidator(), new MinLengthValidator(8) ]))
-        };
-        const validator = new FormValidator(formElement, formState);
-
-        validator.initialize();
     }
 
     public render(): string {
@@ -36,7 +23,7 @@ export class LoginForm extends Component {
                 </div>
                 <div class="sign__footer">
                     {{{ button }}}
-                    <a class="sign__account" href="../registration/registration.html">Нет аккаунта?</a>
+                    <a class="sign__account">Нет аккаунта?</a>
                 </div>
             </form>
         `;

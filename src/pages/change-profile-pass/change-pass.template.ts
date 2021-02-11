@@ -1,6 +1,6 @@
 export default `
     <nav class="profile__nav">
-        <a type="button" class="profile__nav-button" href="../chat/chat.html"></a>
+        <a type="button" class="profile__nav-button"></a>
     </nav>
     <div class="profile__info">
         <div class="profile__avatar"></div>
@@ -21,7 +21,9 @@ export default `
                 <input id="newPassMore" name="newPassMore" type="password" class="profile__form-input">
                 <span class="error-message"></span>
             </div>
+            <div class="profile__submit">
+                {{{ button }}}
+            </div>
         </form>
-        {{{ button }}}
     </div>
 `;

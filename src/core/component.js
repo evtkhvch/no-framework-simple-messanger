@@ -6,6 +6,7 @@ var EVENTS;
     EVENTS["FLOW_CDM"] = "flow:component-did-mount";
     EVENTS["FLOW_CDU"] = "flow:component-did-update";
     EVENTS["FLOW_RENDER"] = "flow:render";
+    EVENTS["DESTROY"] = "destroy";
 })(EVENTS || (EVENTS = {}));
 class IComponent {
 }
@@ -35,6 +36,7 @@ export class Component {
         subject.subscribe(EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
         subject.subscribe(EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
         subject.subscribe(EVENTS.FLOW_RENDER, this._render.bind(this));
+        subject.subscribe(EVENTS.DESTROY, this.destroy.bind(this));
     }
     _createResources() {
         if (this._meta) {
@@ -106,6 +108,14 @@ export class Component {
         if (this._element) {
             this._element.style.display = 'none';
         }
+    }
+    remove() {
+        if (this._element) {
+            this._element.remove();
+        }
+        this.subject.next(EVENTS.DESTROY);
+    }
+    destroy() {
     }
 }
 //# sourceMappingURL=component.js.map

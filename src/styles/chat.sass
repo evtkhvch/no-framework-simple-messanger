@@ -1,0 +1,106 @@
+@import "variables"
+
+.chat
+  flex-grow: 1
+  display: flex
+  flex-direction: column
+  padding: 0 20px
+
+.chat__header
+  display: flex
+  align-items: center
+  justify-content: space-between
+  padding: 10px 0
+  border-bottom: 1px solid #EAEAEA
+
+.chat__header-icon
+  display: flex
+  align-items: center
+  font-size: 13px
+
+.chat__header-avatar
+  height: 34px
+  width: 34px
+  background-color: #EFEFEF
+  border-radius: 50%
+  margin-right: 10px
+
+.chat__content
+  height: calc(100% - 58px)
+  display: flex
+  flex-direction: column
+  flex-grow: 1
+
+.chat__options
+  cursor: pointer
+  border: 0
+  outline: none
+
+.chat__options:after
+  content: url("../assets/icons/more.svg")
+
+.chat__dialog
+  display: flex
+  flex-direction: column
+  flex-grow: 1
+  overflow: auto
+
+.chat__dialog .message:first-child
+  margin-top: 10px
+
+.chat__footer
+  padding: 11px 0
+  border-top: 1px solid #EAEAEA
+  display: flex
+  align-items: center
+
+.chat__footer-icon
+  background-color: $white
+  outline: none
+  border: 0
+  cursor: pointer
+
+.chat__footer-icon:after
+  content: url("../assets/icons/pin.svg")
+
+.chat__footer-message
+  flex-grow: 1
+  height: 32px
+  outline: none
+  margin: 0 10px
+  border: 0
+  border-radius: 30px
+  background-color: #EFEFEF
+  font-size: 12px
+  color: $grey
+  padding-left: 20px
+
+.chat__footer-submit
+  border: 0
+  outline: none
+  height: 28px
+  width: 28px
+  border-radius: 50%
+  cursor: pointer
+  background-color: $blue
+
+.chat__footer-submit:after
+  content: url("../assets/icons/arrow-right.svg")
+
+.chat__date
+  display: flex
+  align-items: center
+  justify-content: center
+  font-size: 12px
+  padding: 20px 0
+  color: $grey
+
+.dialog
+  flex-grow: 1
+  display: flex
+  align-items: center
+  justify-content: center
+
+.dialog__title
+  font-size: 12px
+  color: $grey

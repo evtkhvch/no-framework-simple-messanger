@@ -58,7 +58,12 @@ export class FormValidator {
         }
     }
     isFormValid() {
-        return Object.values(this.state).every(item => item.validator.isValid(item.value));
+        return Object.values(this.state).every(item => { var _a; return (_a = item.validator) === null || _a === void 0 ? void 0 : _a.isValid(item.value); });
+    }
+    removeListeners() {
+        var _a, _b;
+        (_a = this.form) === null || _a === void 0 ? void 0 : _a.removeEventListener('input', this.listen.bind(this), true);
+        (_b = this.form) === null || _b === void 0 ? void 0 : _b.removeEventListener('submit', this.listen.bind(this), true);
     }
 }
 //# sourceMappingURL=form-validator.js.map

@@ -1,21 +1,25 @@
 import { Component, Props } from '../../core/component.js';
-import { render } from '../../core/render.js';
 import template from './change-data-template.js';
 import { EmailValidator, EmptyValidator, FormControl, FormState, ValidatorComposer } from '../../core/validator.js';
 import { FormValidator } from '../../core/form-validator.js';
 import { Button } from '../../components/button/button.js';
+import { Router } from '../../core/router.js';
 
 class ChangeProfileData extends Component {
+    private validator: FormValidator | undefined;
+    private router: Router | undefined;
+
     constructor(public props: Props) {
         super('div', props, 'profile');
+        this.router = new Router('.app');
     }
 
     public componentDidMount(): void {
-        ChangeProfileData.initForm();
+        this.initForm();
     }
 
-    private static initForm(): void {
-        const formElement = document.querySelector('.profile__form.profile__container') as HTMLFormElement;
+    private initForm(): void {
+        const formElement: HTMLElement | null = document.querySelector('.profile__form.profile__container');
         const formState: FormState = {
             mail: new FormControl('pochta@yandex.ru', false, new ValidatorComposer([ new EmailValidator(), new EmptyValidator() ])),
             login: new FormControl('ivanivanov', false, new EmptyValidator()),
@@ -24,9 +28,28 @@ class ChangeProfileData extends Component {
             nameInChat: new FormControl('Иван', false, new EmptyValidator()),
             phone: new FormControl('+7 (909) 967 30 30', false, new EmptyValidator()),
         };
-        const validator = new FormValidator(formElement, formState);
+        this.validator = new FormValidator(formElement, formState);
 
-        validator.initialize();
+        this.validator.initialize();
+
+        const navButton: HTMLElement | null = document.querySelector('.profile__nav-button');
+
+        if (navButton) {
+            navButton.onclick = () => {
+                this.router?.go('/profile');
+            }
+        }
+
+        if (formElement) {
+            formElement.onsubmit = (event: Event) => {
+              event.preventDefault();
+              this.router?.go('/profile');
+            };
+        }
+    }
+
+    public destroy(): void {
+        this.validator?.removeListeners();
     }
 
     public render(): string {
@@ -34,7 +57,7 @@ class ChangeProfileData extends Component {
     }
 }
 
-const changeProfileDataComponent = new ChangeProfileData({
+export const changeProfileDataComponent = new ChangeProfileData({
     name: 'Иван',
     button: new Button({
         type: 'submit',
@@ -42,5 +65,3 @@ const changeProfileDataComponent = new ChangeProfileData({
         name: 'Сохранить'
     }).elementToString
 });
-
-render('.app', changeProfileDataComponent);
