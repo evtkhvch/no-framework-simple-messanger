@@ -3,15 +3,17 @@ import template from './change-data-template.js';
 import { EmailValidator, EmptyValidator, FormControl, ValidatorComposer } from '../../core/validator.js';
 import { FormValidator } from '../../core/form-validator.js';
 import { Button } from '../../components/button/button.js';
+import { Router } from '../../core/router.js';
 class ChangeProfileData extends Component {
     constructor(props) {
         super('div', props, 'profile');
         this.props = props;
+        this.router = new Router('.app');
     }
     componentDidMount() {
-        ChangeProfileData.initForm();
+        this.initForm();
     }
-    static initForm() {
+    initForm() {
         const formElement = document.querySelector('.profile__form.profile__container');
         const formState = {
             mail: new FormControl('pochta@yandex.ru', false, new ValidatorComposer([new EmailValidator(), new EmptyValidator()])),
@@ -21,8 +23,26 @@ class ChangeProfileData extends Component {
             nameInChat: new FormControl('Иван', false, new EmptyValidator()),
             phone: new FormControl('+7 (909) 967 30 30', false, new EmptyValidator()),
         };
-        const validator = new FormValidator(formElement, formState);
-        validator.initialize();
+        this.validator = new FormValidator(formElement, formState);
+        this.validator.initialize();
+        const navButton = document.querySelector('.profile__nav-button');
+        if (navButton) {
+            navButton.onclick = () => {
+                var _a;
+                (_a = this.router) === null || _a === void 0 ? void 0 : _a.go('/profile');
+            };
+        }
+        if (formElement) {
+            formElement.onsubmit = (event) => {
+                var _a;
+                event.preventDefault();
+                (_a = this.router) === null || _a === void 0 ? void 0 : _a.go('/profile');
+            };
+        }
+    }
+    destroy() {
+        var _a;
+        (_a = this.validator) === null || _a === void 0 ? void 0 : _a.removeListeners();
     }
     render() {
         return template;

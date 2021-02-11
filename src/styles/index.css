@@ -179,6 +179,7 @@
 }
 
 .not-found__back {
+  cursor: pointer;
   font-size: 11px;
   color: #3369F3;
 }
@@ -318,6 +319,13 @@
 
 .profile__option-change {
   color: #3369F3;
+}
+
+.profile__submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
 }
 
 .search-bar {

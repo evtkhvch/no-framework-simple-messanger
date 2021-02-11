@@ -8,6 +8,8 @@ import { changeProfileDataComponent } from './pages/change-profile-data/change-p
 import { errorPage } from './pages/error-page/error-page.js';
 import { notFoundPageComponent } from './pages/not-found-page/not-found-page.js';
 
+const ROUTES: string[] = [ '/login', '/registration', '/profile', '/chat', '/change-profile-pass', '/change-profile-data', '/error', '/not-found', '/' ];
+
 const router = new Router('.app');
 
 router
@@ -23,4 +25,8 @@ router
 
 if (window.location.pathname === '/') {
     router.go('/login');
+}
+
+if (!ROUTES.includes(window.location.pathname)) {
+    router.go('/not-found');
 }

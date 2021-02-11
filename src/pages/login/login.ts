@@ -15,7 +15,7 @@ class LoginComponent extends Component {
     }
 
     public componentDidMount(): void {
-        const formElement = document.querySelector('.sign__box.login__box') as HTMLFormElement;
+        const formElement: HTMLFormElement | null = document.querySelector('.sign__box.login__box');
         const formState = {
             login: new FormControl('', false, new EmptyValidator()),
             pass: new FormControl('', false, new ValidatorComposer([ new EmptyValidator(), new MinLengthValidator(8) ]))
