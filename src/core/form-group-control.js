@@ -1,4 +1,4 @@
-export class FormValidator {
+export class FormGroupControl {
     constructor(form, state) {
         this.form = form;
         this.state = state;
@@ -34,10 +34,10 @@ export class FormValidator {
             this.state = Object.assign(Object.assign({}, this.state), { [field]: Object.assign(Object.assign({}, this.state[field]), { value: input === null || input === void 0 ? void 0 : input.value }) });
         }
         if (validator === null || validator === void 0 ? void 0 : validator.isValid(input === null || input === void 0 ? void 0 : input.value)) {
-            FormValidator.setErrorMessage(input, '');
+            FormGroupControl.setErrorMessage(input, '');
         }
         else {
-            FormValidator.setErrorMessage(input, validator === null || validator === void 0 ? void 0 : validator.getDescription());
+            FormGroupControl.setErrorMessage(input, validator === null || validator === void 0 ? void 0 : validator.getDescription());
         }
         this.setButtonStatus();
     }
@@ -60,4 +60,4 @@ export class FormValidator {
         return Object.values(this.state).every(item => { var _a; return (_a = item.validator) === null || _a === void 0 ? void 0 : _a.isValid(item.value); });
     }
 }
-//# sourceMappingURL=form-validator.js.map
+//# sourceMappingURL=form-group-control.js.map

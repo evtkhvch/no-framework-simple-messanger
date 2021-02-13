@@ -9,12 +9,12 @@ import {
     PhoneNumberValidator,
     ValidatorComposer
 } from '../../core/validator.js';
-import { FormValidator } from '../../core/form-validator.js';
+import { FormGroupControl } from '../../core/form-group-control.js';
 import { Router } from '../../core/router.js';
 import { AuthApi } from '../../api/auth-api.js';
 
 export class RegistrationComponent extends Component {
-    private validator: FormValidator<RegistrationFormGroup> | undefined;
+    private validator: FormGroupControl<RegistrationFormGroup> | undefined;
     private router: Router | undefined;
     private authApi = new AuthApi();
 
@@ -34,7 +34,7 @@ export class RegistrationComponent extends Component {
             pass: new FormControl('', false, new EmptyValidator()),
             passOneMoreTime: new FormControl('', false, new EmptyValidator())
         };
-        this.validator = new FormValidator(formElement, formState);
+        this.validator = new FormGroupControl(formElement, formState);
         this.validator.initialize();
 
         const registrationLink: HTMLFormElement | null = document.querySelector('.registration__box .sign__account');

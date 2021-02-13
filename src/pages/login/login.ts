@@ -2,12 +2,12 @@ import { Component, Props } from '../../core/component.js';
 import { Button } from '../../components/button/button.js';
 import { LoginForm } from './components/login-form/login-form.js';
 import { EmptyValidator, FormControl, FormState, ValidatorComposer } from '../../core/validator.js';
-import { FormValidator } from '../../core/form-validator.js';
+import { FormGroupControl } from '../../core/form-group-control.js';
 import { Router } from '../../core/router.js';
 import { AuthApi } from '../../api/auth-api.js';
 
 export class LoginComponent extends Component {
-    private validator: FormValidator<LoginFormGroup> | undefined;
+    private validator: FormGroupControl<LoginFormGroup> | undefined;
     private router: Router = new Router('.app');
     private authApi = new AuthApi();
 
@@ -22,7 +22,7 @@ export class LoginComponent extends Component {
             pass: new FormControl('', false, new ValidatorComposer([ new EmptyValidator() ]))
         };
 
-        this.validator = new FormValidator(formElement, formState);
+        this.validator = new FormGroupControl(formElement, formState);
         this.validator.initialize();
 
         const registrationLink: HTMLFormElement | null = document.querySelector('.login__box .sign__account');

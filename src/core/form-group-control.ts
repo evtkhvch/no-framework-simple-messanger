@@ -1,6 +1,6 @@
 import { FormState } from './validator.js';
 
-export class FormValidator<T extends FormState> {
+export class FormGroupControl<T extends FormState> {
     constructor(public form: HTMLElement | null, public state: T) {
     }
 
@@ -39,9 +39,9 @@ export class FormValidator<T extends FormState> {
         }
 
         if (validator?.isValid(input?.value)) {
-            FormValidator.setErrorMessage(input, '');
+            FormGroupControl.setErrorMessage(input, '');
         } else {
-            FormValidator.setErrorMessage(input, validator?.getDescription());
+            FormGroupControl.setErrorMessage(input, validator?.getDescription());
         }
 
         this.setButtonStatus();

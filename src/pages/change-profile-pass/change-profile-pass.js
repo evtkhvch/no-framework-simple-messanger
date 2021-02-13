@@ -2,7 +2,7 @@ import { Component } from '../../core/component.js';
 import template from './change-pass.template.js';
 import { Button } from '../../components/button/button.js';
 import { EmptyValidator, FormControl } from '../../core/validator.js';
-import { FormValidator } from '../../core/form-validator.js';
+import { FormGroupControl } from '../../core/form-group-control.js';
 import { Router } from '../../core/router.js';
 export class ChangeProfilePassComponent extends Component {
     constructor(props) {
@@ -20,7 +20,7 @@ export class ChangeProfilePassComponent extends Component {
             newPass: new FormControl('ivanivanov', false, new EmptyValidator()),
             newPassMore: new FormControl('Иван', false, new EmptyValidator()),
         };
-        this.validator = new FormValidator(formElement, formState);
+        this.validator = new FormGroupControl(formElement, formState);
         this.validator.initialize();
         if (formElement) {
             formElement.onsubmit = (event) => {

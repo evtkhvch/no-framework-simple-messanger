@@ -26,7 +26,7 @@ export class AuthApi {
         return this.httpClient.get(`${environment.praktikum}/auth/user`, {
             data: {},
             headers: {}
-        }).then(res => res.response);
+        }).then(res => res.response).then(res => JSON.parse(res));
     }
 }
 //# sourceMappingURL=auth-api.js.map

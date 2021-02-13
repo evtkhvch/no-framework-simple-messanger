@@ -11,7 +11,7 @@ import { Component } from '../../core/component.js';
 import { Button } from '../../components/button/button.js';
 import { RegistrationForm } from './components/registration-form/registration-form.js';
 import { EmailValidator, EmptyValidator, FormControl, PhoneNumberValidator, ValidatorComposer } from '../../core/validator.js';
-import { FormValidator } from '../../core/form-validator.js';
+import { FormGroupControl } from '../../core/form-group-control.js';
 import { Router } from '../../core/router.js';
 import { AuthApi } from '../../api/auth-api.js';
 export class RegistrationComponent extends Component {
@@ -32,7 +32,7 @@ export class RegistrationComponent extends Component {
             pass: new FormControl('', false, new EmptyValidator()),
             passOneMoreTime: new FormControl('', false, new EmptyValidator())
         };
-        this.validator = new FormValidator(formElement, formState);
+        this.validator = new FormGroupControl(formElement, formState);
         this.validator.initialize();
         const registrationLink = document.querySelector('.registration__box .sign__account');
         if (registrationLink) {

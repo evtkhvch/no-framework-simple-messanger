@@ -1,7 +1,7 @@
 import { Component } from '../../core/component.js';
 import template from './change-data-template.js';
 import { EmailValidator, EmptyValidator, FormControl, ValidatorComposer } from '../../core/validator.js';
-import { FormValidator } from '../../core/form-validator.js';
+import { FormGroupControl } from '../../core/form-group-control.js';
 import { Button } from '../../components/button/button.js';
 import { Router } from '../../core/router.js';
 export class ChangeProfileDataComponent extends Component {
@@ -23,7 +23,7 @@ export class ChangeProfileDataComponent extends Component {
             nameInChat: new FormControl('Иван', false, new EmptyValidator()),
             phone: new FormControl('+7 (909) 967 30 30', false, new EmptyValidator()),
         };
-        this.validator = new FormValidator(formElement, formState);
+        this.validator = new FormGroupControl(formElement, formState);
         this.validator.initialize();
         const navButton = document.querySelector('.profile__nav-button');
         if (navButton) {
