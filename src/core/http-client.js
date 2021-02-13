@@ -1,4 +1,3 @@
-"use strict";
 var METHOD;
 (function (METHOD) {
     METHOD["GET"] = "GET";
@@ -6,12 +5,12 @@ var METHOD;
     METHOD["PUT"] = "PUT";
     METHOD["DELETE"] = "DELETE";
 })(METHOD || (METHOD = {}));
-class HTTPClient {
+export class HTTPClient {
     constructor() {
         this.get = (url, options) => {
             const data = queryStringify(options.data);
             const newUrl = `${url}${data}`;
-            return this.request(newUrl, { data, headers: options.headers, method: METHOD.GET }, options.timeout);
+            return this.request(newUrl, Object.assign(Object.assign({}, options), { method: METHOD.GET }), options.timeout);
         };
         this.put = (url, options) => {
             return this.request(url, Object.assign(Object.assign({}, options), { method: METHOD.PUT }), options.timeout);
@@ -45,7 +44,7 @@ class HTTPClient {
                     xhr.send();
                 }
                 else {
-                    xhr.send(data);
+                    xhr.send(JSON.stringify(data));
                 }
             });
         };

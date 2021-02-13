@@ -5,7 +5,7 @@ export interface Validator<T> {
 }
 
 export interface FormState {
-    [name: string]: FormControl;
+    [key: string]: FormControl;
 }
 
 export class FormControl {

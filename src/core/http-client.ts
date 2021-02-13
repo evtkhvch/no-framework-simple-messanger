@@ -5,27 +5,27 @@ enum METHOD {
     DELETE = 'DELETE'
 }
 
-class HTTPClient implements Http {
-    public get = (url: string, options: HTTPClientOptions): Promise<unknown> => {
+export class HTTPClient implements Http {
+    public get = (url: string, options: HTTPClientOptions): Promise<XMLHttpRequest> => {
         const data = queryStringify(options.data);
         const newUrl = `${url}${data}`;
 
-        return this.request(newUrl, { data, headers: options.headers, method: METHOD.GET }, options.timeout);
+        return this.request(newUrl, { ...options, method: METHOD.GET }, options.timeout);
     };
 
-    public put = (url: string, options: HTTPClientOptions): Promise<unknown> => {
+    public put = (url: string, options: HTTPClientOptions): Promise<XMLHttpRequest> => {
         return this.request(url, { ...options, method: METHOD.PUT }, options.timeout);
     };
 
-    public post = (url: string, options: HTTPClientOptions): Promise<unknown> => {
+    public post = (url: string, options: HTTPClientOptions): Promise<XMLHttpRequest> => {
         return this.request(url, { ...options, method: METHOD.POST }, options.timeout);
     };
 
-    public delete = (url: string, options: HTTPClientOptions): Promise<unknown> => {
+    public delete = (url: string, options: HTTPClientOptions): Promise<XMLHttpRequest> => {
         return this.request(url, { ...options, method: METHOD.DELETE }, options.timeout);
     };
 
-    private request = (url: string, options: RequestOptions, timeout = 5000): Promise<unknown> => {
+    private request = (url: string, options: RequestOptions, timeout = 5000): Promise<XMLHttpRequest> => {
         const { method, data, headers } = options;
 
         return new Promise((resolve, reject) => {
@@ -51,7 +51,7 @@ class HTTPClient implements Http {
             if (method === METHOD.GET || !data) {
                 xhr.send();
             } else {
-                xhr.send(data);
+                xhr.send(JSON.stringify(data));
             }
         });
     };
@@ -74,23 +74,23 @@ const queryStringify = <T extends object>(data: T): string => {
 };
 
 abstract class Http {
-    abstract get(url: string, options: HTTPClientOptions): Promise<unknown>;
+    abstract get(url: string, options: HTTPClientOptions): Promise<XMLHttpRequest>;
 
-    abstract put(url: string, options: HTTPClientOptions): Promise<unknown>;
+    abstract put(url: string, options: HTTPClientOptions): Promise<XMLHttpRequest>;
 
-    abstract post(url: string, options: HTTPClientOptions): Promise<unknown>;
+    abstract post(url: string, options: HTTPClientOptions): Promise<XMLHttpRequest>;
 
-    abstract delete(url: string, options: HTTPClientOptions): Promise<unknown>;
+    abstract delete(url: string, options: HTTPClientOptions): Promise<XMLHttpRequest>;
 }
 
 interface HTTPClientOptions {
-    headers: any;
+    headers?: any;
     data: any;
-    timeout: number;
+    timeout?: number;
 }
 
 interface RequestOptions {
     method: METHOD;
     data: any;
-    headers: any;
+    headers?: any;
 }

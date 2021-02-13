@@ -1,27 +1,28 @@
 import { Component, Props } from '../../core/component.js';
 import { Button } from '../../components/button/button.js';
 import { LoginForm } from './components/login-form/login-form.js';
-import { EmptyValidator, FormControl, MinLengthValidator, ValidatorComposer } from '../../core/validator.js';
+import { EmptyValidator, FormControl, FormState, ValidatorComposer } from '../../core/validator.js';
 import { FormValidator } from '../../core/form-validator.js';
 import { Router } from '../../core/router.js';
+import { AuthApi } from '../../api/auth-api.js';
 
 class LoginComponent extends Component {
-    private validator: FormValidator | undefined;
-    private router: Router | undefined;
+    private validator: FormValidator<LoginFormGroup> | undefined;
+    private router: Router = new Router('.app');
+    private authApi = new AuthApi();
 
     constructor(public props: Props) {
         super('div', props, 'sign');
-        this.router = new Router('.app');
     }
 
     public componentDidMount(): void {
         const formElement: HTMLFormElement | null = document.querySelector('.sign__box.login__box');
-        const formState = {
+        const formState: LoginFormGroup = {
             login: new FormControl('', false, new EmptyValidator()),
-            pass: new FormControl('', false, new ValidatorComposer([ new EmptyValidator(), new MinLengthValidator(8) ]))
+            pass: new FormControl('', false, new ValidatorComposer([ new EmptyValidator() ]))
         };
 
-        this.validator = new FormValidator(formElement, formState);
+        this.validator = new FormValidator<LoginFormGroup>(formElement, formState);
         this.validator.initialize();
 
         const registrationLink: HTMLFormElement | null = document.querySelector('.login__box .sign__account');
@@ -36,8 +37,19 @@ class LoginComponent extends Component {
             formElement.onsubmit = (event: Event) => {
                 event.preventDefault();
 
-                this.router?.go('/chat');
+                const { login, pass } = this.validator?.state as LoginFormGroup;
+
+                this.signIn(login.value, pass.value);
             }
+        }
+    }
+
+    private async signIn(login: string, password: string): Promise<void> {
+        console.log(login, password);
+        const res = await this.authApi.signIn(login, password)
+        console.log(res);
+        if (res.status === 200) {
+            this.router?.go('/chat');
         }
     }
 
@@ -59,3 +71,8 @@ export const loginComponent = new LoginComponent({
         }).elementToString
     }).elementToString
 });
+
+interface LoginFormGroup extends FormState {
+    login: FormControl;
+    pass: FormControl;
+}
