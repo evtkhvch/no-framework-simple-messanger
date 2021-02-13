@@ -53,10 +53,6 @@ class LoginComponent extends Component {
             }
         });
     }
-    destroy() {
-        var _a;
-        (_a = this.validator) === null || _a === void 0 ? void 0 : _a.removeListeners();
-    }
     render() {
         return `{{{ loginForm }}}`;
     }

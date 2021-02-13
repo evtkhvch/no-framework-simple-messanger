@@ -19,7 +19,7 @@ export class AuthApi {
     logout() {
         return this.httpClient.post(`${environment.praktikum}/v2/auth/logout`, {
             data: {},
-            headers: { 'Content-Type': 'application/json', 'accept': 'application/json' }
+            headers: { 'accept': 'application/json' }
         });
     }
 }

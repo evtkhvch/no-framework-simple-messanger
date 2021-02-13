@@ -34,10 +34,6 @@ class ChangeProfilePass extends Component {
             navButton.onclick = () => { var _a; (_a = this.router) === null || _a === void 0 ? void 0 : _a.go('/profile'); };
         }
     }
-    destroy() {
-        var _a;
-        (_a = this.validator) === null || _a === void 0 ? void 0 : _a.removeListeners();
-    }
     render() {
         return template;
     }

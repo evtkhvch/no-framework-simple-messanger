@@ -1,12 +1,23 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 import { Component } from '../../core/component.js';
 import template from './profile.template.js';
 import { EmptyValidator, FormControl } from '../../core/validator.js';
 import { FormValidator } from '../../core/form-validator.js';
 import { Router } from '../../core/router.js';
+import { AuthApi } from '../../api/auth-api.js';
 class Profile extends Component {
     constructor(props) {
         super('div', props, 'profile');
         this.props = props;
+        this.authApi = new AuthApi();
         this.router = new Router('.app');
     }
     componentDidMount() {
@@ -36,8 +47,7 @@ class Profile extends Component {
         }
         if (exit) {
             exit.onclick = () => {
-                var _a;
-                (_a = this.router) === null || _a === void 0 ? void 0 : _a.go('/login');
+                this.logout();
             };
         }
         if (changePass) {
@@ -53,9 +63,12 @@ class Profile extends Component {
             };
         }
     }
-    destroy() {
+    logout() {
         var _a;
-        (_a = this.validator) === null || _a === void 0 ? void 0 : _a.removeListeners();
+        return __awaiter(this, void 0, void 0, function* () {
+            const res = yield this.authApi.logout();
+            (_a = this.router) === null || _a === void 0 ? void 0 : _a.go('/login');
+        });
     }
     render() {
         return template;

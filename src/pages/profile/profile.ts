@@ -3,10 +3,12 @@ import template from './profile.template.js';
 import { EmptyValidator, FormControl, FormState } from '../../core/validator.js';
 import { FormValidator } from '../../core/form-validator.js';
 import { Router } from '../../core/router.js';
+import { AuthApi } from '../../api/auth-api.js';
 
 class Profile extends Component {
     private validator: FormValidator<ProfileGroup> | undefined;
     private router: Router | undefined;
+    private authApi = new AuthApi();
 
     constructor(public props: Props) {
         super('div', props, 'profile');
@@ -44,7 +46,7 @@ class Profile extends Component {
 
         if (exit) {
             exit.onclick = () => {
-                this.router?.go('/login');
+                this.logout();
             };
         }
 
@@ -61,8 +63,10 @@ class Profile extends Component {
         }
     }
 
-    public destroy(): void {
-        this.validator?.removeListeners();
+    private async logout(): Promise<void> {
+        const res = await this.authApi.logout();
+
+        this.router?.go('/login');
     }
 
     public render(): string {

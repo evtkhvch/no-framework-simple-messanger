@@ -50,10 +50,6 @@ class LoginComponent extends Component {
         }
     }
 
-    public destroy(): void {
-        this.validator?.removeListeners();
-    }
-
     public render(): string {
         return `{{{ loginForm }}}`;
     }
