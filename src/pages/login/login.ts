@@ -22,7 +22,7 @@ class LoginComponent extends Component {
             pass: new FormControl('', false, new ValidatorComposer([ new EmptyValidator() ]))
         };
 
-        this.validator = new FormValidator<LoginFormGroup>(formElement, formState);
+        this.validator = new FormValidator(formElement, formState);
         this.validator.initialize();
 
         const registrationLink: HTMLFormElement | null = document.querySelector('.login__box .sign__account');
@@ -36,18 +36,15 @@ class LoginComponent extends Component {
         if (formElement) {
             formElement.onsubmit = (event: Event) => {
                 event.preventDefault();
-
-                const { login, pass } = this.validator?.state as LoginFormGroup;
-
-                this.signIn(login.value, pass.value);
+                this.signIn();
             }
         }
     }
 
-    private async signIn(login: string, password: string): Promise<void> {
-        console.log(login, password);
-        const res = await this.authApi.signIn(login, password)
-        console.log(res);
+    private async signIn(): Promise<void> {
+        const { login, pass } = this.validator?.state as LoginFormGroup;
+        const res = await this.authApi.signIn(login.value, pass.value);
+
         if (res.status === 200) {
             this.router?.go('/chat');
         }

@@ -38,21 +38,18 @@ class LoginComponent extends Component {
         }
         if (formElement) {
             formElement.onsubmit = (event) => {
-                var _a;
                 event.preventDefault();
-                const { login, pass } = (_a = this.validator) === null || _a === void 0 ? void 0 : _a.state;
-                this.signIn(login.value, pass.value);
+                this.signIn();
             };
         }
     }
-    signIn(login, password) {
-        var _a;
+    signIn() {
+        var _a, _b;
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(login, password);
-            const res = yield this.authApi.signIn(login, password);
-            console.log(res);
+            const { login, pass } = (_a = this.validator) === null || _a === void 0 ? void 0 : _a.state;
+            const res = yield this.authApi.signIn(login.value, pass.value);
             if (res.status === 200) {
-                (_a = this.router) === null || _a === void 0 ? void 0 : _a.go('/chat');
+                (_b = this.router) === null || _b === void 0 ? void 0 : _b.go('/chat');
             }
         });
     }

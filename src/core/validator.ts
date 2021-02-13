@@ -23,6 +23,17 @@ export class EmptyValidator implements Validator<string> {
     }
 }
 
+export class PhoneNumberValidator implements Validator<string> {
+    public isValid(value: string): boolean {
+        const re = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+        return re.test(String(value).toLowerCase());
+    }
+
+    public getDescription(): string {
+        return 'Введите корректный номер телефона';
+    }
+}
+
 export class EmailValidator implements Validator<string> {
     public isValid(value: string): boolean {
         const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

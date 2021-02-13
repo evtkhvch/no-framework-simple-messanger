@@ -10,5 +10,11 @@ export class AuthApi {
             headers: { 'Content-Type': 'application/json', 'accept': 'application/json' }
         });
     }
+    signUp(data) {
+        return this.httpClient.post(`${environment.praktikum}/v2/auth/signup`, {
+            data,
+            headers: { 'Content-Type': 'application/json', 'accept': 'application/json' }
+        });
+    }
 }
 //# sourceMappingURL=auth-api.js.map
