@@ -13,7 +13,7 @@ import { FormValidator } from '../../core/form-validator.js';
 import { Router } from '../../core/router.js';
 import { AuthApi } from '../../api/auth-api.js';
 
-class Registration extends Component {
+export class RegistrationComponent extends Component {
     private validator: FormValidator<RegistrationFormGroup> | undefined;
     private router: Router | undefined;
     private authApi = new AuthApi();
@@ -74,7 +74,7 @@ class Registration extends Component {
     }
 }
 
-export const registrationComponent = new Registration({
+export const registrationProps = {
     registrationForm: new RegistrationForm({
         button: new Button({
             type: 'submit',
@@ -82,7 +82,7 @@ export const registrationComponent = new Registration({
             class: 'sign__submit default-button'
         }).elementToString
     }).elementToString
-});
+};
 
 interface RegistrationFormGroup extends FormState {
     mail: FormControl;

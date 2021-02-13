@@ -5,7 +5,7 @@ import { DIALOG_LIST, CHAT } from '../../core/mock.js';
 import { ChatFooter } from './components/chat-footer/chat-footer.js';
 import { Message } from './components/message/message.js';
 import { Router } from '../../core/router.js';
-class ChatComponent extends Component {
+export class ChatComponent extends Component {
     constructor(props) {
         super('div', props, 'chat-list');
         this.props = props;
@@ -63,7 +63,7 @@ class ChatComponent extends Component {
 }
 const cardList = DIALOG_LIST.map(item => new UserCard(Object.assign({}, item)).elementToString).join('');
 const messageList = CHAT.messageList.map(item => new Message(Object.assign({}, item)).elementToString).join('');
-export const chatComponent = new ChatComponent({
+export const chatProps = {
     name: CHAT.name,
     isChat: false,
     messageList,
@@ -71,5 +71,5 @@ export const chatComponent = new ChatComponent({
         cardList: cardList
     }).elementToString,
     footer: new ChatFooter({}).elementToString
-});
+};
 //# sourceMappingURL=chat.js.map

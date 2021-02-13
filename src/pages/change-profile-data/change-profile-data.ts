@@ -5,7 +5,7 @@ import { FormValidator } from '../../core/form-validator.js';
 import { Button } from '../../components/button/button.js';
 import { Router } from '../../core/router.js';
 
-class ChangeProfileData extends Component {
+export class ChangeProfileDataComponent extends Component {
     private validator: FormValidator<ChangeProfileGroup> | undefined;
     private router: Router | undefined;
 
@@ -53,14 +53,14 @@ class ChangeProfileData extends Component {
     }
 }
 
-export const changeProfileDataComponent = new ChangeProfileData({
+export const changeProfileDataProps = {
     name: 'Иван',
     button: new Button({
         type: 'submit',
         class: 'profile__form-submit default-button',
         name: 'Сохранить'
     }).elementToString
-});
+};
 
 interface ChangeProfileGroup extends FormState {
     mail: FormControl;

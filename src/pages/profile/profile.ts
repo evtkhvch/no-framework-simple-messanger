@@ -5,7 +5,7 @@ import { FormValidator } from '../../core/form-validator.js';
 import { Router } from '../../core/router.js';
 import { AuthApi } from '../../api/auth-api.js';
 
-class Profile extends Component {
+export class ProfileComponent extends Component {
     private validator: FormValidator<ProfileGroup> | undefined;
     private router: Router | undefined;
     private authApi = new AuthApi();
@@ -19,15 +19,17 @@ class Profile extends Component {
         this.initForm();
     }
 
-    private initForm(): void {
+    private async initForm(): Promise<void> {
+        const userData = await this.authApi.user();
+
         const formElement: HTMLFormElement | null = document.querySelector('.profile__form.profile__container');
         const formState: ProfileGroup = {
-            mail: new FormControl('pochta@yandex.ru', true, new EmptyValidator()),
-            login: new FormControl('ivanivanov', true, new EmptyValidator()),
-            userName: new FormControl('Иван', true, new EmptyValidator()),
-            surname: new FormControl('Иванов', true, new EmptyValidator()),
-            nameInChat: new FormControl('Иван', true, new EmptyValidator()),
-            phone: new FormControl('+7 (909) 967 30 30', true, new EmptyValidator()),
+            mail: new FormControl(userData.email, true, new EmptyValidator()),
+            login: new FormControl(userData.login, true, new EmptyValidator()),
+            userName: new FormControl(userData.first_name, true, new EmptyValidator()),
+            surname: new FormControl(userData.second_name, true, new EmptyValidator()),
+            nameInChat: new FormControl(userData.display_name, true, new EmptyValidator()),
+            phone: new FormControl(userData.phone, true, new EmptyValidator()),
         };
         this.validator = new FormValidator(formElement, formState);
 
@@ -76,7 +78,7 @@ class Profile extends Component {
     }
 }
 
-export const profileComponent = new Profile({ name: 'Иван' });
+export const profileProps = { name: 'Иван' };
 
 interface ProfileGroup extends FormState {
     mail: FormControl;

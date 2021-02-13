@@ -5,7 +5,7 @@ import { EmptyValidator, FormControl, FormState } from '../../core/validator.js'
 import { FormValidator } from '../../core/form-validator.js';
 import { Router } from '../../core/router.js';
 
-class ChangeProfilePass extends Component {
+export class ChangeProfilePassComponent extends Component {
     private validator: FormValidator<ChangeProfileGroup> | undefined;
     private router: Router | undefined;
 
@@ -48,14 +48,14 @@ class ChangeProfilePass extends Component {
     }
 }
 
-export const changeProfilePassComponent = new ChangeProfilePass({
+export const changeProfilePassProps = {
     name: 'Иван',
     button: new Button({
         type: 'submit',
         class: 'profile__form-submit default-button',
         name: 'Сохранить'
     }).elementToString
-});
+};
 
 interface ChangeProfileGroup extends FormState {
     pass: FormControl;

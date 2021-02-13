@@ -111,7 +111,7 @@ export class Component {
             this._element.style.display = 'none';
         }
     }
-    remove() {
+    _destroy() {
         if (this._element) {
             this._element.remove();
         }

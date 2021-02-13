@@ -4,7 +4,7 @@ import { Button } from '../../components/button/button.js';
 import { EmptyValidator, FormControl } from '../../core/validator.js';
 import { FormValidator } from '../../core/form-validator.js';
 import { Router } from '../../core/router.js';
-class ChangeProfilePass extends Component {
+export class ChangeProfilePassComponent extends Component {
     constructor(props) {
         super('div', props, 'profile');
         this.props = props;
@@ -38,12 +38,12 @@ class ChangeProfilePass extends Component {
         return template;
     }
 }
-export const changeProfilePassComponent = new ChangeProfilePass({
+export const changeProfilePassProps = {
     name: 'Иван',
     button: new Button({
         type: 'submit',
         class: 'profile__form-submit default-button',
         name: 'Сохранить'
     }).elementToString
-});
+};
 //# sourceMappingURL=change-profile-pass.js.map

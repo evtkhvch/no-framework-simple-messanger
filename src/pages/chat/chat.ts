@@ -6,7 +6,7 @@ import { ChatFooter } from './components/chat-footer/chat-footer.js';
 import { Message } from './components/message/message.js';
 import { Router } from '../../core/router.js';
 
-class ChatComponent extends Component {
+export class ChatComponent extends Component {
     private router: Router | undefined;
 
     constructor(public props: Props) {
@@ -73,7 +73,7 @@ class ChatComponent extends Component {
 const cardList = DIALOG_LIST.map(item => new UserCard({...item}).elementToString).join('');
 const messageList = CHAT.messageList.map(item => new Message({...item}).elementToString).join('');
 
-export const chatComponent = new ChatComponent({
+export const chatProps = {
     name: CHAT.name,
     isChat: false,
     messageList,
@@ -81,4 +81,4 @@ export const chatComponent = new ChatComponent({
         cardList: cardList
     }).elementToString,
     footer: new ChatFooter({}).elementToString
-});
+};

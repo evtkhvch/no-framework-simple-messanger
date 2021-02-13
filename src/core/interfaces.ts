@@ -14,3 +14,7 @@ export class Chat {
     constructor(public id: number, public name: string, public messageList: Message[]) {
     }
 }
+
+export interface Constructable<T> {
+    new(...args: any): T;
+}

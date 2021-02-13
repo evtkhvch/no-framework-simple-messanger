@@ -14,7 +14,7 @@ import { EmptyValidator, FormControl, ValidatorComposer } from '../../core/valid
 import { FormValidator } from '../../core/form-validator.js';
 import { Router } from '../../core/router.js';
 import { AuthApi } from '../../api/auth-api.js';
-class LoginComponent extends Component {
+export class LoginComponent extends Component {
     constructor(props) {
         super('div', props, 'sign');
         this.props = props;
@@ -57,7 +57,7 @@ class LoginComponent extends Component {
         return `{{{ loginForm }}}`;
     }
 }
-export const loginComponent = new LoginComponent({
+export const loginProps = {
     loginForm: new LoginForm({
         button: new Button({
             type: 'submit',
@@ -65,5 +65,5 @@ export const loginComponent = new LoginComponent({
             class: 'sign__submit default-button',
         }).elementToString
     }).elementToString
-});
+};
 //# sourceMappingURL=login.js.map

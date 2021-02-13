@@ -14,7 +14,7 @@ import { EmailValidator, EmptyValidator, FormControl, PhoneNumberValidator, Vali
 import { FormValidator } from '../../core/form-validator.js';
 import { Router } from '../../core/router.js';
 import { AuthApi } from '../../api/auth-api.js';
-class Registration extends Component {
+export class RegistrationComponent extends Component {
     constructor(props) {
         super('div', props, 'sign');
         this.props = props;
@@ -69,7 +69,7 @@ class Registration extends Component {
         return `{{{ registrationForm }}}`;
     }
 }
-export const registrationComponent = new Registration({
+export const registrationProps = {
     registrationForm: new RegistrationForm({
         button: new Button({
             type: 'submit',
@@ -77,5 +77,5 @@ export const registrationComponent = new Registration({
             class: 'sign__submit default-button'
         }).elementToString
     }).elementToString
-});
+};
 //# sourceMappingURL=registration.js.map

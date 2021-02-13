@@ -6,7 +6,7 @@ import { FormValidator } from '../../core/form-validator.js';
 import { Router } from '../../core/router.js';
 import { AuthApi } from '../../api/auth-api.js';
 
-class LoginComponent extends Component {
+export class LoginComponent extends Component {
     private validator: FormValidator<LoginFormGroup> | undefined;
     private router: Router = new Router('.app');
     private authApi = new AuthApi();
@@ -55,7 +55,7 @@ class LoginComponent extends Component {
     }
 }
 
-export const loginComponent = new LoginComponent({
+export const loginProps = {
     loginForm: new LoginForm({
         button: new Button({
             type: 'submit',
@@ -63,7 +63,7 @@ export const loginComponent = new LoginComponent({
             class: 'sign__submit default-button',
         }).elementToString
     }).elementToString
-});
+};
 
 interface LoginFormGroup extends FormState {
     login: FormControl;
