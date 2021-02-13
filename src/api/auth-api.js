@@ -20,7 +20,7 @@ export class AuthApi {
         return this.httpClient.post(`${environment.praktikum}/auth/logout`, {
             data: {},
             headers: {}
-        });
+        }).then(res => res.status === 200);
     }
     user() {
         return this.httpClient.get(`${environment.praktikum}/auth/user`, {

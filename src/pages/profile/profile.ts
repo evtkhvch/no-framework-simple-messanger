@@ -24,29 +24,10 @@ export class ProfileComponent extends Component {
         const changePass: HTMLFormElement | null = document.querySelector('.profile__option-change-pass');
         const changeData: HTMLFormElement | null = document.querySelector('.profile__option-change-data');
 
-        if (profileNav) {
-            profileNav.onclick = () => {
-                this.router?.go('/chat');
-            };
-        }
-
-        if (exit) {
-            exit.onclick = () => {
-                this.logout();
-            };
-        }
-
-        if (changePass) {
-            changePass.onclick = () => {
-                this.router?.go('/change-profile-pass');
-            };
-        }
-
-        if (changeData) {
-            changeData.onclick = () => {
-                this.router?.go('/change-profile-data');
-            };
-        }
+        profileNav?.addEventListener('click', () => this.router?.go('/chat'));
+        changePass?.addEventListener('click', () => this.router?.go('/change-profile-pass'));
+        changeData?.addEventListener('click', () => this.router?.go('/change-profile-data'));
+        exit?.addEventListener('click', () => this.authApi.logout().then(() => { this.router?.go('/login') }));
     }
 
     private setForm(userData: User): void {
@@ -75,14 +56,6 @@ export class ProfileComponent extends Component {
                 this.setForm(user);
             }
         });
-    }
-
-    private async logout(): Promise<void> {
-        const res = await this.authApi.logout();
-
-        if (res.status === 200) {
-            this.router?.go('/login');
-        }
     }
 
     public destroy() {

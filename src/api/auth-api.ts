@@ -18,11 +18,11 @@ export class AuthApi {
         });
     }
 
-    public logout(): Promise<XMLHttpRequest> {
+    public logout(): Promise<boolean> {
         return this.httpClient.post(`${environment.praktikum}/auth/logout`, {
             data: {},
             headers: {}
-        });
+        }).then(res => res.status === 200);
     }
 
     public user(): Promise<User> {

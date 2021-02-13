@@ -1,12 +1,3 @@
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 import { Component } from '../../core/component.js';
 import template from './profile.template.js';
 import { EmptyValidator, FormControl } from '../../core/validator.js';
@@ -27,29 +18,10 @@ export class ProfileComponent extends Component {
         const exit = document.querySelector('.profile__option-exit');
         const changePass = document.querySelector('.profile__option-change-pass');
         const changeData = document.querySelector('.profile__option-change-data');
-        if (profileNav) {
-            profileNav.onclick = () => {
-                var _a;
-                (_a = this.router) === null || _a === void 0 ? void 0 : _a.go('/chat');
-            };
-        }
-        if (exit) {
-            exit.onclick = () => {
-                this.logout();
-            };
-        }
-        if (changePass) {
-            changePass.onclick = () => {
-                var _a;
-                (_a = this.router) === null || _a === void 0 ? void 0 : _a.go('/change-profile-pass');
-            };
-        }
-        if (changeData) {
-            changeData.onclick = () => {
-                var _a;
-                (_a = this.router) === null || _a === void 0 ? void 0 : _a.go('/change-profile-data');
-            };
-        }
+        profileNav === null || profileNav === void 0 ? void 0 : profileNav.addEventListener('click', () => { var _a; return (_a = this.router) === null || _a === void 0 ? void 0 : _a.go('/chat'); });
+        changePass === null || changePass === void 0 ? void 0 : changePass.addEventListener('click', () => { var _a; return (_a = this.router) === null || _a === void 0 ? void 0 : _a.go('/change-profile-pass'); });
+        changeData === null || changeData === void 0 ? void 0 : changeData.addEventListener('click', () => { var _a; return (_a = this.router) === null || _a === void 0 ? void 0 : _a.go('/change-profile-data'); });
+        exit === null || exit === void 0 ? void 0 : exit.addEventListener('click', () => this.authApi.logout().then(() => { var _a; (_a = this.router) === null || _a === void 0 ? void 0 : _a.go('/login'); }));
     }
     setForm(userData) {
         const formElement = document.querySelector('.profile__form.profile__container');
@@ -71,15 +43,6 @@ export class ProfileComponent extends Component {
             if (user) {
                 this.setProps({ name: user.display_name || '' });
                 this.setForm(user);
-            }
-        });
-    }
-    logout() {
-        var _a;
-        return __awaiter(this, void 0, void 0, function* () {
-            const res = yield this.authApi.logout();
-            if (res.status === 200) {
-                (_a = this.router) === null || _a === void 0 ? void 0 : _a.go('/login');
             }
         });
     }
