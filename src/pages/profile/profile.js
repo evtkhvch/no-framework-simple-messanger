@@ -67,7 +67,9 @@ class Profile extends Component {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield this.authApi.logout();
-            (_a = this.router) === null || _a === void 0 ? void 0 : _a.go('/login');
+            if (res.status === 200) {
+                (_a = this.router) === null || _a === void 0 ? void 0 : _a.go('/login');
+            }
         });
     }
     render() {

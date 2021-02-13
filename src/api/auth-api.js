@@ -5,21 +5,27 @@ export class AuthApi {
         this.httpClient = new HTTPClient();
     }
     signIn(login, password) {
-        return this.httpClient.post(`${environment.praktikum}/v2/auth/signin`, {
+        return this.httpClient.post(`${environment.praktikum}/auth/signin`, {
             data: { login, password },
-            headers: { 'Content-Type': 'application/json', 'accept': 'application/json' }
+            headers: { 'Content-Type': 'application/json' }
         });
     }
     signUp(data) {
-        return this.httpClient.post(`${environment.praktikum}/v2/auth/signup`, {
+        return this.httpClient.post(`${environment.praktikum}/auth/signup`, {
             data,
-            headers: { 'Content-Type': 'application/json', 'accept': 'application/json' }
+            headers: { 'Content-Type': 'application/json' }
         });
     }
     logout() {
-        return this.httpClient.post(`${environment.praktikum}/v2/auth/logout`, {
+        return this.httpClient.post(`${environment.praktikum}/auth/logout`, {
             data: {},
-            headers: { 'accept': 'application/json' }
+            headers: {}
+        });
+    }
+    user() {
+        return this.httpClient.post(`${environment.praktikum}/auth/user`, {
+            data: {},
+            headers: {}
         });
     }
 }

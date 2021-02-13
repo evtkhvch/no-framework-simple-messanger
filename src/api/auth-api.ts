@@ -5,23 +5,30 @@ export class AuthApi {
     private httpClient = new HTTPClient();
 
     public signIn(login: string, password: string): Promise<XMLHttpRequest> {
-        return this.httpClient.post(`${environment.praktikum}/v2/auth/signin`, {
+        return this.httpClient.post(`${environment.praktikum}/auth/signin`, {
             data: { login, password },
-            headers: { 'Content-Type': 'application/json', 'accept': 'application/json' }
+            headers: { 'Content-Type': 'application/json' }
         });
     }
 
     public signUp(data: SignUpReq): Promise<XMLHttpRequest> {
-        return this.httpClient.post(`${environment.praktikum}/v2/auth/signup`, {
+        return this.httpClient.post(`${environment.praktikum}/auth/signup`, {
             data,
-            headers: { 'Content-Type': 'application/json', 'accept': 'application/json' }
+            headers: { 'Content-Type': 'application/json' }
         });
     }
 
     public logout(): Promise<XMLHttpRequest> {
-        return this.httpClient.post(`${environment.praktikum}/v2/auth/logout`, {
+        return this.httpClient.post(`${environment.praktikum}/auth/logout`, {
             data: {},
-            headers: { 'accept': 'application/json' }
+            headers: {}
+        });
+    }
+
+    public user(): Promise<XMLHttpRequest> {
+        return this.httpClient.post(`${environment.praktikum}/auth/user`, {
+            data: {},
+            headers: {}
         });
     }
 }

@@ -25,6 +25,7 @@ export class HTTPClient {
             const { method, data, headers } = options;
             return new Promise((resolve, reject) => {
                 const xhr = new XMLHttpRequest();
+                xhr.withCredentials = true;
                 xhr.open(method, url);
                 if (headers) {
                     for (let key in headers) {

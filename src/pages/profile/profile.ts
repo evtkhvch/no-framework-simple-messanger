@@ -66,7 +66,9 @@ class Profile extends Component {
     private async logout(): Promise<void> {
         const res = await this.authApi.logout();
 
-        this.router?.go('/login');
+        if (res.status === 200) {
+            this.router?.go('/login');
+        }
     }
 
     public render(): string {
