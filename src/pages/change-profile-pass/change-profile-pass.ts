@@ -6,7 +6,7 @@ import { FormValidator } from '../../core/form-validator.js';
 import { Router } from '../../core/router.js';
 
 class ChangeProfilePass extends Component {
-    private validator: FormValidator | undefined;
+    private validator: FormValidator<ChangeProfileGroup> | undefined;
     private router: Router | undefined;
 
     constructor(public props: Props) {
@@ -20,7 +20,7 @@ class ChangeProfilePass extends Component {
 
     private initForm(): void {
         const formElement: HTMLFormElement | null = document.querySelector('.profile__form.profile__container');
-        const formState: FormState = {
+        const formState: ChangeProfileGroup = {
             pass: new FormControl('pochta@yandex.ru', false, new EmptyValidator()),
             newPass: new FormControl('ivanivanov', false, new EmptyValidator()),
             newPassMore: new FormControl('Иван', false, new EmptyValidator()),
@@ -60,3 +60,9 @@ export const changeProfilePassComponent = new ChangeProfilePass({
         name: 'Сохранить'
     }).elementToString
 });
+
+interface ChangeProfileGroup extends FormState {
+    pass: FormControl;
+    newPass: FormControl;
+    newPassMore: FormControl;
+}

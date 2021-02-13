@@ -17,6 +17,13 @@ export class AuthApi {
             headers: { 'Content-Type': 'application/json', 'accept': 'application/json' }
         });
     }
+
+    public logout(): Promise<XMLHttpRequest> {
+        return this.httpClient.post(`${environment.praktikum}/v2/auth/logout`, {
+            data: {},
+            headers: { 'Content-Type': 'application/json', 'accept': 'application/json' }
+        });
+    }
 }
 
 export interface SignUpReq {

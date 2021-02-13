@@ -5,7 +5,7 @@ import { FormValidator } from '../../core/form-validator.js';
 import { Router } from '../../core/router.js';
 
 class Profile extends Component {
-    private validator: FormValidator | undefined;
+    private validator: FormValidator<ProfileGroup> | undefined;
     private router: Router | undefined;
 
     constructor(public props: Props) {
@@ -19,7 +19,7 @@ class Profile extends Component {
 
     private initForm(): void {
         const formElement: HTMLFormElement | null = document.querySelector('.profile__form.profile__container');
-        const formState: FormState = {
+        const formState: ProfileGroup = {
             mail: new FormControl('pochta@yandex.ru', true, new EmptyValidator()),
             login: new FormControl('ivanivanov', true, new EmptyValidator()),
             userName: new FormControl('Иван', true, new EmptyValidator()),
@@ -71,3 +71,12 @@ class Profile extends Component {
 }
 
 export const profileComponent = new Profile({ name: 'Иван' });
+
+interface ProfileGroup extends FormState {
+    mail: FormControl;
+    login: FormControl;
+    userName: FormControl;
+    surname: FormControl;
+    nameInChat: FormControl;
+    phone: FormControl;
+}
