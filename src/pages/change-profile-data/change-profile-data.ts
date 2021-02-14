@@ -13,7 +13,6 @@ export class ChangeProfileDataComponent extends Component {
     private router: Router = new Router('.app');
     private authApi = new AuthApi();
     private userApi = new UserApi();
-    private formState: ChangeProfileGroup | null = null;
     private formElement: HTMLElement | null = null;
     private subscription: (() => void) | undefined;
 
@@ -53,7 +52,7 @@ export class ChangeProfileDataComponent extends Component {
     }
 
     private setForm(userData: User | null): void {
-        this.formState = {
+        const formState = {
             mail: new FormControl(userData?.email || '', false, new ValidatorComposer([ new EmailValidator(), new EmptyValidator() ])),
             login: new FormControl(userData?.login || '', false, new EmptyValidator()),
             userName: new FormControl(userData?.first_name || '', false, new EmptyValidator()),
@@ -61,7 +60,7 @@ export class ChangeProfileDataComponent extends Component {
             nameInChat: new FormControl(userData?.display_name || '', false, new EmptyValidator()),
             phone: new FormControl(userData?.phone || '', false, new EmptyValidator()),
         };
-        this.formGroup = new FormGroupControl(this.formElement, this.formState);
+        this.formGroup = new FormGroupControl(this.formElement, formState);
 
         this.formGroup.initialize();
     }

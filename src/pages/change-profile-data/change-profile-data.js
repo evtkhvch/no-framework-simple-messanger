@@ -14,7 +14,6 @@ export class ChangeProfileDataComponent extends Component {
         this.router = new Router('.app');
         this.authApi = new AuthApi();
         this.userApi = new UserApi();
-        this.formState = null;
         this.formElement = null;
     }
     componentDidMount() {
@@ -45,7 +44,7 @@ export class ChangeProfileDataComponent extends Component {
         });
     }
     setForm(userData) {
-        this.formState = {
+        const formState = {
             mail: new FormControl((userData === null || userData === void 0 ? void 0 : userData.email) || '', false, new ValidatorComposer([new EmailValidator(), new EmptyValidator()])),
             login: new FormControl((userData === null || userData === void 0 ? void 0 : userData.login) || '', false, new EmptyValidator()),
             userName: new FormControl((userData === null || userData === void 0 ? void 0 : userData.first_name) || '', false, new EmptyValidator()),
@@ -53,7 +52,7 @@ export class ChangeProfileDataComponent extends Component {
             nameInChat: new FormControl((userData === null || userData === void 0 ? void 0 : userData.display_name) || '', false, new EmptyValidator()),
             phone: new FormControl((userData === null || userData === void 0 ? void 0 : userData.phone) || '', false, new EmptyValidator()),
         };
-        this.formGroup = new FormGroupControl(this.formElement, this.formState);
+        this.formGroup = new FormGroupControl(this.formElement, formState);
         this.formGroup.initialize();
     }
     destroy() {
