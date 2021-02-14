@@ -4,47 +4,71 @@ import { EmailValidator, EmptyValidator, FormControl, FormState, ValidatorCompos
 import { FormGroupControl } from '../../core/form-group-control.js';
 import { Button } from '../../components/button/button.js';
 import { Router } from '../../core/router.js';
+import { ACTION, store } from '../../core/store.js';
+import { AuthApi, User } from '../../api/auth-api.js';
+import { UserApi } from '../../api/user-api.js';
 
 export class ChangeProfileDataComponent extends Component {
-    private validator: FormGroupControl<ChangeProfileGroup> | undefined;
-    private router: Router | undefined;
+    private formGroup: FormGroupControl<ChangeProfileGroup> | undefined;
+    private router: Router = new Router('.app');
+    private authApi = new AuthApi();
+    private userApi = new UserApi();
+    private formState: ChangeProfileGroup | null = null;
+    private formElement: HTMLElement | null = null;
+    private subscription: (() => void) | undefined;
 
     constructor(public props: Props) {
         super('div', props, 'profile');
-        this.router = new Router('.app');
     }
 
     public componentDidMount(): void {
-        this.initForm();
-    }
-
-    private initForm(): void {
-        const formElement: HTMLElement | null = document.querySelector('.profile__form.profile__container');
-        const formState: ChangeProfileGroup = {
-            mail: new FormControl('pochta@yandex.ru', false, new ValidatorComposer([ new EmailValidator(), new EmptyValidator() ])),
-            login: new FormControl('ivanivanov', false, new EmptyValidator()),
-            userName: new FormControl('Иван', false, new EmptyValidator()),
-            surname: new FormControl('Иванов', false, new EmptyValidator()),
-            nameInChat: new FormControl('Иван', false, new EmptyValidator()),
-            phone: new FormControl('+7 (909) 967 30 30', false, new EmptyValidator()),
-        };
-        this.validator = new FormGroupControl(formElement, formState);
-
-        this.validator.initialize();
+        this.formElement = document.querySelector('.profile__form.profile__container');
+        this.initListeners();
 
         const navButton: HTMLElement | null = document.querySelector('.profile__nav-button');
+        navButton?.addEventListener('click', () => this.router?.go('/profile'));
+    }
 
-        if (navButton) {
-            navButton.onclick = () => {
-                this.router?.go('/profile');
-            }
-        }
+    private initListeners(): void {
+        this.authApi.user().then(value => {
+            store.dispatch({ type: ACTION.GET_USER, props: value });
+        });
 
-        if (formElement) {
-            formElement.onsubmit = (event: Event) => {
-              event.preventDefault();
-              this.router?.go('/profile');
-            };
+        this.subscription = store.subscribe(() => {
+            const { user } = store.getState();
+            this.setProps({ name: user?.display_name });
+            this.setForm(user);
+        });
+
+        this.formElement?.addEventListener('submit', (event: Event) => {
+            event.preventDefault();
+            const profile = getProfile(this.formGroup?.state);
+
+            this.userApi.changeProfile(profile).then((res) => {
+                store.dispatch({ type: ACTION.CHANGE_USER, props: res });
+
+                return this.router?.go('/profile');
+            });
+        });
+    }
+
+    private setForm(userData: User | null): void {
+        this.formState = {
+            mail: new FormControl(userData?.email || '', false, new ValidatorComposer([ new EmailValidator(), new EmptyValidator() ])),
+            login: new FormControl(userData?.login || '', false, new EmptyValidator()),
+            userName: new FormControl(userData?.first_name || '', false, new EmptyValidator()),
+            surname: new FormControl(userData?.second_name || '', false, new EmptyValidator()),
+            nameInChat: new FormControl(userData?.display_name || '', false, new EmptyValidator()),
+            phone: new FormControl(userData?.phone || '', false, new EmptyValidator()),
+        };
+        this.formGroup = new FormGroupControl(this.formElement, this.formState);
+
+        this.formGroup.initialize();
+    }
+
+    public destroy(): void {
+        if (this.subscription) {
+            this.subscription();
         }
     }
 
@@ -53,8 +77,19 @@ export class ChangeProfileDataComponent extends Component {
     }
 }
 
+const getProfile = (data: ChangeProfileGroup | undefined) => {
+    return {
+        first_name: data?.userName.value || '',
+        second_name: data?.surname.value || '',
+        display_name: data?.nameInChat.value || '',
+        login: data?.login.value || '',
+        email: data?.mail.value || '',
+        phone: data?.phone.value || ''
+    };
+};
+
 export const changeProfileDataProps = {
-    name: 'Иван',
+    name: '',
     button: new Button({
         type: 'submit',
         class: 'profile__form-submit default-button',

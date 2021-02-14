@@ -2,7 +2,8 @@ import { User } from '../api/auth-api.js';
 
 export enum ACTION {
     INIT = 'INIT',
-    GET_USER = 'GET_USER'
+    GET_USER = 'GET_USER',
+    CHANGE_USER = 'CHANGE_USER'
 }
 
 export interface Action {
@@ -23,7 +24,10 @@ export const initialState: State = {
 const reducer: Reducer = (state = initialState, action: Action): State => {
     switch (action.type) {
         case ACTION.GET_USER:
-            return { ...state, user: action.props };
+            return { ...state, user: { ...state.user, ...action.props } };
+
+        case ACTION.CHANGE_USER:
+            return { ...state, user: { ...state.user, ...action.props } };
 
         default:
             return state;

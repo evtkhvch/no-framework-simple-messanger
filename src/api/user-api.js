@@ -1,5 +1,5 @@
-import { HTTPClient } from '../core/http-client';
-import { environment } from '../enviroment/enviroment';
+import { HTTPClient } from '../core/http-client.js';
+import { environment } from '../enviroment/enviroment.js';
 export class UserApi {
     constructor() {
         this.httpClient = new HTTPClient();
@@ -8,7 +8,7 @@ export class UserApi {
         return this.httpClient.put(`${environment.praktikum}/user/profile`, {
             data,
             headers: { 'Content-Type': 'application/json' }
-        });
+        }).then(res => res.response).then(res => JSON.parse(res));
     }
     changeProfileAvatar(avatar) {
         return this.httpClient.put(`${environment.praktikum}/user/profile/avatar`, {

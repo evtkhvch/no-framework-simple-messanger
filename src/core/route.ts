@@ -28,6 +28,8 @@ export class Route {
     public render(): void {
         if (!this._component) {
             this._component = new this.component(this.props);
+        } else {
+            this._component.init();
         }
         render(this.rootQuery, this._component);
     }

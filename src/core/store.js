@@ -2,6 +2,7 @@ export var ACTION;
 (function (ACTION) {
     ACTION["INIT"] = "INIT";
     ACTION["GET_USER"] = "GET_USER";
+    ACTION["CHANGE_USER"] = "CHANGE_USER";
 })(ACTION || (ACTION = {}));
 export const initialState = {
     user: null
@@ -9,7 +10,9 @@ export const initialState = {
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case ACTION.GET_USER:
-            return Object.assign(Object.assign({}, state), { user: action.props });
+            return Object.assign(Object.assign({}, state), { user: Object.assign(Object.assign({}, state.user), action.props) });
+        case ACTION.CHANGE_USER:
+            return Object.assign(Object.assign({}, state), { user: Object.assign(Object.assign({}, state.user), action.props) });
         default:
             return state;
     }
