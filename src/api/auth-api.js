@@ -6,19 +6,19 @@ export class AuthApi {
     }
     signIn(login, password) {
         return this.httpClient.post(`${environment.praktikum}/auth/signin`, {
-            data: { login, password },
+            data: JSON.stringify({ login, password }),
             headers: { 'Content-Type': 'application/json' }
         });
     }
     signUp(data) {
         return this.httpClient.post(`${environment.praktikum}/auth/signup`, {
-            data,
+            data: JSON.stringify(data),
             headers: { 'Content-Type': 'application/json' }
         });
     }
     logout() {
         return this.httpClient.post(`${environment.praktikum}/auth/logout`, {
-            data: {},
+            data: JSON.stringify({}),
             headers: {}
         }).then(res => res.status === 200);
     }

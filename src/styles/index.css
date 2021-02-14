@@ -237,6 +237,10 @@
   margin-bottom: 21px;
 }
 
+.change-data.profile__avatar:hover {
+  opacity: 0.8;
+}
+
 .profile__avatar:after {
   content: url("../assets/icons/picture.svg");
 }

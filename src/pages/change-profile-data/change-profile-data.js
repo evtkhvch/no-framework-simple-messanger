@@ -20,6 +20,17 @@ export class ChangeProfileDataComponent extends Component {
         this.formElement = document.querySelector('.profile__form.profile__container');
         this.initListeners();
         const navButton = document.querySelector('.profile__nav-button');
+        const input = document.querySelector('.profile__change-img');
+        input === null || input === void 0 ? void 0 : input.addEventListener('change', () => {
+            const selectedFile = input.files ? input === null || input === void 0 ? void 0 : input.files[0] : null;
+            if (selectedFile) {
+                let formData = new FormData();
+                formData.set('avatar', selectedFile);
+                this.userApi.changeProfileAvatar(formData).then(res => {
+                    store.dispatch({ type: ACTION.CHANGE_USER, props: res });
+                });
+            }
+        });
         navButton === null || navButton === void 0 ? void 0 : navButton.addEventListener('click', () => { var _a; return (_a = this.router) === null || _a === void 0 ? void 0 : _a.go('/profile'); });
     }
     initListeners() {
@@ -29,7 +40,7 @@ export class ChangeProfileDataComponent extends Component {
         });
         this.subscription = store.subscribe(() => {
             const { user } = store.getState();
-            this.setProps({ name: user === null || user === void 0 ? void 0 : user.display_name });
+            this.setProps({ name: user === null || user === void 0 ? void 0 : user.display_name, avatar: `https://ya-praktikum.tech${user === null || user === void 0 ? void 0 : user.avatar}` });
             this.setForm(user);
         });
         (_a = this.formElement) === null || _a === void 0 ? void 0 : _a.addEventListener('submit', (event) => {
@@ -75,6 +86,7 @@ const getProfile = (data) => {
     };
 };
 export const changeProfileDataProps = {
+    avatar: '',
     name: '',
     button: new Button({
         type: 'submit',

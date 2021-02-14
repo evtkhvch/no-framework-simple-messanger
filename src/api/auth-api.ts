@@ -6,21 +6,21 @@ export class AuthApi {
 
     public signIn(login: string, password: string): Promise<XMLHttpRequest> {
         return this.httpClient.post(`${environment.praktikum}/auth/signin`, {
-            data: { login, password },
+            data: JSON.stringify({ login, password }),
             headers: { 'Content-Type': 'application/json' }
         });
     }
 
     public signUp(data: SignUpReq): Promise<XMLHttpRequest> {
         return this.httpClient.post(`${environment.praktikum}/auth/signup`, {
-            data,
+            data: JSON.stringify(data),
             headers: { 'Content-Type': 'application/json' }
         });
     }
 
     public logout(): Promise<boolean> {
         return this.httpClient.post(`${environment.praktikum}/auth/logout`, {
-            data: {},
+            data: JSON.stringify({}),
             headers: {}
         }).then(res => res.status === 200);
     }

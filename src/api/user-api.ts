@@ -1,26 +1,27 @@
 import { HTTPClient } from '../core/http-client.js';
 import { environment } from '../enviroment/enviroment.js';
+import { User } from './auth-api';
 
 export class UserApi {
     private httpClient = new HTTPClient();
 
     public changeProfile(data: Profile): Promise<Profile> {
         return this.httpClient.put(`${environment.praktikum}/user/profile`, {
-            data,
+            data: JSON.stringify(data),
             headers: { 'Content-Type': 'application/json' }
         }).then(res => res.response).then(res => JSON.parse(res))
     }
 
-    public changeProfileAvatar(avatar: any): Promise<boolean> {
+    public changeProfileAvatar(data: FormData): Promise<User> {
         return this.httpClient.put(`${environment.praktikum}/user/profile/avatar`, {
-            data: {},
-            headers: { 'Content-Type': 'multipart/form-data' }
-        }).then(res => res.status === 200)
+            data,
+            headers: {}
+        }).then(res => res.response).then(res => JSON.parse(res))
     }
 
     public changeProfilePassword(oldPassword: string, newPassword: string): Promise<boolean> {
         return this.httpClient.put(`${environment.praktikum}/user/password`, {
-            data: { oldPassword, newPassword },
+            data: JSON.stringify({ oldPassword, newPassword }),
             headers: { 'Content-Type': 'application/json' }
         }).then(res => res.status === 200)
     }

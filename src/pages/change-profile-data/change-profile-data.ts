@@ -25,6 +25,21 @@ export class ChangeProfileDataComponent extends Component {
         this.initListeners();
 
         const navButton: HTMLElement | null = document.querySelector('.profile__nav-button');
+        const input: HTMLInputElement | null = document.querySelector('.profile__change-img');
+
+        input?.addEventListener('change', () => {
+            const selectedFile = input.files ? input?.files[0] : null;
+
+            if (selectedFile) {
+                let formData = new FormData();
+                formData.set('avatar', selectedFile);
+
+                this.userApi.changeProfileAvatar(formData).then(res => {
+                    store.dispatch({ type: ACTION.CHANGE_USER, props: res });
+                });
+            }
+        });
+
         navButton?.addEventListener('click', () => this.router?.go('/profile'));
     }
 
@@ -35,7 +50,7 @@ export class ChangeProfileDataComponent extends Component {
 
         this.subscription = store.subscribe(() => {
             const { user } = store.getState();
-            this.setProps({ name: user?.display_name });
+            this.setProps({ name: user?.display_name, avatar: `https://ya-praktikum.tech${user?.avatar}` });
             this.setForm(user);
         });
 
@@ -88,6 +103,7 @@ const getProfile = (data: ChangeProfileGroup | undefined) => {
 };
 
 export const changeProfileDataProps = {
+    avatar: '',
     name: '',
     button: new Button({
         type: 'submit',

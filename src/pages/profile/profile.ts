@@ -52,7 +52,7 @@ export class ProfileComponent extends Component {
             const { user } = store.getState();
 
             if (user) {
-                this.setProps({ name: user.display_name || '' });
+                this.setProps({ name: user?.display_name, avatar: `https://ya-praktikum.tech${user?.avatar}` });
                 this.setForm(user);
             }
         });
@@ -69,7 +69,7 @@ export class ProfileComponent extends Component {
     }
 }
 
-export const profileProps = { name: '' };
+export const profileProps = { name: '', avatar: '' };
 
 interface ProfileGroup extends FormState {
     mail: FormControl;

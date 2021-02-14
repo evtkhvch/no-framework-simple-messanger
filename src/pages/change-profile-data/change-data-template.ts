@@ -3,7 +3,10 @@ export default `
         <a type="button" class="profile__nav-button"></a>
     </nav>
     <div class="profile__info">
-        <div class="profile__avatar"></div>
+        <label for="avatar">
+            <img src="{{ avatar }}" class="profile__avatar change-data"/>
+        </label>
+        <input type="file" class="profile__change-img" id="avatar" name="avatar" accept="image/png, image/jpeg">
         <div class="profile__name">{{ name }}</div>
         <form class="profile__form profile__container">
             <div class="profile__form-item">

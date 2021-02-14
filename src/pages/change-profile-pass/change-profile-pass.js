@@ -5,15 +5,25 @@ import { EmptyValidator, FormControl } from '../../core/validator.js';
 import { FormGroupControl } from '../../core/form-group-control.js';
 import { Router } from '../../core/router.js';
 import { UserApi } from '../../api/user-api.js';
+import { ACTION, store } from '../../core/store.js';
+import { AuthApi } from '../../api/auth-api.js';
 export class ChangeProfilePassComponent extends Component {
     constructor(props) {
         super('div', props, 'profile');
         this.props = props;
         this.formElement = null;
         this.userApi = new UserApi();
+        this.authApi = new AuthApi();
         this.router = new Router('.app');
     }
     componentDidMount() {
+        this.authApi.user().then(value => {
+            store.dispatch({ type: ACTION.GET_USER, props: value });
+        });
+        this.subscription = store.subscribe(() => {
+            const { user } = store.getState();
+            this.setProps({ name: user === null || user === void 0 ? void 0 : user.display_name, avatar: `https://ya-praktikum.tech${user === null || user === void 0 ? void 0 : user.avatar}` });
+        });
         this.formElement = document.querySelector('.profile__form.profile__container');
         this.initListeners();
         this.initForm();

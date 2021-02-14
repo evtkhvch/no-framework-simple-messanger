@@ -41,7 +41,7 @@ export class ProfileComponent extends Component {
         this.subscription = store.subscribe(() => {
             const { user } = store.getState();
             if (user) {
-                this.setProps({ name: user.display_name || '' });
+                this.setProps({ name: user === null || user === void 0 ? void 0 : user.display_name, avatar: `https://ya-praktikum.tech${user === null || user === void 0 ? void 0 : user.avatar}` });
                 this.setForm(user);
             }
         });
@@ -55,5 +55,5 @@ export class ProfileComponent extends Component {
         return template;
     }
 }
-export const profileProps = { name: '' };
+export const profileProps = { name: '', avatar: '' };
 //# sourceMappingURL=profile.js.map

@@ -6,19 +6,19 @@ export class UserApi {
     }
     changeProfile(data) {
         return this.httpClient.put(`${environment.praktikum}/user/profile`, {
-            data,
+            data: JSON.stringify(data),
             headers: { 'Content-Type': 'application/json' }
         }).then(res => res.response).then(res => JSON.parse(res));
     }
-    changeProfileAvatar(avatar) {
+    changeProfileAvatar(data) {
         return this.httpClient.put(`${environment.praktikum}/user/profile/avatar`, {
-            data: {},
-            headers: { 'Content-Type': 'multipart/form-data' }
-        }).then(res => res.status === 200);
+            data,
+            headers: {}
+        }).then(res => res.response).then(res => JSON.parse(res));
     }
     changeProfilePassword(oldPassword, newPassword) {
         return this.httpClient.put(`${environment.praktikum}/user/password`, {
-            data: { oldPassword, newPassword },
+            data: JSON.stringify({ oldPassword, newPassword }),
             headers: { 'Content-Type': 'application/json' }
         }).then(res => res.status === 200);
     }

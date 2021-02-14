@@ -51,7 +51,7 @@ export class HTTPClient implements Http {
             if (method === METHOD.GET || !data) {
                 xhr.send();
             } else {
-                xhr.send(JSON.stringify(data));
+                xhr.send(data);
             }
         });
     };

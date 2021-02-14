@@ -45,7 +45,7 @@ export class HTTPClient {
                     xhr.send();
                 }
                 else {
-                    xhr.send(JSON.stringify(data));
+                    xhr.send(data);
                 }
             });
         };
