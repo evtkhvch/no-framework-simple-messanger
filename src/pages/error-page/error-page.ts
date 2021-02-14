@@ -1,7 +1,7 @@
 import { Component, Props } from '../../core/component.js';
 import { Router } from '../../core/router.js';
 
-class ErrorPage extends Component {
+export class ErrorComponent extends Component {
     public router: Router | null = null;
 
     constructor(public props: Props) {
@@ -26,4 +26,4 @@ class ErrorPage extends Component {
     }
 }
 
-export const errorPage = new ErrorPage({});
+export const errorProps = {};

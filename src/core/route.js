@@ -1,9 +1,10 @@
 import { render } from './render.js';
 export class Route {
-    constructor(pathname, component, props) {
+    constructor(pathname, component, props, rootQuery) {
         this.pathname = pathname;
         this.component = component;
         this.props = props;
+        this.rootQuery = rootQuery;
         this._component = null;
     }
     navigate(pathname) {
@@ -14,7 +15,7 @@ export class Route {
     }
     leave() {
         if (this._component) {
-            this._component.remove();
+            this._component._destroy();
         }
     }
     match(pathname) {
@@ -22,10 +23,12 @@ export class Route {
     }
     render() {
         if (!this._component) {
-            this._component = this.component;
+            this._component = new this.component(this.props);
         }
-        this._component.init();
-        render(this.props.rootQuery, this._component);
+        else {
+            this._component.init();
+        }
+        render(this.rootQuery, this._component);
     }
 }
 const isEqual = (lhs, rhs) => lhs === rhs;

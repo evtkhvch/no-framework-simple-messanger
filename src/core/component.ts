@@ -24,10 +24,11 @@ abstract class IComponent {
     abstract componentDidMount(): void;
     abstract setProps(nextProps: Props): void;
     abstract componentDidUpdate(oldProps: Props, newProps: Props): boolean;
+    abstract _render(): void;
     abstract render(): string;
     abstract show(): void;
     abstract hide(): void;
-    abstract remove(): void;
+    abstract _destroy(): void;
     abstract destroy(): void;
     abstract get element(): HTMLElement | null;
 }
@@ -67,6 +68,7 @@ export class Component implements IComponent {
 
     public init(): void {
         this._createResources();
+
         this.subject.next(EVENTS.FLOW_RENDER);
     }
 
@@ -108,11 +110,13 @@ export class Component implements IComponent {
         return this._element ? this._element.innerHTML : '';
     }
 
-    private _render(): void {
+    public _render(): void {
         const block = this.render();
 
         if (this._element) {
-            this._element.innerHTML = templateCompiler(block, this.props);
+            const tmp = templateCompiler(block, this.props);
+            // @ts-ignore
+            this._element.innerHTML = window.DOMPurify.sanitize(tmp);
         }
         setTimeout(() => { this._afterViewInit(); });
     }
@@ -155,7 +159,7 @@ export class Component implements IComponent {
         }
     }
 
-    public remove(): void {
+    public _destroy(): void {
         if (this._element) {
             this._element.remove();
         }

@@ -5,7 +5,7 @@ export interface Validator<T> {
 }
 
 export interface FormState {
-    [name: string]: FormControl;
+    [key: string]: FormControl;
 }
 
 export class FormControl {
@@ -20,6 +20,17 @@ export class EmptyValidator implements Validator<string> {
 
     public getDescription(): string {
         return 'Поле должно быть заполнено';
+    }
+}
+
+export class PhoneNumberValidator implements Validator<string> {
+    public isValid(value: string): boolean {
+        const re = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+        return re.test(String(value).toLowerCase());
+    }
+
+    public getDescription(): string {
+        return 'Введите корректный номер телефона';
     }
 }
 

@@ -1,6 +1,6 @@
 import { Component } from '../../core/component.js';
 import { Router } from '../../core/router.js';
-class PageNotFound extends Component {
+export class NotFoundComponent extends Component {
     constructor(props) {
         super('div', props, 'not-found');
         this.props = props;
@@ -21,5 +21,5 @@ class PageNotFound extends Component {
         `;
     }
 }
-export const notFoundPageComponent = new PageNotFound({});
+export const notFoundProps = {};
 //# sourceMappingURL=not-found-page.js.map

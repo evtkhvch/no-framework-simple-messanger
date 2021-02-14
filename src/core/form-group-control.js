@@ -1,14 +1,13 @@
-export class FormValidator {
+export class FormGroupControl {
     constructor(form, state) {
         this.form = form;
         this.state = state;
     }
     initialize() {
-        var _a, _b;
+        var _a;
         this.initControls();
         this.setButtonStatus();
         (_a = this.form) === null || _a === void 0 ? void 0 : _a.addEventListener('input', this.listen.bind(this), true);
-        (_b = this.form) === null || _b === void 0 ? void 0 : _b.addEventListener('submit', this.listen.bind(this), true);
     }
     initControls() {
         const fields = Object.entries(this.state);
@@ -35,10 +34,10 @@ export class FormValidator {
             this.state = Object.assign(Object.assign({}, this.state), { [field]: Object.assign(Object.assign({}, this.state[field]), { value: input === null || input === void 0 ? void 0 : input.value }) });
         }
         if (validator === null || validator === void 0 ? void 0 : validator.isValid(input === null || input === void 0 ? void 0 : input.value)) {
-            FormValidator.setErrorMessage(input, '');
+            FormGroupControl.setErrorMessage(input, '');
         }
         else {
-            FormValidator.setErrorMessage(input, validator === null || validator === void 0 ? void 0 : validator.getDescription());
+            FormGroupControl.setErrorMessage(input, validator === null || validator === void 0 ? void 0 : validator.getDescription());
         }
         this.setButtonStatus();
     }
@@ -60,10 +59,5 @@ export class FormValidator {
     isFormValid() {
         return Object.values(this.state).every(item => { var _a; return (_a = item.validator) === null || _a === void 0 ? void 0 : _a.isValid(item.value); });
     }
-    removeListeners() {
-        var _a, _b;
-        (_a = this.form) === null || _a === void 0 ? void 0 : _a.removeEventListener('input', this.listen.bind(this), true);
-        (_b = this.form) === null || _b === void 0 ? void 0 : _b.removeEventListener('submit', this.listen.bind(this), true);
-    }
 }
-//# sourceMappingURL=form-validator.js.map
+//# sourceMappingURL=form-group-control.js.map

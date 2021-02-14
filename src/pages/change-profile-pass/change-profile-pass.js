@@ -2,52 +2,68 @@ import { Component } from '../../core/component.js';
 import template from './change-pass.template.js';
 import { Button } from '../../components/button/button.js';
 import { EmptyValidator, FormControl } from '../../core/validator.js';
-import { FormValidator } from '../../core/form-validator.js';
+import { FormGroupControl } from '../../core/form-group-control.js';
 import { Router } from '../../core/router.js';
-class ChangeProfilePass extends Component {
+import { UserApi } from '../../api/user-api.js';
+import { ACTION, store } from '../../core/store.js';
+import { AuthApi } from '../../api/auth-api.js';
+export class ChangeProfilePassComponent extends Component {
     constructor(props) {
         super('div', props, 'profile');
         this.props = props;
+        this.formElement = null;
+        this.userApi = new UserApi();
+        this.authApi = new AuthApi();
         this.router = new Router('.app');
     }
     componentDidMount() {
+        this.authApi.user().then(value => {
+            store.dispatch({ type: ACTION.GET_USER, props: value });
+        });
+        this.subscription = store.subscribe(() => {
+            const { user } = store.getState();
+            this.setProps({ name: user === null || user === void 0 ? void 0 : user.display_name, avatar: `https://ya-praktikum.tech${user === null || user === void 0 ? void 0 : user.avatar}` });
+        });
+        this.formElement = document.querySelector('.profile__form.profile__container');
+        this.initListeners();
         this.initForm();
-    }
-    initForm() {
-        const formElement = document.querySelector('.profile__form.profile__container');
-        const formState = {
-            pass: new FormControl('pochta@yandex.ru', false, new EmptyValidator()),
-            newPass: new FormControl('ivanivanov', false, new EmptyValidator()),
-            newPassMore: new FormControl('Иван', false, new EmptyValidator()),
-        };
-        this.validator = new FormValidator(formElement, formState);
-        this.validator.initialize();
-        if (formElement) {
-            formElement.onsubmit = (event) => {
-                var _a;
-                event.preventDefault();
-                (_a = this.router) === null || _a === void 0 ? void 0 : _a.go('/profile');
-            };
-        }
         const navButton = document.querySelector('.profile__nav-button');
         if (navButton) {
             navButton.onclick = () => { var _a; (_a = this.router) === null || _a === void 0 ? void 0 : _a.go('/profile'); };
         }
     }
-    destroy() {
+    initListeners() {
         var _a;
-        (_a = this.validator) === null || _a === void 0 ? void 0 : _a.removeListeners();
+        (_a = this.formElement) === null || _a === void 0 ? void 0 : _a.addEventListener('submit', (event) => {
+            var _a, _b;
+            event.preventDefault();
+            const old = ((_a = this.formGroup) === null || _a === void 0 ? void 0 : _a.state.pass.value) || '';
+            const newPass = ((_b = this.formGroup) === null || _b === void 0 ? void 0 : _b.state.newPassMore.value) || '';
+            this.userApi.changeProfilePassword(old, newPass).then(() => {
+                var _a;
+                (_a = this.router) === null || _a === void 0 ? void 0 : _a.go('/profile');
+            });
+        });
+    }
+    initForm() {
+        const formState = {
+            pass: new FormControl('', false, new EmptyValidator()),
+            newPass: new FormControl('', false, new EmptyValidator()),
+            newPassMore: new FormControl('', false, new EmptyValidator()),
+        };
+        this.formGroup = new FormGroupControl(this.formElement, formState);
+        this.formGroup.initialize();
     }
     render() {
         return template;
     }
 }
-export const changeProfilePassComponent = new ChangeProfilePass({
+export const changeProfilePassProps = {
     name: 'Иван',
     button: new Button({
         type: 'submit',
         class: 'profile__form-submit default-button',
         name: 'Сохранить'
     }).elementToString
-});
+};
 //# sourceMappingURL=change-profile-pass.js.map

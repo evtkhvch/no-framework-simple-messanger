@@ -1,68 +1,67 @@
 import { Component, Props } from '../../core/component.js';
 import template from './profile.template.js';
 import { EmptyValidator, FormControl, FormState } from '../../core/validator.js';
-import { FormValidator } from '../../core/form-validator.js';
+import { FormGroupControl } from '../../core/form-group-control.js';
 import { Router } from '../../core/router.js';
+import { AuthApi, User } from '../../api/auth-api.js';
+import { ACTION, store } from '../../core/store.js';
 
-class Profile extends Component {
-    private validator: FormValidator | undefined;
-    private router: Router | undefined;
+export class ProfileComponent extends Component {
+    private formGroup: FormGroupControl<ProfileGroup> | undefined;
+    private router: Router = new Router('.app');
+    private authApi = new AuthApi();
+    private subscription: (() => void) | undefined;
 
     constructor(public props: Props) {
         super('div', props, 'profile');
-        this.router = new Router('.app');
     }
 
     public componentDidMount(): void {
-        this.initForm();
-    }
-
-    private initForm(): void {
-        const formElement: HTMLFormElement | null = document.querySelector('.profile__form.profile__container');
-        const formState: FormState = {
-            mail: new FormControl('pochta@yandex.ru', true, new EmptyValidator()),
-            login: new FormControl('ivanivanov', true, new EmptyValidator()),
-            userName: new FormControl('Иван', true, new EmptyValidator()),
-            surname: new FormControl('Иванов', true, new EmptyValidator()),
-            nameInChat: new FormControl('Иван', true, new EmptyValidator()),
-            phone: new FormControl('+7 (909) 967 30 30', true, new EmptyValidator()),
-        };
-        this.validator = new FormValidator(formElement, formState);
-
-        this.validator.initialize();
+        this.initListeners();
 
         const profileNav: HTMLFormElement | null = document.querySelector('.profile__nav-button');
         const exit: HTMLFormElement | null = document.querySelector('.profile__option-exit');
         const changePass: HTMLFormElement | null = document.querySelector('.profile__option-change-pass');
         const changeData: HTMLFormElement | null = document.querySelector('.profile__option-change-data');
 
-        if (profileNav) {
-            profileNav.onclick = () => {
-                this.router?.go('/chat');
-            };
-        }
-
-        if (exit) {
-            exit.onclick = () => {
-                this.router?.go('/login');
-            };
-        }
-
-        if (changePass) {
-            changePass.onclick = () => {
-                this.router?.go('/change-profile-pass');
-            };
-        }
-
-        if (changeData) {
-            changeData.onclick = () => {
-                this.router?.go('/change-profile-data');
-            };
-        }
+        profileNav?.addEventListener('click', () => this.router?.go('/chat'));
+        changePass?.addEventListener('click', () => this.router?.go('/change-profile-pass'));
+        changeData?.addEventListener('click', () => this.router?.go('/change-profile-data'));
+        exit?.addEventListener('click', () => this.authApi.logout().then(() => { this.router?.go('/login') }));
     }
 
-    public destroy(): void {
-        this.validator?.removeListeners();
+    private setForm(userData: User): void {
+        const formElement: HTMLFormElement | null = document.querySelector('.profile__form.profile__container');
+        const formState: ProfileGroup = {
+            mail: new FormControl(userData.email || '', true, new EmptyValidator()),
+            login: new FormControl(userData.login || '', true, new EmptyValidator()),
+            userName: new FormControl(userData.first_name || '', true, new EmptyValidator()),
+            surname: new FormControl(userData.second_name || '', true, new EmptyValidator()),
+            nameInChat: new FormControl(userData.display_name || '', true, new EmptyValidator()),
+            phone: new FormControl(userData.phone || '', true, new EmptyValidator()),
+        };
+        this.formGroup = new FormGroupControl(formElement, formState);
+
+        this.formGroup.initialize();
+    }
+
+    private initListeners(): void {
+        this.authApi.user().then(value => { store.dispatch({ type: ACTION.GET_USER, props: value }); })
+
+        this.subscription = store.subscribe(() => {
+            const { user } = store.getState();
+
+            if (user) {
+                this.setProps({ name: user?.display_name, avatar: `https://ya-praktikum.tech${user?.avatar}` });
+                this.setForm(user);
+            }
+        });
+    }
+
+    public destroy() {
+        if (this.subscription) {
+            this.subscription();
+        }
     }
 
     public render(): string {
@@ -70,4 +69,13 @@ class Profile extends Component {
     }
 }
 
-export const profileComponent = new Profile({ name: 'Иван' });
+export const profileProps = { name: '', avatar: '' };
+
+interface ProfileGroup extends FormState {
+    mail: FormControl;
+    login: FormControl;
+    userName: FormControl;
+    surname: FormControl;
+    nameInChat: FormControl;
+    phone: FormControl;
+}

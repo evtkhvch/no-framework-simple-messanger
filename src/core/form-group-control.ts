@@ -1,14 +1,13 @@
 import { FormState } from './validator.js';
 
-export class FormValidator {
-    constructor(public form: HTMLElement | null, public state: FormState) {
+export class FormGroupControl<T extends FormState> {
+    constructor(public form: HTMLElement | null, public state: T) {
     }
 
     public initialize(): void {
         this.initControls();
         this.setButtonStatus();
         this.form?.addEventListener('input', this.listen.bind(this), true);
-        this.form?.addEventListener('submit', this.listen.bind(this), true);
     }
 
     public initControls(): void {
@@ -40,9 +39,9 @@ export class FormValidator {
         }
 
         if (validator?.isValid(input?.value)) {
-            FormValidator.setErrorMessage(input, '');
+            FormGroupControl.setErrorMessage(input, '');
         } else {
-            FormValidator.setErrorMessage(input, validator?.getDescription());
+            FormGroupControl.setErrorMessage(input, validator?.getDescription());
         }
 
         this.setButtonStatus();
@@ -67,10 +66,5 @@ export class FormValidator {
 
     public isFormValid(): boolean {
         return Object.values(this.state).every(item => item.validator?.isValid(item.value));
-    }
-
-    public removeListeners(): void {
-        this.form?.removeEventListener('input', this.listen.bind(this), true);
-        this.form?.removeEventListener('submit', this.listen.bind(this), true);
     }
 }

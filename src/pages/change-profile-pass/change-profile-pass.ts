@@ -2,12 +2,19 @@ import { Component, Props } from '../../core/component.js';
 import template from './change-pass.template.js';
 import { Button } from '../../components/button/button.js';
 import { EmptyValidator, FormControl, FormState } from '../../core/validator.js';
-import { FormValidator } from '../../core/form-validator.js';
+import { FormGroupControl } from '../../core/form-group-control.js';
 import { Router } from '../../core/router.js';
+import { UserApi } from '../../api/user-api.js';
+import { ACTION, store } from '../../core/store.js';
+import { AuthApi } from '../../api/auth-api.js';
 
-class ChangeProfilePass extends Component {
-    private validator: FormValidator | undefined;
+export class ChangeProfilePassComponent extends Component {
+    private formGroup: FormGroupControl<ChangeProfileGroup> | undefined;
     private router: Router | undefined;
+    private formElement: HTMLElement | null = null;
+    private userApi = new UserApi();
+    private authApi = new AuthApi();
+    private subscription: (() => void) | undefined;
 
     constructor(public props: Props) {
         super('div', props, 'profile');
@@ -15,26 +22,19 @@ class ChangeProfilePass extends Component {
     }
 
     public componentDidMount(): void {
+        this.authApi.user().then(value => {
+            store.dispatch({ type: ACTION.GET_USER, props: value });
+        });
+
+        this.subscription = store.subscribe(() => {
+            const { user } = store.getState();
+
+            this.setProps({ name: user?.display_name, avatar: `https://ya-praktikum.tech${user?.avatar}` });
+        });
+
+        this.formElement = document.querySelector('.profile__form.profile__container');
+        this.initListeners();
         this.initForm();
-    }
-
-    private initForm(): void {
-        const formElement: HTMLFormElement | null = document.querySelector('.profile__form.profile__container');
-        const formState: FormState = {
-            pass: new FormControl('pochta@yandex.ru', false, new EmptyValidator()),
-            newPass: new FormControl('ivanivanov', false, new EmptyValidator()),
-            newPassMore: new FormControl('Иван', false, new EmptyValidator()),
-        };
-        this.validator = new FormValidator(formElement, formState);
-
-        this.validator.initialize();
-
-        if (formElement) {
-            formElement.onsubmit = (event: Event) => {
-                event.preventDefault();
-                this.router?.go('/profile');
-            }
-        }
 
         const navButton: HTMLElement | null = document.querySelector('.profile__nav-button');
 
@@ -43,8 +43,27 @@ class ChangeProfilePass extends Component {
         }
     }
 
-    public destroy(): void {
-        this.validator?.removeListeners();
+    private initListeners(): void {
+        this.formElement?.addEventListener('submit', (event: Event) => {
+            event.preventDefault();
+            const old = this.formGroup?.state.pass.value || '';
+            const newPass = this.formGroup?.state.newPassMore.value || '';
+
+            this.userApi.changeProfilePassword(old, newPass).then(() => {
+                this.router?.go('/profile');
+            });
+        });
+    }
+
+    private initForm(): void {
+        const formState: ChangeProfileGroup = {
+            pass: new FormControl('', false, new EmptyValidator()),
+            newPass: new FormControl('', false, new EmptyValidator()),
+            newPassMore: new FormControl('', false, new EmptyValidator()),
+        };
+        this.formGroup = new FormGroupControl(this.formElement, formState);
+
+        this.formGroup.initialize();
     }
 
     public render(): string {
@@ -52,11 +71,17 @@ class ChangeProfilePass extends Component {
     }
 }
 
-export const changeProfilePassComponent = new ChangeProfilePass({
+export const changeProfilePassProps = {
     name: 'Иван',
     button: new Button({
         type: 'submit',
         class: 'profile__form-submit default-button',
         name: 'Сохранить'
     }).elementToString
-});
+};
+
+interface ChangeProfileGroup extends FormState {
+    pass: FormControl;
+    newPass: FormControl;
+    newPassMore: FormControl;
+}

@@ -10,8 +10,8 @@ export class Router {
         }
         Router.__instance = this;
     }
-    use(pathname, component) {
-        const route = new Route(pathname, component, { rootQuery: this._rootQuery });
+    use(pathname, component, props) {
+        const route = new Route(pathname, component, props, this._rootQuery);
         this.routes.push(route);
         return this;
     }

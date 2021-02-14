@@ -3,7 +3,7 @@ export default `
         <a type="button" class="profile__nav-button"></a>
     </nav>
     <div class="profile__info">
-        <div class="profile__avatar"></div>
+        <img src="{{ avatar }}" class="profile__avatar" />
         <div class="profile__name">{{ name }}</div>
         <form class="profile__form profile__container">
             <div class="profile__form-item">
