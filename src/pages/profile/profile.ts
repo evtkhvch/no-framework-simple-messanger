@@ -46,7 +46,7 @@ export class ProfileComponent extends Component {
     }
 
     private initListeners(): void {
-        this.authApi.user().then(value => { store.dispatch({ type: ACTION.GET_USER, props: value }); })
+        this.authApi.user().then(value => { store.dispatch({ type: ACTION.SET_USER, props: value }); })
 
         this.subscription = store.subscribe(() => {
             const { user } = store.getState();

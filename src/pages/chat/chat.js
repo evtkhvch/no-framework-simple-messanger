@@ -1,7 +1,7 @@
 import { Component } from '../../core/component.js';
 import { ChatsBar } from './components/chats-bar/chats-bar.js';
 import { UserCard } from './components/user-card/user-card.js';
-import { CHAT } from '../../core/mock.js';
+import { MESSAGE_LIST } from '../../core/mock.js';
 import { ChatFooter } from './components/chat-footer/chat-footer.js';
 import { Message } from './components/message/message.js';
 import { Router } from '../../core/router.js';
@@ -13,14 +13,19 @@ export class ChatComponent extends Component {
         this.props = props;
         this.router = new Router('.app');
         this.chatApi = new ChatApi();
+        this.chatList = [];
     }
     componentDidMount() {
         this.initForm();
         this.initListener();
     }
+    getChat(id) {
+        return this.chatList.find(val => val.id === id);
+    }
     initForm() {
         this.chatApi.chats().then(value => {
-            store.dispatch({ type: ACTION.GET_CHAT_LIST, props: value });
+            this.chatList = value;
+            store.dispatch({ type: ACTION.SET_CHAT_LIST, props: value });
         });
         this.subscription = store.subscribe(() => {
             const { chatList } = store.getState();
@@ -48,9 +53,14 @@ export class ChatComponent extends Component {
     }
     initListener() {
         const userCardList = document.querySelector('.user-card__list');
-        userCardList === null || userCardList === void 0 ? void 0 : userCardList.addEventListener('click', () => {
-            this.setProps(Object.assign(Object.assign({}, this.props), { isChat: true }));
-        });
+        userCardList === null || userCardList === void 0 ? void 0 : userCardList.addEventListener('click', (event) => {
+            var _a;
+            // @ts-ignore
+            const target = (_a = event === null || event === void 0 ? void 0 : event.target) === null || _a === void 0 ? void 0 : _a.closest('li');
+            const chat = this.getChat(Number(target.dataset.id));
+            const messageList = MESSAGE_LIST.map(item => new Message(Object.assign({}, item)).elementToString).join('');
+            this.setProps(Object.assign(Object.assign({}, this.props), { isChat: true, messageList, name: chat === null || chat === void 0 ? void 0 : chat.title }));
+        }, true);
     }
     destroy() {
         if (this.subscription) {
@@ -83,11 +93,10 @@ export class ChatComponent extends Component {
         `;
     }
 }
-const messageList = CHAT.messageList.map(item => new Message(Object.assign({}, item)).elementToString).join('');
 export const chatProps = {
-    name: CHAT.name,
+    name: '',
     isChat: false,
-    messageList,
+    messageList: [],
     chatsBar: new ChatsBar({
         cardList: []
     }).elementToString,

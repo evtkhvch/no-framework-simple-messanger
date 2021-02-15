@@ -18,7 +18,7 @@ export class ChangeProfilePassComponent extends Component {
     }
     componentDidMount() {
         this.authApi.user().then(value => {
-            store.dispatch({ type: ACTION.GET_USER, props: value });
+            store.dispatch({ type: ACTION.SET_USER, props: value });
         });
         this.subscription = store.subscribe(() => {
             const { user } = store.getState();

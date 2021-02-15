@@ -3,10 +3,8 @@ import { Chat } from '../api/chat-api';
 
 export enum ACTION {
     INIT = 'INIT',
-    GET_USER = 'GET_USER',
-    CHANGE_USER = 'CHANGE_USER',
-    GET_CHAT_LIST = 'GET_CHAT_LIST',
-    SET_CURRENT_CHAT = 'SET_CURRENT_CHAT'
+    SET_USER = 'SET_USER',
+    SET_CHAT_LIST = 'SET_CHAT_LIST'
 }
 
 export interface Action {
@@ -17,7 +15,7 @@ export interface Action {
 export interface State {
     user: User | null;
     chatList: Chat[];
-    chat: Chat | null;
+    chat: Chat | undefined | null;
 }
 
 export type Reducer = (state: State | undefined, action: Action) => State;
@@ -30,17 +28,11 @@ export const initialState: State = {
 
 const reducer: Reducer = (state = initialState, action: Action): State => {
     switch (action.type) {
-        case ACTION.GET_USER:
+        case ACTION.SET_USER:
             return { ...state, user: { ...state.user, ...action.props } };
 
-        case ACTION.CHANGE_USER:
-            return { ...state, user: { ...state.user, ...action.props } };
-
-        case ACTION.GET_CHAT_LIST:
+        case ACTION.SET_CHAT_LIST:
             return { ...state, chatList: action.props };
-
-        case ACTION.SET_CURRENT_CHAT:
-            return { ...state, chat: action.props };
 
         default:
             return state;

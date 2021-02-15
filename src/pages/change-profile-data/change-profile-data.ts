@@ -35,7 +35,7 @@ export class ChangeProfileDataComponent extends Component {
                 formData.set('avatar', selectedFile);
 
                 this.userApi.changeProfileAvatar(formData).then(res => {
-                    store.dispatch({ type: ACTION.CHANGE_USER, props: res });
+                    store.dispatch({ type: ACTION.SET_USER, props: res });
                 });
             }
         });
@@ -45,7 +45,7 @@ export class ChangeProfileDataComponent extends Component {
 
     private initListeners(): void {
         this.authApi.user().then(value => {
-            store.dispatch({ type: ACTION.GET_USER, props: value });
+            store.dispatch({ type: ACTION.SET_USER, props: value });
         });
 
         this.subscription = store.subscribe(() => {
@@ -59,7 +59,7 @@ export class ChangeProfileDataComponent extends Component {
             const profile = getProfile(this.formGroup?.state);
 
             this.userApi.changeProfile(profile).then((res) => {
-                store.dispatch({ type: ACTION.CHANGE_USER, props: res });
+                store.dispatch({ type: ACTION.SET_USER, props: res });
 
                 return this.router?.go('/profile');
             });

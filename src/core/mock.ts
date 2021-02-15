@@ -1,6 +1,6 @@
-import { Message, Chat } from './interfaces.js';
+import { Message } from './interfaces.js';
 
-const MESSAGE_LIST: Message[] = [
+export const MESSAGE_LIST: Message[] = [
     new Message(
         1,
         'incoming',
@@ -38,5 +38,3 @@ const MESSAGE_LIST: Message[] = [
         '11:56'
     )
 ];
-
-export const CHAT: Chat = new Chat(1, 'Вадим', MESSAGE_LIST);
