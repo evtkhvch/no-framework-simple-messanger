@@ -1,18 +1,4 @@
-import { Dialog, Message, Chat } from './interfaces.js';
-
-export const DIALOG_LIST: Dialog[] = [
-    new Dialog(1, 'Андрей', 'И Human Interface Guidelines и Material Design рекомендуют', '10:49', 4),
-    new Dialog(2, 'Андрей', 'И Human Interface Guidelines и Material Design рекомендуют', '10:49', 4),
-    new Dialog(3, 'Андрей', 'И Human Interface Guidelines и Material Design рекомендуют', '10:49', 4),
-    new Dialog(4, 'Андрей', 'И Human Interface Guidelines и Material Design рекомендуют', '10:49', 4),
-    new Dialog(5, 'Андрей', 'И Human Interface Guidelines и Material Design рекомендуют', '10:49', 4),
-    new Dialog(6, 'Андрей', 'И Human Interface Guidelines и Material Design рекомендуют', '10:49', 4),
-    new Dialog(7, 'Андрей', 'И Human Interface Guidelines и Material Design рекомендуют', '10:49', 4),
-    new Dialog(8, 'Андрей', 'И Human Interface Guidelines и Material Design рекомендуют', '10:49', 4),
-    new Dialog(9, 'Андрей', 'И Human Interface Guidelines и Material Design рекомендуют', '10:49', 4),
-    new Dialog(10, 'Андрей', 'И Human Interface Guidelines и Material Design рекомендуют', '10:49', 4),
-    new Dialog(11, 'Андрей', 'И Human Interface Guidelines и Material Design рекомендуют', '10:49', 4)
-];
+import { Message, Chat } from './interfaces.js';
 
 const MESSAGE_LIST: Message[] = [
     new Message(
