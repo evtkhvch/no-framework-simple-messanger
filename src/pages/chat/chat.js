@@ -1,21 +1,36 @@
 import { Component } from '../../core/component.js';
 import { ChatsBar } from './components/chats-bar/chats-bar.js';
 import { UserCard } from './components/user-card/user-card.js';
-import { DIALOG_LIST, CHAT } from '../../core/mock.js';
+import { CHAT } from '../../core/mock.js';
 import { ChatFooter } from './components/chat-footer/chat-footer.js';
 import { Message } from './components/message/message.js';
 import { Router } from '../../core/router.js';
+import { ACTION, store } from '../../core/store.js';
+import { ChatApi } from '../../api/chat-api.js';
 export class ChatComponent extends Component {
     constructor(props) {
         super('div', props, 'chat-list');
         this.props = props;
         this.router = new Router('.app');
+        this.chatApi = new ChatApi();
     }
     componentDidMount() {
         this.initForm();
         this.initListener();
     }
     initForm() {
+        this.chatApi.chats().then(value => {
+            store.dispatch({ type: ACTION.GET_CHAT_LIST, props: value });
+        });
+        this.subscription = store.subscribe(() => {
+            const { chatList } = store.getState();
+            const cardList = chatList.map(item => new UserCard(Object.assign(Object.assign({}, item), { avatar: item.avatar ? `https://ya-praktikum.tech${item.avatar}` : null })).elementToString).join('');
+            this.setProps({
+                chatsBar: new ChatsBar({
+                    cardList: cardList
+                }).elementToString
+            });
+        });
         const message = document.querySelector('.chat__footer-message');
         const button = document.querySelector('.chat__footer-submit');
         const profileTitle = document.querySelector('.chats-bar__header-title');
@@ -33,7 +48,14 @@ export class ChatComponent extends Component {
     }
     initListener() {
         const userCardList = document.querySelector('.user-card__list');
-        userCardList === null || userCardList === void 0 ? void 0 : userCardList.addEventListener('click', () => { this.setProps(Object.assign(Object.assign({}, this.props), { isChat: true })); });
+        userCardList === null || userCardList === void 0 ? void 0 : userCardList.addEventListener('click', () => {
+            this.setProps(Object.assign(Object.assign({}, this.props), { isChat: true }));
+        });
+    }
+    destroy() {
+        if (this.subscription) {
+            this.subscription();
+        }
     }
     render() {
         return `
@@ -61,14 +83,13 @@ export class ChatComponent extends Component {
         `;
     }
 }
-const cardList = DIALOG_LIST.map(item => new UserCard(Object.assign({}, item)).elementToString).join('');
 const messageList = CHAT.messageList.map(item => new Message(Object.assign({}, item)).elementToString).join('');
 export const chatProps = {
     name: CHAT.name,
     isChat: false,
     messageList,
     chatsBar: new ChatsBar({
-        cardList: cardList
+        cardList: []
     }).elementToString,
     footer: new ChatFooter({}).elementToString
 };
