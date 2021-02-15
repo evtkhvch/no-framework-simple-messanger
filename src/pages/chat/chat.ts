@@ -21,6 +21,14 @@ export class ChatComponent extends Component {
     public componentDidMount() {
         this.initForm();
         this.initListener();
+        ChatComponent.openMenu();
+    }
+
+    private static openMenu(): void {
+        document.querySelector('.chat__options.nav-menu')?.addEventListener('click', () => {
+            const target = document.querySelector('.chat__options.nav-menu .drop-down');
+            target?.classList.toggle('closed');
+        }, false)
     }
 
     private getChat(id: number): Chat | undefined {
@@ -94,7 +102,17 @@ export class ChatComponent extends Component {
                                 <div class="chat__header-avatar"></div>
                                 <span>{{ name }}</span>
                             </div>
-                            <button type="button" class="chat__options"></button>
+                            <nav class="chat__options nav-menu">
+                              <div class="drop-down closed">
+                                <div class="icon"></div>
+                                <ul class="list">
+                                    <li>Добавить чат</li>
+                                    <li>Добавить пользователя</li>
+                                    <li>Удалить пользователя</li>                 
+                                </ul>
+
+                              </div>
+                            </nav>
                         </header>
                         <div class="chat__dialog">
                         {{{ messageList }}}

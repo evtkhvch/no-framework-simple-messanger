@@ -18,6 +18,14 @@ export class ChatComponent extends Component {
     componentDidMount() {
         this.initForm();
         this.initListener();
+        ChatComponent.openMenu();
+    }
+    static openMenu() {
+        var _a;
+        (_a = document.querySelector('.chat__options.nav-menu')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', () => {
+            const target = document.querySelector('.chat__options.nav-menu .drop-down');
+            target === null || target === void 0 ? void 0 : target.classList.toggle('closed');
+        }, false);
     }
     getChat(id) {
         return this.chatList.find(val => val.id === id);
@@ -78,7 +86,17 @@ export class ChatComponent extends Component {
                                 <div class="chat__header-avatar"></div>
                                 <span>{{ name }}</span>
                             </div>
-                            <button type="button" class="chat__options"></button>
+                            <nav class="chat__options nav-menu">
+                              <div class="drop-down closed">
+                                <div class="icon"></div>
+                                <ul class="list">
+                                    <li>Добавить чат</li>
+                                    <li>Добавить пользователя</li>
+                                    <li>Удалить пользователя</li>                 
+                                </ul>
+
+                              </div>
+                            </nav>
                         </header>
                         <div class="chat__dialog">
                         {{{ messageList }}}
