@@ -7,6 +7,7 @@
   padding: 0 20px
 
 .chat__header
+  position: relative
   display: flex
   align-items: center
   justify-content: space-between
@@ -32,12 +33,12 @@
   flex-grow: 1
 
 .chat__options
+  position: absolute
+  top: 18px
+  right: 0
   cursor: pointer
   border: 0
   outline: none
-
-.chat__options:after
-  content: url("../assets/icons/more.svg")
 
 .chat__dialog
   display: flex

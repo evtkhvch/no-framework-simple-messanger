@@ -1,10 +1,8 @@
 export var ACTION;
 (function (ACTION) {
     ACTION["INIT"] = "INIT";
-    ACTION["GET_USER"] = "GET_USER";
-    ACTION["CHANGE_USER"] = "CHANGE_USER";
-    ACTION["GET_CHAT_LIST"] = "GET_CHAT_LIST";
-    ACTION["SET_CURRENT_CHAT"] = "SET_CURRENT_CHAT";
+    ACTION["SET_USER"] = "SET_USER";
+    ACTION["SET_CHAT_LIST"] = "SET_CHAT_LIST";
 })(ACTION || (ACTION = {}));
 export const initialState = {
     user: null,
@@ -13,14 +11,10 @@ export const initialState = {
 };
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case ACTION.GET_USER:
+        case ACTION.SET_USER:
             return Object.assign(Object.assign({}, state), { user: Object.assign(Object.assign({}, state.user), action.props) });
-        case ACTION.CHANGE_USER:
-            return Object.assign(Object.assign({}, state), { user: Object.assign(Object.assign({}, state.user), action.props) });
-        case ACTION.GET_CHAT_LIST:
+        case ACTION.SET_CHAT_LIST:
             return Object.assign(Object.assign({}, state), { chatList: action.props });
-        case ACTION.SET_CURRENT_CHAT:
-            return Object.assign(Object.assign({}, state), { chat: action.props });
         default:
             return state;
     }

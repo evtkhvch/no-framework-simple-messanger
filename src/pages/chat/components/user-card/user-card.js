@@ -6,7 +6,7 @@ export class UserCard extends Component {
     }
     render() {
         return `
-            <li class="user-card">
+            <li data-id="{{ id }}" class="user-card">
                 <div class="user-card__avatar">
                     <div class="user-card__dot">
                         <img src="{{ avatar }}" />

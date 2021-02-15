@@ -37,7 +37,7 @@ export class ProfileComponent extends Component {
         this.formGroup.initialize();
     }
     initListeners() {
-        this.authApi.user().then(value => { store.dispatch({ type: ACTION.GET_USER, props: value }); });
+        this.authApi.user().then(value => { store.dispatch({ type: ACTION.SET_USER, props: value }); });
         this.subscription = store.subscribe(() => {
             const { user } = store.getState();
             if (user) {
