@@ -9,6 +9,8 @@ import { ACTION, store } from '../../core/store.js';
 import { Chat, ChatApi } from '../../api/chat-api.js';
 import { Menu } from './components/menu/menu.js';
 import { Dialog } from './components/dialog/dialog.js';
+import { EmptyValidator, FormControl } from '../../core/validator.js';
+import { FormGroupControl } from '../../core/form-group-control.js';
 
 export class ChatComponent extends Component {
     private router: Router = new Router('.app');
@@ -25,6 +27,7 @@ export class ChatComponent extends Component {
         this.initListener();
         this.initMenu();
         this.initDialog();
+        this.getChats();
     }
 
     private initMenu(): void {
@@ -38,10 +41,19 @@ export class ChatComponent extends Component {
 
     private initDialog(): void {
         const addChat = document.querySelector('.add-chat');
+        const form: HTMLFontElement | null = document.querySelector('.modal-dialog__form');
+        const formState = { dialogTitle: new FormControl('', false, new EmptyValidator()) };
+        const formGroup = new FormGroupControl(form, formState);
+
+        formGroup.initialize();
 
         addChat?.addEventListener('click', () => {
             // @ts-ignore
             dialog?.showModal();
+        });
+
+        form?.addEventListener('submit', () => {
+            this.chatApi.createChat(formGroup.state.dialogTitle.value).then(() => this.getChats());
         });
     }
 
@@ -49,12 +61,14 @@ export class ChatComponent extends Component {
         return this.chatList.find(val => val.id === id);
     }
 
-    private initForm(): void {
+    private getChats(): void {
         this.chatApi.chats().then(value => {
             this.chatList = value;
             store.dispatch({ type: ACTION.SET_CHAT_LIST, props: value });
         });
+    }
 
+    private initForm(): void {
         this.subscription = store.subscribe(() => {
             const { chatList } = store.getState();
             const cardList = chatList.map(item => new UserCard({

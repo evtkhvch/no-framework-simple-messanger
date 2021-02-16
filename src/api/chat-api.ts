@@ -10,6 +10,13 @@ export class ChatApi {
             headers: { 'Content-Type': 'application/json' }
         }).then(res => res.response).then(res => JSON.parse(res))
     }
+
+    public createChat(title: string): Promise<boolean> {
+        return this.httpClient.post(`${environment.praktikum}/chats`, {
+            data: JSON.stringify({ title }),
+            headers: { 'Content-Type': 'application/json' }
+        }).then(res => res.status === 200);
+    }
 }
 
 export interface Chat {

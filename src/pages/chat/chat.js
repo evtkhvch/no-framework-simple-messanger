@@ -9,6 +9,8 @@ import { ACTION, store } from '../../core/store.js';
 import { ChatApi } from '../../api/chat-api.js';
 import { Menu } from './components/menu/menu.js';
 import { Dialog } from './components/dialog/dialog.js';
+import { EmptyValidator, FormControl } from '../../core/validator.js';
+import { FormGroupControl } from '../../core/form-group-control.js';
 export class ChatComponent extends Component {
     constructor(props) {
         super('div', props, 'chat-list');
@@ -22,6 +24,7 @@ export class ChatComponent extends Component {
         this.initListener();
         this.initMenu();
         this.initDialog();
+        this.getChats();
     }
     initMenu() {
         const navMenu = document.querySelector('.chat__options.nav-menu');
@@ -32,19 +35,28 @@ export class ChatComponent extends Component {
     }
     initDialog() {
         const addChat = document.querySelector('.add-chat');
+        const form = document.querySelector('.modal-dialog__form');
+        const formState = { dialogTitle: new FormControl('', false, new EmptyValidator()) };
+        const formGroup = new FormGroupControl(form, formState);
+        formGroup.initialize();
         addChat === null || addChat === void 0 ? void 0 : addChat.addEventListener('click', () => {
             // @ts-ignore
             dialog === null || dialog === void 0 ? void 0 : dialog.showModal();
+        });
+        form === null || form === void 0 ? void 0 : form.addEventListener('submit', () => {
+            this.chatApi.createChat(formGroup.state.dialogTitle.value).then(() => this.getChats());
         });
     }
     getChat(id) {
         return this.chatList.find(val => val.id === id);
     }
-    initForm() {
+    getChats() {
         this.chatApi.chats().then(value => {
             this.chatList = value;
             store.dispatch({ type: ACTION.SET_CHAT_LIST, props: value });
         });
+    }
+    initForm() {
         this.subscription = store.subscribe(() => {
             const { chatList } = store.getState();
             const cardList = chatList.map(item => new UserCard(Object.assign(Object.assign({}, item), { avatar: item.avatar ? `https://ya-praktikum.tech${item.avatar}` : null })).elementToString).join('');

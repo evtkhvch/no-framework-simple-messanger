@@ -10,5 +10,11 @@ export class ChatApi {
             headers: { 'Content-Type': 'application/json' }
         }).then(res => res.response).then(res => JSON.parse(res));
     }
+    createChat(title) {
+        return this.httpClient.post(`${environment.praktikum}/chats`, {
+            data: JSON.stringify({ title }),
+            headers: { 'Content-Type': 'application/json' }
+        }).then(res => res.status === 200);
+    }
 }
 //# sourceMappingURL=chat-api.js.map
