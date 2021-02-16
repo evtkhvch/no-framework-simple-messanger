@@ -636,6 +636,8 @@
   overflow: hidden;
   width: 210px;
   background-color: white;
+  position: relative;
+  z-index: 2;
 }
 
 .nav-menu .drop-down.closed {

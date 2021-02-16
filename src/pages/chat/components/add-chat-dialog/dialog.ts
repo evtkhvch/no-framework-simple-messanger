@@ -7,20 +7,20 @@ export class Dialog extends Component {
 
     public render(): string {
         return `
-            <dialog id="dialog" class="modal-dialog">
-              <form class="modal-dialog__form" method="dialog">
+            <dialog id="{{ id }}" class="{{ class }} modal-dialog">
+              <form class="modal-dialog__form" method="{{ id }}">
                 <div class="modal-dialog__content">
-                     <div class="modal-dialog__title">Добавить чат</div>
+                     <div class="modal-dialog__title">{{ title }}</div>
                      <div class="modal-dialog__input-wrap">
                           <div class="modal-dialog__input form-item login__field">
-                            <input name="dialogTitle" type="text" id="dialogTitle" placeholder="&nbsp;">
-                            <label for="dialogTitle" data-label="Название"></label>
+                            <input name="dialogTitle" type="{{ type }}" id="{{ inputId }}" placeholder="&nbsp;">
+                            <label for="dialogTitle" data-label="{{ input }}"></label>
                             <span class="error-message"></span>
                          </div>
                      </div>
                 </div>
                 <div class="modal-dialog__footer">
-                    <button type="submit" class="modal-dialog__submit default-button">Добавить</button>
+                    <button type="submit" class="modal-dialog__submit default-button">{{ submit }}</button>
                 </div>
               </form>
             </dialog>

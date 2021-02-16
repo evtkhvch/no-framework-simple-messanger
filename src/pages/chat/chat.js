@@ -8,9 +8,9 @@ import { Router } from '../../core/router.js';
 import { ACTION, store } from '../../core/store.js';
 import { ChatApi } from '../../api/chat-api.js';
 import { Menu } from './components/menu/menu.js';
-import { Dialog } from './components/dialog/dialog.js';
 import { EmptyValidator, FormControl } from '../../core/validator.js';
 import { FormGroupControl } from '../../core/form-group-control.js';
+import { Dialog } from './components/add-chat-dialog/dialog.js';
 export class ChatComponent extends Component {
     constructor(props) {
         super('div', props, 'chat-list');
@@ -23,7 +23,9 @@ export class ChatComponent extends Component {
         this.initForm();
         this.initListener();
         this.initMenu();
-        this.initDialog();
+        this.initAddChatDialog();
+        this.initAddUserDialog();
+        this.initRemoveUserDialog();
         this.getChats();
     }
     initMenu() {
@@ -33,18 +35,52 @@ export class ChatComponent extends Component {
             target === null || target === void 0 ? void 0 : target.classList.toggle('closed');
         }, false);
     }
-    initDialog() {
+    initAddChatDialog() {
         const addChat = document.querySelector('.add-chat');
-        const form = document.querySelector('.modal-dialog__form');
-        const formState = { dialogTitle: new FormControl('', false, new EmptyValidator()) };
+        const dialog = document.querySelector('.add-chat-dialog.modal-dialog');
+        const form = document.querySelector('.add-chat-dialog .modal-dialog__form');
+        const formState = { addChatTitle: new FormControl('', false, new EmptyValidator()) };
         const formGroup = new FormGroupControl(form, formState);
         formGroup.initialize();
-        addChat === null || addChat === void 0 ? void 0 : addChat.addEventListener('click', () => {
-            // @ts-ignore
-            dialog === null || dialog === void 0 ? void 0 : dialog.showModal();
+        addChat === null || addChat === void 0 ? void 0 : addChat.addEventListener('click', () => { dialog === null || dialog === void 0 ? void 0 : dialog.showModal(); });
+        form === null || form === void 0 ? void 0 : form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            this.chatApi.createChat(formGroup.state.addChatTitle.value).then(() => {
+                dialog === null || dialog === void 0 ? void 0 : dialog.close();
+                this.getChats();
+            });
         });
-        form === null || form === void 0 ? void 0 : form.addEventListener('submit', () => {
-            this.chatApi.createChat(formGroup.state.dialogTitle.value).then(() => this.getChats());
+    }
+    initAddUserDialog() {
+        const addUser = document.querySelector('.add-user');
+        const dialog = document.querySelector('.add-user-dialog.modal-dialog');
+        const form = document.querySelector('.add-user-dialog .modal-dialog__form');
+        const formState = { addUserTitle: new FormControl('', false, new EmptyValidator()) };
+        const formGroup = new FormGroupControl(form, formState);
+        formGroup.initialize();
+        addUser === null || addUser === void 0 ? void 0 : addUser.addEventListener('click', () => { dialog === null || dialog === void 0 ? void 0 : dialog.showModal(); });
+        form === null || form === void 0 ? void 0 : form.addEventListener('submit', (event) => {
+            var _a;
+            event.preventDefault();
+            const value = Number(formGroup.state.addUserTitle.value);
+            const data = { users: [value], chatId: (_a = this.chat) === null || _a === void 0 ? void 0 : _a.id };
+            this.chatApi.addUsersToChat(data).then(() => dialog === null || dialog === void 0 ? void 0 : dialog.close());
+        });
+    }
+    initRemoveUserDialog() {
+        const removeUser = document.querySelector('.remove-user');
+        const dialog = document.querySelector('.remove-user-dialog.modal-dialog');
+        const form = document.querySelector('.remove-user-dialog .modal-dialog__form');
+        const formState = { removeUserTitle: new FormControl('', false, new EmptyValidator()) };
+        const formGroup = new FormGroupControl(form, formState);
+        formGroup.initialize();
+        removeUser === null || removeUser === void 0 ? void 0 : removeUser.addEventListener('click', () => { dialog === null || dialog === void 0 ? void 0 : dialog.showModal(); });
+        form === null || form === void 0 ? void 0 : form.addEventListener('submit', (event) => {
+            var _a;
+            event.preventDefault();
+            const value = Number(formGroup.state.removeUserTitle.value);
+            const data = { users: [value], chatId: (_a = this.chat) === null || _a === void 0 ? void 0 : _a.id };
+            this.chatApi.removeUsersFromChat(data).then(() => dialog === null || dialog === void 0 ? void 0 : dialog.close());
         });
     }
     getChat(id) {
@@ -84,12 +120,12 @@ export class ChatComponent extends Component {
     initListener() {
         const userCardList = document.querySelector('.user-card__list');
         userCardList === null || userCardList === void 0 ? void 0 : userCardList.addEventListener('click', (event) => {
-            var _a;
+            var _a, _b;
             // @ts-ignore
             const target = (_a = event === null || event === void 0 ? void 0 : event.target) === null || _a === void 0 ? void 0 : _a.closest('li');
-            const chat = this.getChat(Number(target.dataset.id));
+            this.chat = this.getChat(Number(target.dataset.id));
             const messageList = MESSAGE_LIST.map(item => new Message(Object.assign({}, item)).elementToString).join('');
-            this.setProps(Object.assign(Object.assign({}, this.props), { isChat: true, messageList, name: chat === null || chat === void 0 ? void 0 : chat.title }));
+            this.setProps(Object.assign(Object.assign({}, this.props), { isChat: true, messageList, name: (_b = this.chat) === null || _b === void 0 ? void 0 : _b.title }));
         }, true);
     }
     destroy() {
@@ -120,7 +156,9 @@ export class ChatComponent extends Component {
                     <span class="dialog__title">Выберите чат чтобы отправить сообщение</span>
                 </div>
             {{/if}}
-            {{{ dialog }}}
+            {{{ addChatDialog }}}
+            {{{ addUserDialog }}}
+            {{{ removeUserDialog }}}
         `;
     }
 }
@@ -132,7 +170,33 @@ export const chatProps = {
         cardList: []
     }).elementToString,
     menu: new Menu({}).elementToString,
-    dialog: new Dialog({}).elementToString,
+    addChatDialog: new Dialog({
+        inputId: 'addChatTitle',
+        id: 'add-chat-dialog',
+        class: 'add-chat-dialog',
+        title: 'Добавить чат',
+        type: 'text',
+        input: 'Название',
+        submit: 'Добавить'
+    }).elementToString,
+    addUserDialog: new Dialog({
+        inputId: 'addUserTitle',
+        id: 'add-user-dialog',
+        class: 'add-user-dialog',
+        title: 'Добавить пользователя в чат',
+        type: 'number',
+        input: 'Логин',
+        submit: 'Добавить'
+    }).elementToString,
+    removeUserDialog: new Dialog({
+        inputId: 'removeUserTitle',
+        id: 'remove-user-dialog',
+        class: 'remove-user-dialog',
+        title: 'Удалить пользователя из чата',
+        type: 'number',
+        input: 'Логин',
+        submit: 'Удалить'
+    }).elementToString,
     footer: new ChatFooter({}).elementToString
 };
 //# sourceMappingURL=chat.js.map

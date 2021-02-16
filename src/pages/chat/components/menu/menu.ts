@@ -12,8 +12,8 @@ export class Menu extends Component {
                 <div class="icon"></div>
                 <ul class="list">
                     <li class="add-chat">Добавить чат</li>
-                    <li>Добавить пользователя</li>
-                    <li>Удалить пользователя</li>                 
+                    <li class="add-user">Добавить пользователя</li>
+                    <li class="remove-user">Удалить пользователя</li>                 
                 </ul>
               </div>
             </nav>

@@ -6,17 +6,18 @@ import { ChatFooter } from './components/chat-footer/chat-footer.js';
 import { Message } from './components/message/message.js';
 import { Router } from '../../core/router.js';
 import { ACTION, store } from '../../core/store.js';
-import { Chat, ChatApi } from '../../api/chat-api.js';
+import { Chat, ChatApi, ChatUserReq } from '../../api/chat-api.js';
 import { Menu } from './components/menu/menu.js';
-import { Dialog } from './components/dialog/dialog.js';
 import { EmptyValidator, FormControl } from '../../core/validator.js';
 import { FormGroupControl } from '../../core/form-group-control.js';
+import { Dialog } from './components/add-chat-dialog/dialog.js';
 
 export class ChatComponent extends Component {
     private router: Router = new Router('.app');
     private chatApi = new ChatApi();
     private subscription: (() => void) | undefined;
     private chatList: Chat[] = [];
+    private chat: Chat | undefined;
 
     constructor(public props: Props) {
         super('div', props, 'chat-list');
@@ -26,7 +27,9 @@ export class ChatComponent extends Component {
         this.initForm();
         this.initListener();
         this.initMenu();
-        this.initDialog();
+        this.initAddChatDialog();
+        this.initAddUserDialog();
+        this.initRemoveUserDialog();
         this.getChats();
     }
 
@@ -39,21 +42,55 @@ export class ChatComponent extends Component {
         }, false)
     }
 
-    private initDialog(): void {
+    private initAddChatDialog(): void {
         const addChat = document.querySelector('.add-chat');
-        const form: HTMLFontElement | null = document.querySelector('.modal-dialog__form');
-        const formState = { dialogTitle: new FormControl('', false, new EmptyValidator()) };
+        const dialog: HTMLDialogElement | null = document.querySelector('.add-chat-dialog.modal-dialog');
+        const form: HTMLFontElement | null = document.querySelector('.add-chat-dialog .modal-dialog__form');
+        const formState = { addChatTitle: new FormControl('', false, new EmptyValidator()) };
         const formGroup = new FormGroupControl(form, formState);
 
         formGroup.initialize();
-
-        addChat?.addEventListener('click', () => {
-            // @ts-ignore
-            dialog?.showModal();
+        addChat?.addEventListener('click', () => { dialog?.showModal() });
+        form?.addEventListener('submit', (event: Event) => {
+            event.preventDefault();
+            this.chatApi.createChat(formGroup.state.addChatTitle.value).then(() => {
+                dialog?.close();
+                this.getChats();
+            });
         });
+    }
 
-        form?.addEventListener('submit', () => {
-            this.chatApi.createChat(formGroup.state.dialogTitle.value).then(() => this.getChats());
+    private initAddUserDialog(): void {
+        const addUser = document.querySelector('.add-user');
+        const dialog: HTMLDialogElement | null = document.querySelector('.add-user-dialog.modal-dialog');
+        const form: HTMLFontElement | null = document.querySelector('.add-user-dialog .modal-dialog__form');
+        const formState = { addUserTitle: new FormControl('', false, new EmptyValidator()) };
+        const formGroup = new FormGroupControl(form, formState);
+
+        formGroup.initialize();
+        addUser?.addEventListener('click', () => { dialog?.showModal() });
+        form?.addEventListener('submit', (event: Event) => {
+            event.preventDefault();
+            const value = Number(formGroup.state.addUserTitle.value);
+            const data: ChatUserReq = { users: [value], chatId: this.chat?.id! };
+            this.chatApi.addUsersToChat(data).then(() => dialog?.close());
+        });
+    }
+
+    private initRemoveUserDialog(): void {
+        const removeUser = document.querySelector('.remove-user');
+        const dialog: HTMLDialogElement | null = document.querySelector('.remove-user-dialog.modal-dialog');
+        const form: HTMLFontElement | null = document.querySelector('.remove-user-dialog .modal-dialog__form');
+        const formState = { removeUserTitle: new FormControl('', false, new EmptyValidator()) };
+        const formGroup = new FormGroupControl(form, formState);
+
+        formGroup.initialize();
+        removeUser?.addEventListener('click', () => { dialog?.showModal() });
+        form?.addEventListener('submit', (event: Event) => {
+            event.preventDefault();
+            const value = Number(formGroup.state.removeUserTitle.value);
+            const data: ChatUserReq = { users: [value], chatId: this.chat?.id! };
+            this.chatApi.removeUsersFromChat(data).then(() => dialog?.close());
         });
     }
 
@@ -106,10 +143,10 @@ export class ChatComponent extends Component {
         userCardList?.addEventListener('click', (event: Event) => {
             // @ts-ignore
             const target = event?.target?.closest('li');
-            const chat = this.getChat(Number(target.dataset.id));
+            this.chat = this.getChat(Number(target.dataset.id));
             const messageList = MESSAGE_LIST.map(item => new Message({ ...item }).elementToString).join('');
 
-            this.setProps({ ...this.props, isChat: true, messageList, name: chat?.title });
+            this.setProps({ ...this.props, isChat: true, messageList, name: this.chat?.title });
         }, true);
     }
 
@@ -142,7 +179,9 @@ export class ChatComponent extends Component {
                     <span class="dialog__title">Выберите чат чтобы отправить сообщение</span>
                 </div>
             {{/if}}
-            {{{ dialog }}}
+            {{{ addChatDialog }}}
+            {{{ addUserDialog }}}
+            {{{ removeUserDialog }}}
         `;
     }
 }
@@ -155,6 +194,32 @@ export const chatProps = {
         cardList: []
     }).elementToString,
     menu: new Menu({}).elementToString,
-    dialog: new Dialog({}).elementToString,
+    addChatDialog: new Dialog({
+        inputId: 'addChatTitle',
+        id: 'add-chat-dialog',
+        class: 'add-chat-dialog',
+        title: 'Добавить чат',
+        type: 'text',
+        input: 'Название',
+        submit: 'Добавить'
+    }).elementToString,
+    addUserDialog: new Dialog({
+        inputId: 'addUserTitle',
+        id: 'add-user-dialog',
+        class: 'add-user-dialog',
+        title: 'Добавить пользователя в чат',
+        type: 'number',
+        input: 'Логин',
+        submit: 'Добавить'
+    }).elementToString,
+    removeUserDialog: new Dialog({
+        inputId: 'removeUserTitle',
+        id: 'remove-user-dialog',
+        class: 'remove-user-dialog',
+        title: 'Удалить пользователя из чата',
+        type: 'number',
+        input: 'Логин',
+        submit: 'Удалить'
+    }).elementToString,
     footer: new ChatFooter({}).elementToString
 };
