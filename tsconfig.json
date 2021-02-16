@@ -9,5 +9,13 @@
     "sourceMap": true,
     "noImplicitThis": true,
     "strict": true
-  }
+  },
+  "include": [
+    "src/**/*",
+    "test/index.spec.ts",
+    "node_modules/handlebars/types"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
