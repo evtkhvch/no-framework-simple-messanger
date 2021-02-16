@@ -114,9 +114,8 @@ export class Component implements IComponent {
         const block = this.render();
 
         if (this._element) {
-            const tmp = templateCompiler(block, this.props);
             // @ts-ignore
-            this._element.innerHTML = window.DOMPurify.sanitize(tmp);
+            this._element.innerHTML = templateCompiler(block, this.props);
         }
         setTimeout(() => { this._afterViewInit(); });
     }
