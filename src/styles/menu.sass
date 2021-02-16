@@ -1,7 +1,6 @@
 .nav-menu .drop-down
   font-size: 12px
   overflow: hidden
-  height: 172px
   width: 210px
   background-color: white
 
@@ -15,6 +14,7 @@
   padding: 20px 15px
 
 .nav-menu .drop-down .list li
+  cursor: pointer
   display: flex
   align-items: center
   color: black
@@ -22,6 +22,9 @@
   margin-bottom: 20px
   &:last-child
     margin-bottom: 0
+
+.nav-menu .drop-down .icon
+  cursor: pointer
 
 .nav-menu .drop-down .icon:after
   content: url("../assets/icons/more.svg")

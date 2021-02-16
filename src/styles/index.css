@@ -530,7 +530,6 @@
   position: absolute;
   top: 18px;
   right: 0;
-  cursor: pointer;
   border: 0;
   outline: none;
 }
@@ -635,7 +634,6 @@
 .nav-menu .drop-down {
   font-size: 12px;
   overflow: hidden;
-  height: 172px;
   width: 210px;
   background-color: white;
 }
@@ -652,6 +650,7 @@
 }
 
 .nav-menu .drop-down .list li {
+  cursor: pointer;
   display: flex;
   align-items: center;
   color: black;
@@ -662,10 +661,19 @@
   margin-bottom: 0;
 }
 
+.nav-menu .drop-down .icon {
+  cursor: pointer;
+}
+
 .nav-menu .drop-down .icon:after {
   content: url("../assets/icons/more.svg");
   display: flex;
   flex-direction: row-reverse;
+}
+
+.modal-dialog {
+  margin: auto;
+  position: absolute;
 }
 
 html {

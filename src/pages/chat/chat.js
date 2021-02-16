@@ -7,6 +7,8 @@ import { Message } from './components/message/message.js';
 import { Router } from '../../core/router.js';
 import { ACTION, store } from '../../core/store.js';
 import { ChatApi } from '../../api/chat-api.js';
+import { Menu } from './components/menu/menu.js';
+import { Dialog } from './components/dialog/dialog.js';
 export class ChatComponent extends Component {
     constructor(props) {
         super('div', props, 'chat-list');
@@ -18,14 +20,22 @@ export class ChatComponent extends Component {
     componentDidMount() {
         this.initForm();
         this.initListener();
-        ChatComponent.openMenu();
+        this.initMenu();
+        this.initDialog();
     }
-    static openMenu() {
-        var _a;
-        (_a = document.querySelector('.chat__options.nav-menu')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', () => {
+    initMenu() {
+        const navMenu = document.querySelector('.chat__options.nav-menu');
+        navMenu === null || navMenu === void 0 ? void 0 : navMenu.addEventListener('click', () => {
             const target = document.querySelector('.chat__options.nav-menu .drop-down');
             target === null || target === void 0 ? void 0 : target.classList.toggle('closed');
         }, false);
+    }
+    initDialog() {
+        const addChat = document.querySelector('.add-chat');
+        addChat === null || addChat === void 0 ? void 0 : addChat.addEventListener('click', () => {
+            // @ts-ignore
+            dialog === null || dialog === void 0 ? void 0 : dialog.showModal();
+        });
     }
     getChat(id) {
         return this.chatList.find(val => val.id === id);
@@ -86,17 +96,7 @@ export class ChatComponent extends Component {
                                 <div class="chat__header-avatar"></div>
                                 <span>{{ name }}</span>
                             </div>
-                            <nav class="chat__options nav-menu">
-                              <div class="drop-down closed">
-                                <div class="icon"></div>
-                                <ul class="list">
-                                    <li>Добавить чат</li>
-                                    <li>Добавить пользователя</li>
-                                    <li>Удалить пользователя</li>                 
-                                </ul>
-
-                              </div>
-                            </nav>
+                            {{{ menu }}}
                         </header>
                         <div class="chat__dialog">
                         {{{ messageList }}}
@@ -108,6 +108,7 @@ export class ChatComponent extends Component {
                     <span class="dialog__title">Выберите чат чтобы отправить сообщение</span>
                 </div>
             {{/if}}
+            {{{ dialog }}}
         `;
     }
 }
@@ -118,6 +119,8 @@ export const chatProps = {
     chatsBar: new ChatsBar({
         cardList: []
     }).elementToString,
+    menu: new Menu({}).elementToString,
+    dialog: new Dialog({}).elementToString,
     footer: new ChatFooter({}).elementToString
 };
 //# sourceMappingURL=chat.js.map
