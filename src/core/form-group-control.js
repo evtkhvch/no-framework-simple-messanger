@@ -1,3 +1,4 @@
+import { sanitize } from './sanitize.js';
 export class FormGroupControl {
     constructor(form, state) {
         this.form = form;
@@ -31,7 +32,7 @@ export class FormGroupControl {
         const field = input === null || input === void 0 ? void 0 : input.getAttribute('id');
         const validator = (_a = this.state[field]) === null || _a === void 0 ? void 0 : _a.validator;
         if (input) {
-            this.state = Object.assign(Object.assign({}, this.state), { [field]: Object.assign(Object.assign({}, this.state[field]), { value: input === null || input === void 0 ? void 0 : input.value }) });
+            this.state = Object.assign(Object.assign({}, this.state), { [field]: Object.assign(Object.assign({}, this.state[field]), { value: sanitize(input === null || input === void 0 ? void 0 : input.value) }) });
         }
         if (validator === null || validator === void 0 ? void 0 : validator.isValid(input === null || input === void 0 ? void 0 : input.value)) {
             FormGroupControl.setErrorMessage(input, '');

@@ -8,7 +8,7 @@ export class AuthApi {
         return this.httpClient.post(`${environment.praktikum}/auth/signin`, {
             data: JSON.stringify({ login, password }),
             headers: { 'Content-Type': 'application/json' }
-        });
+        }).then(res => res.status === 200);
     }
     signUp(data) {
         return this.httpClient.post(`${environment.praktikum}/auth/signup`, {

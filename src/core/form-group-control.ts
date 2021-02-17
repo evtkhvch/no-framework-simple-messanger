@@ -1,4 +1,5 @@
 import { FormState } from './validator.js';
+import { sanitize } from './sanitize.js';
 
 export class FormGroupControl<T extends FormState> {
     constructor(public form: HTMLElement | null, public state: T) {
@@ -35,7 +36,7 @@ export class FormGroupControl<T extends FormState> {
         const validator = this.state[field]?.validator;
 
         if (input) {
-            this.state = { ...this.state, [field]: { ...this.state[field], value: input?.value } };
+            this.state = { ...this.state, [field]: { ...this.state[field], value: sanitize(input?.value) } };
         }
 
         if (validator?.isValid(input?.value)) {
