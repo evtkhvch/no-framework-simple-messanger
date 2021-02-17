@@ -6,7 +6,11 @@
   "scripts": {
     "compile": "tsc -w & sass ./src/styles/index.sass ./src/styles/index.css --no-source-map --watch",
     "start": "node index.js",
-    "test": "mocha -r jsdom-global/register -r @babel/register"
+    "test": "mocha"
+  },
+  "directories": {
+    "src": "./src",
+    "test": "./test"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.16",
@@ -20,8 +24,6 @@
     "chai": "^4.3.0",
     "express": "^4.17.1",
     "handlebars": "^4.7.7",
-    "jsdom": "16.4.0",
-    "jsdom-global": "3.0.2",
     "mocha": "^8.3.0",
     "sass": "^1.32.6",
     "typescript": "^4.1.3"

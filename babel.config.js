@@ -7,5 +7,5 @@ module.exports = api => {
         "@babel/preset-env"
     ];
 
-    return { presets };
+    return {presets};
 };
