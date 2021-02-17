@@ -1,12 +1,11 @@
 import { Button } from '../src/components/button/button.js';
+import { expect } from 'chai';
 
-describe('Тестирование компоненты', async () => {
-    it('Кнопка', () => {
+describe('Components', async () => {
+    it('Button component', () => {
         const button = new Button({ type: 'submit', class: 'profile__form-submit default-button', name: 'Сохранить' }).elementToString;
         const html = '<button type="submit" class="profile__form-submit default-button">Сохранить</button>';
 
-        if (button !== html) {
-            throw 'Ошибка рендера';
-        }
+        expect(button).to.equal(html);
     });
 });
