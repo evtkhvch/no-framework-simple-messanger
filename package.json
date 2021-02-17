@@ -6,11 +6,7 @@
   "scripts": {
     "compile": "tsc -w & sass ./src/styles/index.sass ./src/styles/index.css --no-source-map --watch",
     "start": "node index.js",
-    "test": "mocha"
-  },
-  "directories": {
-    "src": "./src",
-    "test": "./test"
+    "test": "mocha -r test/setup.js -r babel-polyfill"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.16",
@@ -21,9 +17,12 @@
     "@types/chai": "^4.2.15",
     "@types/mocha": "^8.2.0",
     "@types/node": "^14.14.21",
+    "babel-polyfill": "^6.26.0",
     "chai": "^4.3.0",
     "express": "^4.17.1",
     "handlebars": "^4.7.7",
+    "jsdom": "16.4.0",
+    "jsdom-global": "3.0.2",
     "mocha": "^8.3.0",
     "sass": "^1.32.6",
     "typescript": "^4.1.3"
