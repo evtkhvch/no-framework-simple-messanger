@@ -48,24 +48,18 @@ export class RegistrationComponent extends Component {
         if (formElement) {
             formElement.onsubmit = (event: Event) => {
                 event.preventDefault();
-                this.signUp();
+
+                const data = this.validator?.state as RegistrationFormGroup;
+
+                this.authApi.signUp({
+                    first_name: data.userName.value,
+                    second_name: data.surname.value,
+                    login: data.login.value,
+                    email: data.mail.value,
+                    password: data.passOneMoreTime.value,
+                    phone: data.phone.value
+                }).then(() => { this.router?.go('/chat'); })
             };
-        }
-    }
-
-    private async signUp(): Promise<void> {
-        const data = this.validator?.state as RegistrationFormGroup;
-        const res = await this.authApi.signUp({
-            first_name: data.userName.value,
-            second_name: data.surname.value,
-            login: data.login.value,
-            email: data.mail.value,
-            password: data.passOneMoreTime.value,
-            phone: data.phone.value
-        });
-
-        if (res.status === 200) {
-            this.router?.go('/chat');
         }
     }
 

@@ -1,12 +1,3 @@
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 import { Component } from '../../core/component.js';
 import { Button } from '../../components/button/button.js';
 import { RegistrationForm } from './components/registration-form/registration-form.js';
@@ -43,27 +34,19 @@ export class RegistrationComponent extends Component {
         }
         if (formElement) {
             formElement.onsubmit = (event) => {
+                var _a;
                 event.preventDefault();
-                this.signUp();
+                const data = (_a = this.validator) === null || _a === void 0 ? void 0 : _a.state;
+                this.authApi.signUp({
+                    first_name: data.userName.value,
+                    second_name: data.surname.value,
+                    login: data.login.value,
+                    email: data.mail.value,
+                    password: data.passOneMoreTime.value,
+                    phone: data.phone.value
+                }).then(() => { var _a; (_a = this.router) === null || _a === void 0 ? void 0 : _a.go('/chat'); });
             };
         }
-    }
-    signUp() {
-        var _a, _b;
-        return __awaiter(this, void 0, void 0, function* () {
-            const data = (_a = this.validator) === null || _a === void 0 ? void 0 : _a.state;
-            const res = yield this.authApi.signUp({
-                first_name: data.userName.value,
-                second_name: data.surname.value,
-                login: data.login.value,
-                email: data.mail.value,
-                password: data.passOneMoreTime.value,
-                phone: data.phone.value
-            });
-            if (res.status === 200) {
-                (_b = this.router) === null || _b === void 0 ? void 0 : _b.go('/chat');
-            }
-        });
     }
     render() {
         return `{{{ registrationForm }}}`;

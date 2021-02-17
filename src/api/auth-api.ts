@@ -11,11 +11,11 @@ export class AuthApi {
         }).then(res => res.status === 200);
     }
 
-    public signUp(data: SignUpReq): Promise<XMLHttpRequest> {
+    public signUp(data: SignUpReq): Promise<boolean> {
         return this.httpClient.post(`${environment.praktikum}/auth/signup`, {
             data: JSON.stringify(data),
             headers: { 'Content-Type': 'application/json' }
-        });
+        }).then(res => res.status === 200);
     }
 
     public logout(): Promise<boolean> {

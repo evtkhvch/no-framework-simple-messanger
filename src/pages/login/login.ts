@@ -36,17 +36,10 @@ export class LoginComponent extends Component {
         if (formElement) {
             formElement.onsubmit = (event: Event) => {
                 event.preventDefault();
-                this.signIn();
+                const { login, pass } = this.validator?.state as LoginFormGroup;
+
+                this.authApi.signIn(login.value, pass.value).then(() => this.router?.go('/chat'))
             }
-        }
-    }
-
-    private async signIn(): Promise<void> {
-        const { login, pass } = this.validator?.state as LoginFormGroup;
-        const res = await this.authApi.signIn(login.value, pass.value);
-
-        if (res.status === 200) {
-            this.router?.go('/chat');
         }
     }
 

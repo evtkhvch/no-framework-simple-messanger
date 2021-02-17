@@ -14,7 +14,7 @@ export class AuthApi {
         return this.httpClient.post(`${environment.praktikum}/auth/signup`, {
             data: JSON.stringify(data),
             headers: { 'Content-Type': 'application/json' }
-        });
+        }).then(res => res.status === 200);
     }
     logout() {
         return this.httpClient.post(`${environment.praktikum}/auth/logout`, {
