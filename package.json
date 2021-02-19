@@ -4,10 +4,10 @@
   "main": "index.js",
   "type": "commonjs",
   "scripts": {
-    "compile": "tsc && sass ./src/styles/index.sass ./dist/src/styles/index.css --no-source-map",
-    "watch": "tsc -w & sass ./src/styles/index.sass ./dist/src/styles/index.css --no-source-map --watch",
-    "start": "npm run watch & nodemon ./dist/index.js",
-    "test": "npm run compile && mocha -r test/setup.js -r babel-polyfill"
+    "build": "tsc && sass ./src/styles/index.sass ./dist/src/styles/index.css --no-source-map",
+    "compile": "tsc -w & sass ./src/styles/index.sass ./dist/src/styles/index.css --no-source-map --watch",
+    "start": "npm run compile & nodemon ./dist/index.js",
+    "test": "npm run build && mocha -r test/setup.js -r babel-polyfill"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.16",
