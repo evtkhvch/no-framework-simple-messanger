@@ -1,5 +1,5 @@
-import { Button } from '../src/components/button/button.js';
 import { expect } from 'chai';
+import { Button } from '../src/components/button/button.js';
 
 describe('Components', async () => {
     it('Button component', () => {

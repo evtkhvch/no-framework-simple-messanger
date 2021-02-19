@@ -1,5 +1,5 @@
-import { Router } from '../src/core/router';
-import { LoginComponent, loginProps } from '../src/pages/login/login';
+import { Router } from '../src/core/router.js';
+import { LoginComponent, loginProps } from '../src/pages/login/login.js';
 import { expect } from 'chai';
 
 describe('Routing', async () => {

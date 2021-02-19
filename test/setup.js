@@ -1,8 +1,8 @@
-var jsdom = require('jsdom');
-var Handlebars = require('handlebars');
-const { JSDOM } = jsdom;
+let jsdom = require('jsdom');
+let Handlebars = require('handlebars');
+let { JSDOM } = jsdom;
 
-const { document } = (new JSDOM(`
+let { document } = (new JSDOM(`
     <!DOCTYPE html>
     <html lang="en">
     <head>
