@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "rootDir": "src",
+    "outDir": "dist",
+    "rootDirs": ["src", "./", "test"],
     "target": "es2016",
     "moduleResolution": "node",
     "declaration": false,
@@ -12,10 +13,11 @@
   },
   "include": [
     "src/**/*",
-    "test/index.spec.ts",
+    "test/**/*",
     "node_modules/handlebars/types"
   ],
   "exclude": [
     "node_modules"
-  ]
+  ],
+  "files": ["index.ts"]
 }
