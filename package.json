@@ -5,7 +5,7 @@
   "type": "commonjs",
   "scripts": {
     "compile": "tsc -w & sass ./src/styles/index.sass ./src/styles/index.css --no-source-map --watch",
-    "start": "node index.js",
+    "start": "node ./dist/index.js",
     "test": "mocha -r test/setup.js -r babel-polyfill"
   },
   "devDependencies": {
@@ -15,8 +15,9 @@
     "@babel/preset-typescript": "^7.12.16",
     "@babel/register": "^7.12.13",
     "@types/chai": "^4.2.15",
+    "@types/express": "^4.17.11",
     "@types/mocha": "^8.2.0",
-    "@types/node": "^14.14.21",
+    "@types/node": "^14.14.31",
     "babel-polyfill": "^6.26.0",
     "chai": "^4.3.0",
     "chai-http": "^4.3.0",

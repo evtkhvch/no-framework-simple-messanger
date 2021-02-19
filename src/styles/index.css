@@ -31,7 +31,7 @@
 }
 
 .chats-bar__header-title:after {
-  content: url("../assets/icons/chevron-right.svg");
+  content: url("../../dist/src/assets/icons/chevron-right.svg");
   margin-left: 8px;
   height: 15px;
 }
@@ -212,7 +212,7 @@
 }
 
 .profile__nav-button:after {
-  content: url("../assets/icons/arrow-left.svg");
+  content: url("../../dist/src/assets/icons/arrow-left.svg");
 }
 
 .profile__info {
@@ -242,7 +242,7 @@
 }
 
 .profile__avatar:after {
-  content: url("../assets/icons/picture.svg");
+  content: url("../../dist/src/assets/icons/picture.svg");
 }
 
 .profile__change-img {
@@ -354,7 +354,7 @@
 }
 
 .search-bar input:focus, .search-bar input:not(:placeholder-shown) {
-  background-image: url("../assets/icons/search.svg");
+  background-image: url("../../dist/src/assets/icons/search.svg");
   background-repeat: no-repeat;
   background-position: 12px center;
   padding-left: 34px;
@@ -378,7 +378,7 @@
 
 .search-bar label:before {
   height: 19px;
-  content: url("../assets/icons/search.svg");
+  content: url("../../dist/src/assets/icons/search.svg");
 }
 
 .sign {
@@ -560,7 +560,7 @@
 }
 
 .chat__footer-icon:after {
-  content: url("../assets/icons/pin.svg");
+  content: url("../../dist/src/assets/icons/pin.svg");
 }
 
 .chat__footer-message {
@@ -587,7 +587,7 @@
 }
 
 .chat__footer-submit:after {
-  content: url("../assets/icons/arrow-right.svg");
+  content: url("../../dist/src/assets/icons/arrow-right.svg");
 }
 
 .chat__date {
@@ -668,7 +668,7 @@
 }
 
 .nav-menu .drop-down .icon:after {
-  content: url("../assets/icons/more.svg");
+  content: url("../../dist/src/assets/icons/more.svg");
   display: flex;
   flex-direction: row-reverse;
 }
