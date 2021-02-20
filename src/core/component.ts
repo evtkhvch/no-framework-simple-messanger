@@ -1,7 +1,8 @@
 import { Observable } from './observable.js';
 import { templateCompiler } from './template-compiler.js';
 import { IComponent, Meta } from '../interfaces/component.js';
-import { renderChild } from '../utils/render.js';
+import { renderChild } from '../utils/render-child.js';
+import { destroyChild } from '../utils/destroy-child.js';
 
 export class Component implements IComponent {
     private _element: HTMLElement | null = null;
@@ -128,8 +129,12 @@ export class Component implements IComponent {
         if (this._element) {
             this._element.remove();
         }
+
+        destroyChild(this.props);
         this.subject.next(EVENTS.DESTROY);
     }
+
+
 
     public destroy(): void {
     }
