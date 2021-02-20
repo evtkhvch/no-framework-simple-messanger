@@ -13,7 +13,7 @@ import { FormGroupControl } from '../../core/form-group-control.js';
 import { Router } from '../../core/router.js';
 import { AuthApi } from '../../api/auth-api.js';
 
-export class RegistrationComponent extends Component {
+class RegistrationComponent extends Component {
     private validator: FormGroupControl<RegistrationFormGroup> | undefined;
     private router: Router | undefined;
     private authApi = new AuthApi();
@@ -68,15 +68,15 @@ export class RegistrationComponent extends Component {
     }
 }
 
-export const registrationProps = {
+export const registrationComponent = new RegistrationComponent({
     registrationForm: new RegistrationForm({
         button: new Button({
             type: 'submit',
             name: 'Зарегистрироваться',
             class: 'sign__submit default-button'
-        }).elementToString
-    }).elementToString
-};
+        })
+    })
+});
 
 interface RegistrationFormGroup extends FormState {
     mail: FormControl;

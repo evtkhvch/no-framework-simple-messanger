@@ -1,12 +1,12 @@
 import { Component, Props } from '../../core/component.js';
 import { Button } from '../../components/button/button.js';
-import { LoginForm } from './components/login-form/login-form.js';
 import { EmptyValidator, FormControl, FormState, ValidatorComposer } from '../../core/validator.js';
 import { FormGroupControl } from '../../core/form-group-control.js';
 import { Router } from '../../core/router.js';
 import { AuthApi } from '../../api/auth-api.js';
+import template from './login.template.js';
 
-export class LoginComponent extends Component {
+class LoginComponent extends Component {
     private validator: FormGroupControl<LoginFormGroup> | undefined;
     private router: Router = new Router('.app');
     private authApi = new AuthApi();
@@ -30,7 +30,7 @@ export class LoginComponent extends Component {
         if (registrationLink) {
             registrationLink.onclick = () => {
                 this.router?.go('/registration');
-            }
+            };
         }
 
         if (formElement) {
@@ -43,24 +43,22 @@ export class LoginComponent extends Component {
                         this.router?.go('/chat');
                     }
                 });
-            }
+            };
         }
     }
 
     public render(): string {
-        return `{{{ loginForm }}}`;
+        return template;
     }
 }
 
-export const loginProps = {
-    loginForm: new LoginForm({
-        button: new Button({
-            type: 'submit',
-            name: 'Авторизоваться',
-            class: 'sign__submit default-button',
-        }).elementToString
-    }).elementToString
-};
+export const loginComponent = new LoginComponent({
+    button: new Button({
+        type: 'submit',
+        name: 'Авторизоваться',
+        class: 'sign__submit default-button',
+    })
+});
 
 interface LoginFormGroup extends FormState {
     login: FormControl;

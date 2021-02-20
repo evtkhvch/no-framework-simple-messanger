@@ -1,7 +1,7 @@
 import { Component, Props } from '../../core/component.js';
 import { Router } from '../../core/router.js';
 
-export class NotFoundComponent extends Component {
+class NotFoundComponent extends Component {
     public router: Router | null = null;
 
     constructor(public props: Props) {
@@ -26,4 +26,4 @@ export class NotFoundComponent extends Component {
     }
 }
 
-export const notFoundProps = {};
+export const notFoundComponent = new NotFoundComponent({});

@@ -8,7 +8,7 @@ import { UserApi } from '../../api/user-api.js';
 import { ACTION, store } from '../../core/store.js';
 import { AuthApi } from '../../api/auth-api.js';
 
-export class ChangeProfilePassComponent extends Component {
+class ChangeProfilePassComponent extends Component {
     private formGroup: FormGroupControl<ChangeProfileGroup> | undefined;
     private router: Router | undefined;
     private formElement: HTMLElement | null = null;
@@ -71,14 +71,14 @@ export class ChangeProfilePassComponent extends Component {
     }
 }
 
-export const changeProfilePassProps = {
+export const changeProfilePassComponent = new ChangeProfilePassComponent({
     name: 'Иван',
     button: new Button({
         type: 'submit',
         class: 'profile__form-submit default-button',
         name: 'Сохранить'
-    }).elementToString
-};
+    })
+});
 
 interface ChangeProfileGroup extends FormState {
     pass: FormControl;

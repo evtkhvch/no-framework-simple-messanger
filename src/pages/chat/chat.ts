@@ -12,7 +12,7 @@ import { EmptyValidator, FormControl } from '../../core/validator.js';
 import { FormGroupControl } from '../../core/form-group-control.js';
 import { Dialog } from './components/add-chat-dialog/dialog.js';
 
-export class ChatComponent extends Component {
+class ChatComponent extends Component {
     private router: Router = new Router('.app');
     private chatApi = new ChatApi();
     private subscription: (() => void) | undefined;
@@ -111,12 +111,12 @@ export class ChatComponent extends Component {
             const cardList = chatList.map(item => new UserCard({
                 ...item,
                 avatar: item.avatar ? `https://ya-praktikum.tech${item.avatar}` : null
-            }).elementToString).join('');
+            }));
 
             this.setProps({
                 chatsBar: new ChatsBar({
                     cardList: cardList
-                }).elementToString
+                })
             });
         });
 
@@ -144,7 +144,7 @@ export class ChatComponent extends Component {
             // @ts-ignore
             const target = event?.target?.closest('li');
             this.chat = this.getChat(Number(target.dataset.id));
-            const messageList = MESSAGE_LIST.map(item => new Message({ ...item }).elementToString).join('');
+            const messageList = MESSAGE_LIST.map(item => new Message({ ...item }));
 
             this.setProps({ ...this.props, isChat: true, messageList, name: this.chat?.title });
         }, true);
@@ -186,14 +186,14 @@ export class ChatComponent extends Component {
     }
 }
 
-export const chatProps = {
+export const chatComponent = new ChatComponent({
     name: '',
     isChat: false,
     messageList: [],
     chatsBar: new ChatsBar({
         cardList: []
-    }).elementToString,
-    menu: new Menu({}).elementToString,
+    }),
+    menu: new Menu({}),
     addChatDialog: new Dialog({
         inputId: 'addChatTitle',
         id: 'add-chat-dialog',
@@ -202,7 +202,7 @@ export const chatProps = {
         type: 'text',
         input: 'Название',
         submit: 'Добавить'
-    }).elementToString,
+    }),
     addUserDialog: new Dialog({
         inputId: 'addUserTitle',
         id: 'add-user-dialog',
@@ -211,7 +211,7 @@ export const chatProps = {
         type: 'number',
         input: 'Логин',
         submit: 'Добавить'
-    }).elementToString,
+    }),
     removeUserDialog: new Dialog({
         inputId: 'removeUserTitle',
         id: 'remove-user-dialog',
@@ -220,6 +220,6 @@ export const chatProps = {
         type: 'number',
         input: 'Логин',
         submit: 'Удалить'
-    }).elementToString,
-    footer: new ChatFooter({}).elementToString
-};
+    }),
+    footer: new ChatFooter({})
+});

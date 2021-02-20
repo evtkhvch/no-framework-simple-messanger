@@ -36,7 +36,7 @@ export class FormGroupControl<T extends FormState> {
         const validator = this.state[field]?.validator;
 
         if (input) {
-            this.state = { ...this.state, [field]: { ...this.state[field], value: sanitize(input?.value) } };
+            this.state = { ...this.state, [field]: { ...this.state[field], value: sanitize(input.value) } };
         }
 
         if (validator?.isValid(input?.value)) {
@@ -50,10 +50,9 @@ export class FormGroupControl<T extends FormState> {
 
     private setButtonStatus(): void {
         const submit = this.form?.querySelector('button[type="submit"]') as HTMLButtonElement | null;
-        const isFormValid = this.isFormValid();
 
         if (submit) {
-            submit.disabled = !isFormValid;
+            submit.disabled = !this.isFormValid();
         }
     }
 

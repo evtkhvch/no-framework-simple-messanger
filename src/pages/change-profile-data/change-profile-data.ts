@@ -8,7 +8,7 @@ import { ACTION, store } from '../../core/store.js';
 import { AuthApi, User } from '../../api/auth-api.js';
 import { UserApi } from '../../api/user-api.js';
 
-export class ChangeProfileDataComponent extends Component {
+class ChangeProfileDataComponent extends Component {
     private formGroup: FormGroupControl<ChangeProfileGroup> | undefined;
     private router: Router = new Router('.app');
     private authApi = new AuthApi();
@@ -102,15 +102,15 @@ const getProfile = (data: ChangeProfileGroup | undefined) => {
     };
 };
 
-export const changeProfileDataProps = {
+export const changeProfileDataComponent = new ChangeProfileDataComponent({
     avatar: '',
     name: '',
     button: new Button({
         type: 'submit',
         class: 'profile__form-submit default-button',
         name: 'Сохранить'
-    }).elementToString
-};
+    })
+});
 
 interface ChangeProfileGroup extends FormState {
     mail: FormControl;

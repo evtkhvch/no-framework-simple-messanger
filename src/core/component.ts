@@ -1,37 +1,7 @@
 import { Observable } from './observable.js';
 import { templateCompiler } from './template-compiler.js';
-
-enum EVENTS {
-    INIT = 'init',
-    FLOW_CDM = 'flow:component-did-mount',
-    FLOW_CDU = 'flow:component-did-update',
-    FLOW_RENDER = 'flow:render',
-    DESTROY = 'destroy'
-}
-
-export interface Props {
-    [prop: string]: unknown
-}
-
-export interface Meta {
-    tagName: string;
-    className: string;
-    props: Props;
-}
-
-abstract class IComponent {
-    abstract init(): void;
-    abstract componentDidMount(): void;
-    abstract setProps(nextProps: Props): void;
-    abstract componentDidUpdate(oldProps: Props, newProps: Props): boolean;
-    abstract _render(): void;
-    abstract render(): string;
-    abstract show(): void;
-    abstract hide(): void;
-    abstract _destroy(): void;
-    abstract destroy(): void;
-    abstract get element(): HTMLElement | null;
-}
+import { IComponent, Meta } from '../interfaces/component.js';
+import { renderChild } from '../utils/render.js';
 
 export class Component implements IComponent {
     private _element: HTMLElement | null = null;
@@ -46,7 +16,7 @@ export class Component implements IComponent {
         this.subject = subject;
         this._registerEvents(subject);
 
-        subject.next(EVENTS.INIT);
+        this.subject.next(EVENTS.INIT);
     }
 
     private _registerEvents(subject: Observable): void {
@@ -68,8 +38,6 @@ export class Component implements IComponent {
 
     public init(): void {
         this._createResources();
-
-        this.subject.next(EVENTS.FLOW_RENDER);
     }
 
     private _componentDidMount(): void {
@@ -82,7 +50,7 @@ export class Component implements IComponent {
     private _componentDidUpdate(oldProps: Props, newProps: Props): void {
         const response = this.componentDidUpdate(oldProps, newProps);
         const wasChange = JSON.stringify(oldProps) !== JSON.stringify(newProps);
-        this.props = newProps;
+        this.props = this._makePropsProxy(newProps);
 
         if (response && wasChange) {
             this.subject.next(EVENTS.FLOW_RENDER);
@@ -106,18 +74,16 @@ export class Component implements IComponent {
         return this._element;
     }
 
-    public get elementToString(): string {
-        return this._element ? this._element.innerHTML : '';
-    }
-
     public _render(): void {
         const block = this.render();
+        const props = renderChild(this.props);
 
         if (this._element) {
-            // @ts-ignore
-            this._element.innerHTML = templateCompiler(block, this.props);
+            this._element.innerHTML = templateCompiler(block, props);
         }
-        setTimeout(() => { this._afterViewInit(); });
+        setTimeout(() => {
+            this._afterViewInit();
+        });
     }
 
     private _afterViewInit(): void {
@@ -167,4 +133,16 @@ export class Component implements IComponent {
 
     public destroy(): void {
     }
+}
+
+enum EVENTS {
+    INIT = 'init',
+    FLOW_CDM = 'flow:component-did-mount',
+    FLOW_CDU = 'flow:component-did-update',
+    FLOW_RENDER = 'flow:render',
+    DESTROY = 'destroy'
+}
+
+export interface Props {
+    [prop: string]: unknown
 }

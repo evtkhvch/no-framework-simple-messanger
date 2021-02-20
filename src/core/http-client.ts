@@ -1,11 +1,6 @@
 import { ErrorInterceptor } from './interceptors.js';
-
-enum METHOD {
-    GET = 'GET',
-    POST = 'POST',
-    PUT = 'PUT',
-    DELETE = 'DELETE'
-}
+import { queryStringify } from '../utils/utils.js';
+import { Http, HTTPClientOptions, METHOD, RequestOptions } from '../interfaces/http.js';
 
 export class HTTPClient implements Http {
     public interceptor = new ErrorInterceptor();
@@ -61,39 +56,4 @@ export class HTTPClient implements Http {
 
         return this.interceptor.intercept(response);
     };
-}
-
-const queryStringify = <T extends object>(data: T): string => {
-    if (!data) {
-        return '';
-    } else {
-        let str = [];
-        for (let p in data) {
-            if (data.hasOwnProperty(p)) {
-                str.push(p + '=' + data[p]);
-            }
-        }
-        const params = str.join('&');
-
-        return `?${params}`;
-    }
-};
-
-interface Http {
-    get(url: string, options: HTTPClientOptions): Promise<XMLHttpRequest>;
-    put(url: string, options: HTTPClientOptions): Promise<XMLHttpRequest>;
-    post(url: string, options: HTTPClientOptions): Promise<XMLHttpRequest>;
-    delete(url: string, options: HTTPClientOptions): Promise<XMLHttpRequest>;
-}
-
-interface HTTPClientOptions {
-    headers?: any;
-    data: any;
-    timeout?: number;
-}
-
-interface RequestOptions {
-    method: METHOD;
-    data: any;
-    headers?: any;
 }

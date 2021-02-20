@@ -6,7 +6,7 @@ import { Router } from '../../core/router.js';
 import { AuthApi, User } from '../../api/auth-api.js';
 import { ACTION, store } from '../../core/store.js';
 
-export class ProfileComponent extends Component {
+class ProfileComponent extends Component {
     private formGroup: FormGroupControl<ProfileGroup> | undefined;
     private router: Router = new Router('.app');
     private authApi = new AuthApi();
@@ -73,7 +73,7 @@ export class ProfileComponent extends Component {
     }
 }
 
-export const profileProps = { name: '', avatar: '' };
+export const profileComponent = new ProfileComponent({ name: '', avatar: '' });
 
 interface ProfileGroup extends FormState {
     mail: FormControl;
