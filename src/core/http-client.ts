@@ -1,3 +1,5 @@
+import { ErrorInterceptor } from './interceptors.js';
+
 enum METHOD {
     GET = 'GET',
     POST = 'POST',
@@ -6,6 +8,8 @@ enum METHOD {
 }
 
 export class HTTPClient implements Http {
+    public interceptor = new ErrorInterceptor();
+
     public get = (url: string, options: HTTPClientOptions): Promise<XMLHttpRequest> => {
         const data = queryStringify(options.data);
         const newUrl = `${url}${data}`;
@@ -28,7 +32,7 @@ export class HTTPClient implements Http {
     private request = (url: string, options: RequestOptions, timeout = 5000): Promise<XMLHttpRequest> => {
         const { method, data, headers } = options;
 
-        return new Promise((resolve, reject) => {
+        const response = new Promise<XMLHttpRequest>((resolve, reject) => {
             const xhr = new XMLHttpRequest();
             xhr.withCredentials = true;
             xhr.open(method, url);
@@ -45,7 +49,7 @@ export class HTTPClient implements Http {
             };
 
             xhr.onabort = reject;
-            xhr.onerror = reject;
+            xhr.onerror = () => reject;
             xhr.ontimeout = reject;
 
             if (method === METHOD.GET || !data) {
@@ -54,6 +58,8 @@ export class HTTPClient implements Http {
                 xhr.send(data);
             }
         });
+
+        return this.interceptor.intercept(response);
     };
 }
 
@@ -73,14 +79,11 @@ const queryStringify = <T extends object>(data: T): string => {
     }
 };
 
-abstract class Http {
-    abstract get(url: string, options: HTTPClientOptions): Promise<XMLHttpRequest>;
-
-    abstract put(url: string, options: HTTPClientOptions): Promise<XMLHttpRequest>;
-
-    abstract post(url: string, options: HTTPClientOptions): Promise<XMLHttpRequest>;
-
-    abstract delete(url: string, options: HTTPClientOptions): Promise<XMLHttpRequest>;
+interface Http {
+    get(url: string, options: HTTPClientOptions): Promise<XMLHttpRequest>;
+    put(url: string, options: HTTPClientOptions): Promise<XMLHttpRequest>;
+    post(url: string, options: HTTPClientOptions): Promise<XMLHttpRequest>;
+    delete(url: string, options: HTTPClientOptions): Promise<XMLHttpRequest>;
 }
 
 interface HTTPClientOptions {

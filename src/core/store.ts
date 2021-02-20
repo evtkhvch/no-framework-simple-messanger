@@ -1,5 +1,5 @@
 import { User } from '../api/auth-api.js';
-import { Chat } from '../api/chat-api';
+import { Chat } from '../api/chat-api.js';
 
 export enum ACTION {
     INIT = 'INIT',

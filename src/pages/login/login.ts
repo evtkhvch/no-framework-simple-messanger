@@ -38,7 +38,11 @@ export class LoginComponent extends Component {
                 event.preventDefault();
                 const { login, pass } = this.validator?.state as LoginFormGroup;
 
-                this.authApi.signIn(login.value, pass.value).then(() => this.router?.go('/chat'))
+                this.authApi.signIn(login.value, pass.value).then((res) => {
+                    if (res.status === 200 || res.status === 400) {
+                        this.router?.go('/chat');
+                    }
+                });
             }
         }
     }

@@ -1,4 +1,4 @@
-import { Message } from './interfaces.js';
+import { Message } from '../core/interfaces.js';
 
 export const MESSAGE_LIST: Message[] = [
     new Message(

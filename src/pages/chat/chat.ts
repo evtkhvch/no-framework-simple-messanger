@@ -1,7 +1,7 @@
 import { Component, Props } from '../../core/component.js';
 import { ChatsBar } from './components/chats-bar/chats-bar.js';
 import { UserCard } from './components/user-card/user-card.js';
-import { MESSAGE_LIST } from '../../core/mock.js';
+import { MESSAGE_LIST } from '../../mock/mock.js';
 import { ChatFooter } from './components/chat-footer/chat-footer.js';
 import { Message } from './components/message/message.js';
 import { Router } from '../../core/router.js';

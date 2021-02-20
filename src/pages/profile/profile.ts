@@ -27,7 +27,11 @@ export class ProfileComponent extends Component {
         profileNav?.addEventListener('click', () => this.router?.go('/chat'));
         changePass?.addEventListener('click', () => this.router?.go('/change-profile-pass'));
         changeData?.addEventListener('click', () => this.router?.go('/change-profile-data'));
-        exit?.addEventListener('click', () => this.authApi.logout().then(() => { this.router?.go('/login') }));
+        exit?.addEventListener('click', () => this.authApi.logout().then((res) => {
+            if (res.status === 200) {
+                this.router?.go('/login');
+            }
+        }));
     }
 
     private setForm(userData: User): void {
