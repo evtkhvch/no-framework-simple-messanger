@@ -4,9 +4,10 @@ import { EmailValidator, EmptyValidator, FormControl, FormState, ValidatorCompos
 import { FormGroupControl } from '../../core/form-group-control.js';
 import { Button } from '../../components/button/button.js';
 import { Router } from '../../core/router.js';
-import { ACTION, store } from '../../core/store.js';
 import { AuthApi, User } from '../../api/auth-api.js';
 import { UserApi } from '../../api/user-api.js';
+import { ACTION } from '../../store/reducer.js';
+import { store } from '../../store/store.js';
 
 class ChangeProfileDataComponent extends Component {
     private formGroup: FormGroupControl<ChangeProfileGroup> | undefined;

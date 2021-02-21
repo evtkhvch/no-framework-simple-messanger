@@ -1,0 +1,36 @@
+import { User } from '../api/auth-api.js';
+import { Chat } from '../api/chat-api.js';
+import { Action, Reducer } from './interfaces/store.js';
+
+export enum ACTION {
+    INIT = '@@redux/INIT',
+    SET_USER = 'SET_USER',
+    GET_CHAT_LIST = 'GET_CHAT_LIST',
+    GET_CHAT_LIST_SUCCESS = 'GET_CHAT_LIST_SUCCESS',
+    SET_CHAT = 'SET_CHAT'
+}
+
+export interface State {
+    user: User | null;
+    chatList: Chat[];
+    chat: Chat | undefined | null;
+}
+
+export const initialState: State = {
+    user: null,
+    chatList: [],
+    chat: null
+}
+
+export const reducer: Reducer = (state = initialState, action: Action) => {
+    switch (action.type) {
+        case ACTION.SET_USER:
+            return { ...state, user: { ...state.user, ...action.props } };
+
+        case ACTION.GET_CHAT_LIST:
+            return { ...state, chatList: action.props };
+
+        default:
+            return state;
+    }
+};

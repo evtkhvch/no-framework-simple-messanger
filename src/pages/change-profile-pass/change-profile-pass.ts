@@ -5,8 +5,9 @@ import { EmptyValidator, FormControl, FormState } from '../../core/validator.js'
 import { FormGroupControl } from '../../core/form-group-control.js';
 import { Router } from '../../core/router.js';
 import { UserApi } from '../../api/user-api.js';
-import { ACTION, store } from '../../core/store.js';
 import { AuthApi } from '../../api/auth-api.js';
+import { store } from '../../store/store.js';
+import { ACTION } from '../../store/reducer.js';
 
 class ChangeProfilePassComponent extends Component {
     private formGroup: FormGroupControl<ChangeProfileGroup> | undefined;

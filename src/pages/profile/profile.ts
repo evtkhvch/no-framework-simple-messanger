@@ -4,7 +4,8 @@ import { EmptyValidator, FormControl, FormState } from '../../core/validator.js'
 import { FormGroupControl } from '../../core/form-group-control.js';
 import { Router } from '../../core/router.js';
 import { AuthApi, User } from '../../api/auth-api.js';
-import { ACTION, store } from '../../core/store.js';
+import { store } from '../../store/store.js';
+import { ACTION } from '../../store/reducer.js';
 
 class ProfileComponent extends Component {
     private formGroup: FormGroupControl<ProfileGroup> | undefined;

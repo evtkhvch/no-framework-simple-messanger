@@ -77,6 +77,11 @@ export class Component implements IComponent {
 
     public _render(): void {
         const block = this.render();
+
+        Object.values(this.props).forEach(item => {
+
+        });
+
         const props = renderChild(this.props);
 
         if (this._element) {

@@ -5,6 +5,18 @@ export class ChatFooter extends Component {
         super('div', props);
     }
 
+    public componentDidMount(): void {
+        const message: HTMLInputElement | null = document.querySelector('.chat__footer-message');
+        const button: HTMLElement | null = document.querySelector('.chat__footer-submit');
+
+
+        if (button) {
+            button.onclick = () => {
+                console.log(message?.value);
+            };
+        }
+    }
+
     public render(): string {
         return `
             <footer class="chat__footer">
