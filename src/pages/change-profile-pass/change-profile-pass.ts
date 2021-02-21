@@ -5,14 +5,16 @@ import { EmptyValidator, FormControl, FormState } from '../../core/validator.js'
 import { FormGroupControl } from '../../core/form-group-control.js';
 import { store } from '../../store/store.js';
 import { ACTION } from '../../store/reducer.js';
-import { authApi } from '../../api/auth-api.js';
-import { userApi } from '../../api/user-api.js';
 import { Router } from '../../core/router.js';
+import { AuthApi } from '../../api/auth-api.js';
+import { UserApi } from '../../api/user-api.js';
 
 class ChangeProfilePassComponent extends Component {
     private formGroup: FormGroupControl<ChangeProfileGroup> | undefined;
     private formElement: HTMLElement | null = null;
     private subscription: (() => void) | undefined;
+    private authApi = new AuthApi();
+    private userApi = new UserApi();
     private router = new Router('.app');
 
     constructor(public props: Props) {
@@ -20,7 +22,7 @@ class ChangeProfilePassComponent extends Component {
     }
 
     public componentDidMount(): void {
-        authApi.user().then(res => {
+        this.authApi.user().then(res => {
             if (res.status === 200) {
                 store.dispatch({ type: ACTION.SET_USER, props: JSON.parse(res.response) });
             } else {
@@ -51,7 +53,7 @@ class ChangeProfilePassComponent extends Component {
             const old = this.formGroup?.state.pass.value || '';
             const newPass = this.formGroup?.state.newPassMore.value || '';
 
-            userApi.changeProfilePassword(old, newPass).then((res) => {
+            this.userApi.changeProfilePassword(old, newPass).then((res) => {
                 if (res.status === 200) {
                     this.router.go('/profile');
                 } else {

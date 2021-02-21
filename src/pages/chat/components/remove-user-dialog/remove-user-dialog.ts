@@ -1,13 +1,14 @@
 import { Component, Props } from '../../../../core/component.js';
 import { EmptyValidator, FormControl } from '../../../../core/validator.js';
 import { FormGroupControl } from '../../../../core/form-group-control.js';
-import { chatApi, ChatUserReq } from '../../../../api/chat-api.js';
+import { ChatApi, ChatUserReq } from '../../../../api/chat-api.js';
 import { store } from '../../../../store/store.js';
 import { Chat } from '../../../../interfaces/chat.js';
 
 export class RemoveUserDialog extends Component {
     private chat: Chat | undefined | null;
     private subscription: (() => void) | undefined;
+    private chatApi = new ChatApi();
 
     constructor(public props: Props) {
         super('div', props);
@@ -24,7 +25,7 @@ export class RemoveUserDialog extends Component {
             event.preventDefault();
             const value = Number(formGroup.state.removeUserTitle.value);
             const data: ChatUserReq = { users: [value], chatId: this.chat?.id! };
-            chatApi.removeUsersFromChat(data).then((res) => {
+            this.chatApi.removeUsersFromChat(data).then((res) => {
                 if (res.status === 200) {
                     dialog?.close();
                 } else {

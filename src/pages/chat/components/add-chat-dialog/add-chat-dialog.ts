@@ -4,11 +4,12 @@ import { FormGroupControl } from '../../../../core/form-group-control.js';
 import { store } from '../../../../store/store.js';
 import { ACTION } from '../../../../store/reducer.js';
 import { Chat } from '../../../../interfaces/chat.js';
-import { chatApi } from '../../../../api/chat-api.js';
+import { ChatApi } from '../../../../api/chat-api.js';
 
 export class AddChatDialog extends Component {
     private chat: Chat | undefined | null;
     private subscription: (() => void) | undefined;
+    private chatApi = new ChatApi();
 
     constructor(public props: Props) {
         super('div', props);
@@ -23,7 +24,7 @@ export class AddChatDialog extends Component {
         formGroup.initialize();
         form?.addEventListener('submit', (event: Event) => {
             event.preventDefault();
-            chatApi.createChat(formGroup.state.addChatTitle.value).then((res) => {
+            this.chatApi.createChat(formGroup.state.addChatTitle.value).then((res) => {
                 if (res.status === 200) {
                     dialog?.close();
                     this.getChats();
@@ -50,7 +51,7 @@ export class AddChatDialog extends Component {
     }
 
     private getChats(): void {
-        chatApi.chats().then(res => {
+        this.chatApi.chats().then(res => {
             if (res.status === 200) {
                 store.dispatch({ type: ACTION.SET_CHAT_LIST, props: JSON.parse(res.response) });
             } else {

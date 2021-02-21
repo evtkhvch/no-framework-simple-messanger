@@ -10,12 +10,13 @@ import {
     ValidatorComposer
 } from '../../core/validator.js';
 import { FormGroupControl } from '../../core/form-group-control.js';
-import { authApi } from '../../api/auth-api.js';
 import { Router } from '../../core/router.js';
+import { AuthApi } from '../../api/auth-api.js';
 
 class RegistrationComponent extends Component {
     private router = new Router('.app');
     private validator: FormGroupControl<RegistrationFormGroup> | undefined;
+    private authApi = new AuthApi();
 
     constructor(public props: Props) {
         super('div', props, 'sign');
@@ -49,7 +50,7 @@ class RegistrationComponent extends Component {
 
                 const data = this.validator?.state as RegistrationFormGroup;
 
-                authApi.signUp({
+                this.authApi.signUp({
                     first_name: data.userName.value,
                     second_name: data.surname.value,
                     login: data.login.value,

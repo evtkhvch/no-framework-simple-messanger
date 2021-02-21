@@ -5,13 +5,14 @@ import { FormGroupControl } from '../../core/form-group-control.js';
 import { store } from '../../store/store.js';
 import { ACTION } from '../../store/reducer.js';
 import { User } from '../../interfaces/user.js';
-import { authApi } from '../../api/auth-api.js';
-import { Router } from '../../core/router';
+import { Router } from '../../core/router.js';
+import { AuthApi } from '../../api/auth-api.js';
 
 class ProfileComponent extends Component {
     private formGroup: FormGroupControl<ProfileGroup> | undefined;
     private subscription: (() => void) | undefined;
     private router = new Router('.app');
+    private authApi = new AuthApi();
 
     constructor(public props: Props) {
         super('div', props, 'profile');
@@ -28,7 +29,7 @@ class ProfileComponent extends Component {
         profileNav?.addEventListener('click', () => this.router.go('/chat'));
         changePass?.addEventListener('click', () => this.router.go('/change-profile-pass'));
         changeData?.addEventListener('click', () => this.router.go('/change-profile-data'));
-        exit?.addEventListener('click', () => authApi.logout().then((res) => {
+        exit?.addEventListener('click', () => this.authApi.logout().then((res) => {
                 if (res.status === 200) {
                     this.router.go('/login');
                 } else {
@@ -55,7 +56,7 @@ class ProfileComponent extends Component {
     }
 
     private initListeners(): void {
-        authApi.user().then(res => {
+        this.authApi.user().then(res => {
             if (res.status === 200) {
                 store.dispatch({ type: ACTION.SET_USER, props: JSON.parse(res.response) });
             } else {

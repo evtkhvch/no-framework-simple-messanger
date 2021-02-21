@@ -1,7 +1,7 @@
 import { HTTPClient } from '../core/http-client.js';
 import { environment } from '../enviroment/enviroment.js';
 
-class ChatApi {
+export class ChatApi {
     private httpClient = new HTTPClient();
 
     public chats(): Promise<XMLHttpRequest> {
@@ -32,8 +32,6 @@ class ChatApi {
         })
     }
 }
-
-export const chatApi = new ChatApi();
 
 export interface ChatUserReq {
     users: number[];

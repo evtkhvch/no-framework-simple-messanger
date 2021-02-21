@@ -1,6 +1,6 @@
 import { Component, Props } from '../../../../core/component.js';
 import template from './chats-bar.template.js';
-import { Router } from '../../../../core/router';
+import { Router } from '../../../../core/router.js';
 
 export class ChatsBar extends Component {
     private router = new Router('.app');

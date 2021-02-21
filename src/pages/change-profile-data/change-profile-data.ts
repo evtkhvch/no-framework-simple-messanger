@@ -8,15 +8,17 @@ import { store } from '../../store/store.js';
 import { getProfile } from './core/utils.js';
 import { ChangeProfileGroup } from './core/interfaces.js';
 import { User } from '../../interfaces/user.js';
-import { authApi } from '../../api/auth-api.js';
-import { userApi } from '../../api/user-api.js';
 import { Router } from '../../core/router.js';
+import { AuthApi } from '../../api/auth-api.js';
+import { UserApi } from '../../api/user-api.js';
 
 class ChangeProfileDataComponent extends Component {
     private formGroup: FormGroupControl<ChangeProfileGroup> | undefined;
     private formElement: HTMLElement | null = null;
     private subscription: (() => void) | undefined;
     private router = new Router('.app');
+    private authApi = new AuthApi();
+    private userApi = new UserApi();
 
     constructor(public props: Props) {
         super('div', props, 'profile');
@@ -37,7 +39,7 @@ class ChangeProfileDataComponent extends Component {
                     let formData = new FormData();
                     formData.set('avatar', selectedFile);
 
-                    userApi.changeProfileAvatar(formData).then(res => {
+                    this.userApi.changeProfileAvatar(formData).then(res => {
                         if (res.status === 200) {
                             store.dispatch({ type: ACTION.SET_USER, props: JSON.parse(res.response) });
                         } else {
@@ -54,7 +56,7 @@ class ChangeProfileDataComponent extends Component {
     }
 
     private initListeners(): void {
-        authApi.user().then(res => {
+        this.authApi.user().then(res => {
             if (res.status === 200) {
                 store.dispatch({ type: ACTION.SET_USER, props: JSON.parse(res.response) });
             } else {
@@ -72,7 +74,7 @@ class ChangeProfileDataComponent extends Component {
             event.preventDefault();
             const profile = getProfile(this.formGroup?.state);
 
-            userApi.changeProfile(profile).then((res) => {
+            this.userApi.changeProfile(profile).then((res) => {
                 if (res.status === 200) {
                     store.dispatch({ type: ACTION.SET_USER, props: JSON.parse(res.response) });
 

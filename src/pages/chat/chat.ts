@@ -12,11 +12,12 @@ import { AddUserDialog } from './components/add-user-dialog/add-user-dialog.js';
 import { store } from '../../store/store.js';
 import { ACTION } from '../../store/reducer.js';
 import { Chat } from '../../interfaces/chat.js';
-import { chatApi } from '../../api/chat-api.js';
+import { ChatApi } from '../../api/chat-api.js';
 
 class ChatComponent extends Component {
     private subscription: (() => void) | undefined;
     private chatList: Chat[] = [];
+    private chatApi = new ChatApi();
 
     constructor(public props: Props) {
         super('div', props, 'chat-list');
@@ -31,7 +32,7 @@ class ChatComponent extends Component {
             store.dispatch({ type: ACTION.SET_CHAT, props: chat });
         }, true);
 
-        chatApi.chats().then(res => {
+        this.chatApi.chats().then(res => {
             if (res.status === 200) {
                 store.dispatch({ type: ACTION.SET_CHAT_LIST, props: JSON.parse(res.response) });
             } else {

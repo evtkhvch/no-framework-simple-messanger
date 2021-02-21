@@ -2,7 +2,7 @@ import { HTTPClient } from '../core/http-client.js';
 import { environment } from '../enviroment/enviroment.js';
 import { Profile } from '../interfaces/profile.js';
 
-class UserApi {
+export class UserApi {
     private httpClient = new HTTPClient();
 
     public changeProfile(data: Profile): Promise<XMLHttpRequest> {
@@ -26,6 +26,4 @@ class UserApi {
         });
     }
 }
-
-export const userApi = new UserApi();
 
