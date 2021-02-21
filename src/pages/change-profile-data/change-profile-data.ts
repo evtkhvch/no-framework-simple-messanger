@@ -1,17 +1,18 @@
 import { Component, Props } from '../../core/component.js';
 import template from './change-data-template.js';
-import { EmailValidator, EmptyValidator, FormControl, FormState, ValidatorComposer } from '../../core/validator.js';
+import { EmailValidator, EmptyValidator, FormControl, ValidatorComposer } from '../../core/validator.js';
 import { FormGroupControl } from '../../core/form-group-control.js';
 import { Button } from '../../components/button/button.js';
-import { Router } from '../../core/router.js';
 import { AuthApi, User } from '../../api/auth-api.js';
 import { UserApi } from '../../api/user-api.js';
 import { ACTION } from '../../store/reducer.js';
 import { store } from '../../store/store.js';
+import { getProfile } from './core/utils.js';
+import { ChangeProfileGroup } from './core/interfaces.js';
+import { router } from '../../index.js';
 
 class ChangeProfileDataComponent extends Component {
     private formGroup: FormGroupControl<ChangeProfileGroup> | undefined;
-    private router: Router = new Router('.app');
     private authApi = new AuthApi();
     private userApi = new UserApi();
     private formElement: HTMLElement | null = null;
@@ -37,11 +38,11 @@ class ChangeProfileDataComponent extends Component {
 
                 this.userApi.changeProfileAvatar(formData).then(res => {
                     store.dispatch({ type: ACTION.SET_USER, props: res });
-                });
+                }).catch((err) => console.error(err));
             }
         });
 
-        navButton?.addEventListener('click', () => this.router?.go('/profile'));
+        navButton?.addEventListener('click', () => router?.go('/profile'));
     }
 
     private initListeners(): void {
@@ -62,7 +63,7 @@ class ChangeProfileDataComponent extends Component {
             this.userApi.changeProfile(profile).then((res) => {
                 store.dispatch({ type: ACTION.SET_USER, props: res });
 
-                return this.router?.go('/profile');
+                router.go('/profile');
             });
         });
     }
@@ -92,17 +93,6 @@ class ChangeProfileDataComponent extends Component {
     }
 }
 
-const getProfile = (data: ChangeProfileGroup | undefined) => {
-    return {
-        first_name: data?.userName.value || '',
-        second_name: data?.surname.value || '',
-        display_name: data?.nameInChat.value || '',
-        login: data?.login.value || '',
-        email: data?.mail.value || '',
-        phone: data?.phone.value || ''
-    };
-};
-
 export const changeProfileDataComponent = new ChangeProfileDataComponent({
     avatar: '',
     name: '',
@@ -112,12 +102,3 @@ export const changeProfileDataComponent = new ChangeProfileDataComponent({
         name: 'Сохранить'
     })
 });
-
-interface ChangeProfileGroup extends FormState {
-    mail: FormControl;
-    login: FormControl;
-    userName: FormControl;
-    surname: FormControl;
-    nameInChat: FormControl;
-    phone: FormControl;
-}

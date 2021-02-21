@@ -1,9 +1,7 @@
 import { Component, Props } from '../../../../core/component.js';
-import { Router } from '../../../../core/router.js';
+import { router } from '../../../../index.js';
 
 export class ChatsBar extends Component {
-    private router = new Router('.app')
-
     constructor(public props: Props) {
         super('div', props);
     }
@@ -13,7 +11,7 @@ export class ChatsBar extends Component {
 
         if (profileTitle) {
             profileTitle.onclick = () => {
-                this.router?.go('/profile');
+                router.go('/profile');
             };
         }
     }

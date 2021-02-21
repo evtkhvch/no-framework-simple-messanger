@@ -2,13 +2,12 @@ import { Component, Props } from '../../core/component.js';
 import { Button } from '../../components/button/button.js';
 import { EmptyValidator, FormControl, FormState, ValidatorComposer } from '../../core/validator.js';
 import { FormGroupControl } from '../../core/form-group-control.js';
-import { Router } from '../../core/router.js';
 import { AuthApi } from '../../api/auth-api.js';
 import template from './login.template.js';
+import { router } from '../../index.js';
 
 class LoginComponent extends Component {
     private validator: FormGroupControl<LoginFormGroup> | undefined;
-    private router: Router = new Router('.app');
     private authApi = new AuthApi();
 
     constructor(public props: Props) {
@@ -29,7 +28,7 @@ class LoginComponent extends Component {
 
         if (registrationLink) {
             registrationLink.onclick = () => {
-                this.router?.go('/registration');
+                router.go('/registration');
             };
         }
 
@@ -40,7 +39,7 @@ class LoginComponent extends Component {
 
                 this.authApi.signIn(login.value, pass.value).then((res) => {
                     if (res.status === 200 || res.status === 400) {
-                        this.router?.go('/chat');
+                        router.go('/chat');
                     }
                 });
             };

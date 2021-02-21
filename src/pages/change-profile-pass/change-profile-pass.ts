@@ -3,15 +3,14 @@ import template from './change-pass.template.js';
 import { Button } from '../../components/button/button.js';
 import { EmptyValidator, FormControl, FormState } from '../../core/validator.js';
 import { FormGroupControl } from '../../core/form-group-control.js';
-import { Router } from '../../core/router.js';
 import { UserApi } from '../../api/user-api.js';
 import { AuthApi } from '../../api/auth-api.js';
 import { store } from '../../store/store.js';
 import { ACTION } from '../../store/reducer.js';
+import { router } from '../../index.js';
 
 class ChangeProfilePassComponent extends Component {
     private formGroup: FormGroupControl<ChangeProfileGroup> | undefined;
-    private router: Router | undefined;
     private formElement: HTMLElement | null = null;
     private userApi = new UserApi();
     private authApi = new AuthApi();
@@ -19,7 +18,6 @@ class ChangeProfilePassComponent extends Component {
 
     constructor(public props: Props) {
         super('div', props, 'profile');
-        this.router = new Router('.app');
     }
 
     public componentDidMount(): void {
@@ -40,7 +38,7 @@ class ChangeProfilePassComponent extends Component {
         const navButton: HTMLElement | null = document.querySelector('.profile__nav-button');
 
         if (navButton) {
-            navButton.onclick = () => { this.router?.go('/profile'); }
+            navButton.onclick = () => { router?.go('/profile'); }
         }
     }
 
@@ -51,7 +49,7 @@ class ChangeProfilePassComponent extends Component {
             const newPass = this.formGroup?.state.newPassMore.value || '';
 
             this.userApi.changeProfilePassword(old, newPass).then(() => {
-                this.router?.go('/profile');
+                router.go('/profile');
             });
         });
     }

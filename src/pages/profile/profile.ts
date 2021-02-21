@@ -2,14 +2,13 @@ import { Component, Props } from '../../core/component.js';
 import template from './profile.template.js';
 import { EmptyValidator, FormControl, FormState } from '../../core/validator.js';
 import { FormGroupControl } from '../../core/form-group-control.js';
-import { Router } from '../../core/router.js';
 import { AuthApi, User } from '../../api/auth-api.js';
 import { store } from '../../store/store.js';
 import { ACTION } from '../../store/reducer.js';
+import { router } from '../../index.js';
 
 class ProfileComponent extends Component {
     private formGroup: FormGroupControl<ProfileGroup> | undefined;
-    private router: Router = new Router('.app');
     private authApi = new AuthApi();
     private subscription: (() => void) | undefined;
 
@@ -25,12 +24,12 @@ class ProfileComponent extends Component {
         const changePass: HTMLFormElement | null = document.querySelector('.profile__option-change-pass');
         const changeData: HTMLFormElement | null = document.querySelector('.profile__option-change-data');
 
-        profileNav?.addEventListener('click', () => this.router?.go('/chat'));
-        changePass?.addEventListener('click', () => this.router?.go('/change-profile-pass'));
-        changeData?.addEventListener('click', () => this.router?.go('/change-profile-data'));
+        profileNav?.addEventListener('click', () => router.go('/chat'));
+        changePass?.addEventListener('click', () => router.go('/change-profile-pass'));
+        changeData?.addEventListener('click', () => router.go('/change-profile-data'));
         exit?.addEventListener('click', () => this.authApi.logout().then((res) => {
             if (res.status === 200) {
-                this.router?.go('/login');
+                router.go('/login');
             }
         }));
     }

@@ -1,4 +1,4 @@
-import { Router } from './router.js';
+import { router } from '../index.js';
 
 interface HttpHandler {
     handle(req: Promise<XMLHttpRequest>): Promise<XMLHttpRequest>
@@ -9,12 +9,10 @@ interface HttpInterceptor {
 }
 
 export class ErrorInterceptor implements HttpInterceptor {
-    private router = new Router('.app');
-
     public intercept(req: Promise<XMLHttpRequest>, next?: HttpHandler): Promise<XMLHttpRequest> {
         req.then(res => {
             if (res.status === 401) {
-                this.router.go('/login');
+                router.go('/login');
             }
         });
 

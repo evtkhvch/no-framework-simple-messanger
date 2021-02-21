@@ -4,6 +4,6 @@ import { reducer } from './reducer.js';
 
 export const store = createStore(reducer, applyMiddleware(
     thunkMiddleware,
-    loggingMiddleware
+    // loggingMiddleware
 ));
 

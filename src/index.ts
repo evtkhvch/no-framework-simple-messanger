@@ -10,7 +10,7 @@ import { notFoundComponent } from './pages/not-found-page/not-found-page.js';
 
 const ROUTES: string[] = [ '/login', '/registration', '/profile', '/chat', '/change-profile-pass', '/change-profile-data', '/error', '/not-found', '/' ];
 
-const router = new Router('.app');
+export const router = new Router('.app');
 
 router
     .use('/login', loginComponent)

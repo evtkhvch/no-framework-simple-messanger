@@ -1,19 +1,16 @@
 import { Component, Props } from '../../core/component.js';
-import { Router } from '../../core/router.js';
+import { router } from '../../index.js';
 
 class NotFoundComponent extends Component {
-    public router: Router | null = null;
-
     constructor(public props: Props) {
         super('div', props, 'not-found');
-        this.router = new Router('.app');
     }
 
     public componentDidMount(): void {
         const back: HTMLFormElement | null = document.querySelector('.not-found__back');
 
         if (back) {
-            back.onclick = () => { this.router?.go('/chat'); };
+            back.onclick = () => { router.go('/chat'); };
         }
     }
 
