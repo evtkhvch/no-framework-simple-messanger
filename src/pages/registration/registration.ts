@@ -56,7 +56,13 @@ class RegistrationComponent extends Component {
                     email: data.mail.value,
                     password: data.passOneMoreTime.value,
                     phone: data.phone.value
-                }).then(() => { router.go('/chat'); })
+                }).then((res) => {
+                    if (res.status === 200) {
+                        router.go('/chat');
+                    } else {
+                        throw new Error(res.response);
+                    }
+                }).catch((err) => console.error(err));
             };
         }
     }

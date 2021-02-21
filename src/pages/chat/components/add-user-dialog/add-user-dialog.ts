@@ -1,8 +1,9 @@
 import { Component, Props } from '../../../../core/component.js';
 import { EmptyValidator, FormControl } from '../../../../core/validator.js';
 import { FormGroupControl } from '../../../../core/form-group-control.js';
-import { Chat, ChatApi, ChatUserReq } from '../../../../api/chat-api.js';
+import { ChatApi, ChatUserReq } from '../../../../api/chat-api.js';
 import { store } from '../../../../store/store.js';
+import { Chat } from '../../../../interfaces/chat.js';
 
 export class AddUserDialog extends Component {
     private chat: Chat | undefined | null;
@@ -24,7 +25,13 @@ export class AddUserDialog extends Component {
             event.preventDefault();
             const value = Number(formGroup.state.addUserTitle.value);
             const data: ChatUserReq = { users: [value], chatId: this.chat?.id! };
-            this.chatApi.addUsersToChat(data).then(() => dialog?.close());
+            this.chatApi.addUsersToChat(data).then((res) => {
+                if (res.status === 200) {
+                    dialog?.close();
+                } else {
+                    throw new Error(res.response);
+                }
+            }).catch((err) => console.error(err));
         });
 
         this.initListener();

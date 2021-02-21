@@ -40,8 +40,10 @@ class LoginComponent extends Component {
                 this.authApi.signIn(login.value, pass.value).then((res) => {
                     if (res.status === 200 || res.status === 400) {
                         router.go('/chat');
+                    } else {
+                        throw new Error(res.response);
                     }
-                });
+                }).catch((err) => console.error(err));
             };
         }
     }

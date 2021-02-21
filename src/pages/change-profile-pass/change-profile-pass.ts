@@ -21,9 +21,13 @@ class ChangeProfilePassComponent extends Component {
     }
 
     public componentDidMount(): void {
-        this.authApi.user().then(value => {
-            store.dispatch({ type: ACTION.SET_USER, props: value });
-        });
+        this.authApi.user().then(res => {
+            if (res.status === 200) {
+                store.dispatch({ type: ACTION.SET_USER, props: JSON.parse(res.response) });
+            } else {
+                throw new Error(res.response)
+            }
+        }).catch((err) => console.error(err));
 
         this.subscription = store.subscribe(() => {
             const { user } = store.getState();
@@ -48,9 +52,13 @@ class ChangeProfilePassComponent extends Component {
             const old = this.formGroup?.state.pass.value || '';
             const newPass = this.formGroup?.state.newPassMore.value || '';
 
-            this.userApi.changeProfilePassword(old, newPass).then(() => {
-                router.go('/profile');
-            });
+            this.userApi.changeProfilePassword(old, newPass).then((res) => {
+                if (res.status === 200) {
+                    router.go('/profile');
+                } else {
+                    throw new Error(res.response)
+                }
+            }).catch((err) => console.error(err));
         });
     }
 

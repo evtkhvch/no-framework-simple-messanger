@@ -25,11 +25,11 @@ export class AuthApi {
         });
     }
 
-    public user(): Promise<User> {
+    public user(): Promise<XMLHttpRequest> {
         return this.httpClient.get(`${environment.praktikum}/auth/user`, {
             data: {},
             headers: {}
-        }).then(res => res.response).then(res => JSON.parse(res));
+        })
     }
 }
 
@@ -40,15 +40,4 @@ export interface SignUpReq {
     email: string;
     password: string;
     phone: string;
-}
-
-export interface User {
-    id: number;
-    first_name: string;
-    second_name: string;
-    display_name: string;
-    login: string;
-    email: string;
-    phone: string;
-    avatar: string;
 }

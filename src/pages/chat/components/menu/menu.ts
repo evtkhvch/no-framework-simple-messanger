@@ -9,7 +9,7 @@ export class Menu extends Component {
         const navMenu = document.querySelector('.chat__options.nav-menu');
 
         navMenu?.addEventListener('click', () => {
-            const target = document.querySelector('.chat__options.nav-menu .drop-down');
+            const target = navMenu.querySelector('.drop-down');
             target?.classList.toggle('closed');
         }, false)
 
@@ -21,19 +21,28 @@ export class Menu extends Component {
     private initAddChatDialog(): void {
         const addChat = document.querySelector('.add-chat');
         const dialog: HTMLDialogElement | null = document.querySelector('.add-chat-dialog');
-        addChat?.addEventListener('click', () => { dialog?.showModal() });
+
+        if (addChat) {
+            addChat.addEventListener('click', () => { dialog?.showModal() });
+        }
     }
 
     private initAddUserDialog(): void {
         const addUser = document.querySelector('.add-user');
         const dialog: HTMLDialogElement | null = document.querySelector('.add-user-dialog');
-        addUser?.addEventListener('click', () => { dialog?.showModal() });
+
+        if (addUser) {
+            addUser.addEventListener('click', () => { dialog?.showModal() });
+        }
     }
 
     private initRemoveUserDialog(): void {
         const removeUser = document.querySelector('.remove-user');
         const dialog: HTMLDialogElement | null = document.querySelector('.remove-user-dialog');
-        removeUser?.addEventListener('click', () => { dialog?.showModal() });
+
+        if (removeUser) {
+            removeUser.addEventListener('click', () => { dialog?.showModal() });
+        }
     }
 
     public render(): string {

@@ -4,7 +4,7 @@ import { UserCard } from './components/user-card/user-card.js';
 import { MESSAGE_LIST } from '../../mock/mock.js';
 import { ChatFooter } from './components/chat-footer/chat-footer.js';
 import { Message } from './components/message/message.js';
-import { Chat, ChatApi } from '../../api/chat-api.js';
+import { ChatApi } from '../../api/chat-api.js';
 import { Menu } from './components/menu/menu.js';
 import { AddChatDialog } from './components/add-chat-dialog/add-chat-dialog.js';
 import template from './chat.template.js';
@@ -12,6 +12,7 @@ import { RemoveUserDialog } from './components/remove-user-dialog/remove-user-di
 import { AddUserDialog } from './components/add-user-dialog/add-user-dialog.js';
 import { store } from '../../store/store.js';
 import { ACTION } from '../../store/reducer.js';
+import { Chat } from '../../interfaces/chat.js';
 
 class ChatComponent extends Component {
     private chatApi = new ChatApi();
@@ -31,9 +32,13 @@ class ChatComponent extends Component {
             store.dispatch({ type: ACTION.SET_CHAT, props: chat });
         }, true);
 
-        this.chatApi.chats().then(value => {
-            store.dispatch({ type: ACTION.SET_CHAT_LIST, props: value });
-        });
+        this.chatApi.chats().then(res => {
+            if (res.status === 200) {
+                store.dispatch({ type: ACTION.SET_CHAT_LIST, props: JSON.parse(res.response) });
+            } else {
+                throw new Error(res.response);
+            }
+        }).catch((err) => console.error(err));
 
         this.initListener();
     }
