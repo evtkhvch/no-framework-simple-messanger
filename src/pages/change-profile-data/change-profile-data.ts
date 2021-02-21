@@ -3,19 +3,17 @@ import template from './change-data-template.js';
 import { EmailValidator, EmptyValidator, FormControl, ValidatorComposer } from '../../core/validator.js';
 import { FormGroupControl } from '../../core/form-group-control.js';
 import { Button } from '../../components/button/button.js';
-import { AuthApi } from '../../api/auth-api.js';
-import { UserApi } from '../../api/user-api.js';
 import { ACTION } from '../../store/reducer.js';
 import { store } from '../../store/store.js';
 import { getProfile } from './core/utils.js';
 import { ChangeProfileGroup } from './core/interfaces.js';
 import { router } from '../../index.js';
 import { User } from '../../interfaces/user.js';
+import { authApi } from '../../api/auth-api.js';
+import { userApi } from '../../api/user-api.js';
 
 class ChangeProfileDataComponent extends Component {
     private formGroup: FormGroupControl<ChangeProfileGroup> | undefined;
-    private authApi = new AuthApi();
-    private userApi = new UserApi();
     private formElement: HTMLElement | null = null;
     private subscription: (() => void) | undefined;
 
@@ -38,7 +36,7 @@ class ChangeProfileDataComponent extends Component {
                     let formData = new FormData();
                     formData.set('avatar', selectedFile);
 
-                    this.userApi.changeProfileAvatar(formData).then(res => {
+                    userApi.changeProfileAvatar(formData).then(res => {
                         if (res.status === 200) {
                             store.dispatch({ type: ACTION.SET_USER, props: JSON.parse(res.response) });
                         } else {
@@ -55,7 +53,7 @@ class ChangeProfileDataComponent extends Component {
     }
 
     private initListeners(): void {
-        this.authApi.user().then(res => {
+        authApi.user().then(res => {
             if (res.status === 200) {
                 store.dispatch({ type: ACTION.SET_USER, props: JSON.parse(res.response) });
             } else {
@@ -73,7 +71,7 @@ class ChangeProfileDataComponent extends Component {
             event.preventDefault();
             const profile = getProfile(this.formGroup?.state);
 
-            this.userApi.changeProfile(profile).then((res) => {
+            userApi.changeProfile(profile).then((res) => {
                 if (res.status === 200) {
                     store.dispatch({ type: ACTION.SET_USER, props: JSON.parse(res.response) });
 

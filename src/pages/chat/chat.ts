@@ -4,7 +4,6 @@ import { UserCard } from './components/user-card/user-card.js';
 import { MESSAGE_LIST } from '../../mock/mock.js';
 import { ChatFooter } from './components/chat-footer/chat-footer.js';
 import { Message } from './components/message/message.js';
-import { ChatApi } from '../../api/chat-api.js';
 import { Menu } from './components/menu/menu.js';
 import { AddChatDialog } from './components/add-chat-dialog/add-chat-dialog.js';
 import template from './chat.template.js';
@@ -13,9 +12,9 @@ import { AddUserDialog } from './components/add-user-dialog/add-user-dialog.js';
 import { store } from '../../store/store.js';
 import { ACTION } from '../../store/reducer.js';
 import { Chat } from '../../interfaces/chat.js';
+import { chatApi } from '../../api/chat-api.js';
 
 class ChatComponent extends Component {
-    private chatApi = new ChatApi();
     private subscription: (() => void) | undefined;
     private chatList: Chat[] = [];
 
@@ -32,7 +31,7 @@ class ChatComponent extends Component {
             store.dispatch({ type: ACTION.SET_CHAT, props: chat });
         }, true);
 
-        this.chatApi.chats().then(res => {
+        chatApi.chats().then(res => {
             if (res.status === 200) {
                 store.dispatch({ type: ACTION.SET_CHAT_LIST, props: JSON.parse(res.response) });
             } else {

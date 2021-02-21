@@ -1,7 +1,7 @@
 import { HTTPClient } from '../core/http-client.js';
 import { environment } from '../enviroment/enviroment.js';
 
-export class AuthApi {
+class AuthApi {
     private httpClient = new HTTPClient();
 
     public signIn(login: string, password: string): Promise<XMLHttpRequest> {
@@ -32,6 +32,8 @@ export class AuthApi {
         })
     }
 }
+
+export const authApi = new AuthApi();
 
 export interface SignUpReq {
     first_name: string;

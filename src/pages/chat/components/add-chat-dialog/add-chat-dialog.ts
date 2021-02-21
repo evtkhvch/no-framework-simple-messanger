@@ -1,14 +1,13 @@
 import { Component, Props } from '../../../../core/component.js';
 import { EmptyValidator, FormControl } from '../../../../core/validator.js';
 import { FormGroupControl } from '../../../../core/form-group-control.js';
-import { ChatApi } from '../../../../api/chat-api.js';
 import { store } from '../../../../store/store.js';
 import { ACTION } from '../../../../store/reducer.js';
 import { Chat } from '../../../../interfaces/chat.js';
+import { chatApi } from '../../../../api/chat-api.js';
 
 export class AddChatDialog extends Component {
     private chat: Chat | undefined | null;
-    private chatApi = new ChatApi();
     private subscription: (() => void) | undefined;
 
     constructor(public props: Props) {
@@ -24,7 +23,7 @@ export class AddChatDialog extends Component {
         formGroup.initialize();
         form?.addEventListener('submit', (event: Event) => {
             event.preventDefault();
-            this.chatApi.createChat(formGroup.state.addChatTitle.value).then((res) => {
+            chatApi.createChat(formGroup.state.addChatTitle.value).then((res) => {
                 if (res.status === 200) {
                     dialog?.close();
                     this.getChats();
@@ -51,7 +50,7 @@ export class AddChatDialog extends Component {
     }
 
     private getChats(): void {
-        this.chatApi.chats().then(res => {
+        chatApi.chats().then(res => {
             if (res.status === 200) {
                 store.dispatch({ type: ACTION.SET_CHAT_LIST, props: JSON.parse(res.response) });
             } else {

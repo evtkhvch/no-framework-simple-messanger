@@ -3,17 +3,15 @@ import template from './change-pass.template.js';
 import { Button } from '../../components/button/button.js';
 import { EmptyValidator, FormControl, FormState } from '../../core/validator.js';
 import { FormGroupControl } from '../../core/form-group-control.js';
-import { UserApi } from '../../api/user-api.js';
-import { AuthApi } from '../../api/auth-api.js';
 import { store } from '../../store/store.js';
 import { ACTION } from '../../store/reducer.js';
 import { router } from '../../index.js';
+import { authApi } from '../../api/auth-api.js';
+import { userApi } from '../../api/user-api.js';
 
 class ChangeProfilePassComponent extends Component {
     private formGroup: FormGroupControl<ChangeProfileGroup> | undefined;
     private formElement: HTMLElement | null = null;
-    private userApi = new UserApi();
-    private authApi = new AuthApi();
     private subscription: (() => void) | undefined;
 
     constructor(public props: Props) {
@@ -21,7 +19,7 @@ class ChangeProfilePassComponent extends Component {
     }
 
     public componentDidMount(): void {
-        this.authApi.user().then(res => {
+        authApi.user().then(res => {
             if (res.status === 200) {
                 store.dispatch({ type: ACTION.SET_USER, props: JSON.parse(res.response) });
             } else {
@@ -52,7 +50,7 @@ class ChangeProfilePassComponent extends Component {
             const old = this.formGroup?.state.pass.value || '';
             const newPass = this.formGroup?.state.newPassMore.value || '';
 
-            this.userApi.changeProfilePassword(old, newPass).then((res) => {
+            userApi.changeProfilePassword(old, newPass).then((res) => {
                 if (res.status === 200) {
                     router.go('/profile');
                 } else {

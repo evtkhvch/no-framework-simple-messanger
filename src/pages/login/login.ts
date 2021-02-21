@@ -2,13 +2,12 @@ import { Component, Props } from '../../core/component.js';
 import { Button } from '../../components/button/button.js';
 import { EmptyValidator, FormControl, FormState, ValidatorComposer } from '../../core/validator.js';
 import { FormGroupControl } from '../../core/form-group-control.js';
-import { AuthApi } from '../../api/auth-api.js';
 import template from './login.template.js';
 import { router } from '../../index.js';
+import { authApi } from '../../api/auth-api.js';
 
 class LoginComponent extends Component {
     private validator: FormGroupControl<LoginFormGroup> | undefined;
-    private authApi = new AuthApi();
 
     constructor(public props: Props) {
         super('div', props, 'sign');
@@ -37,7 +36,7 @@ class LoginComponent extends Component {
                 event.preventDefault();
                 const { login, pass } = this.validator?.state as LoginFormGroup;
 
-                this.authApi.signIn(login.value, pass.value).then((res) => {
+                authApi.signIn(login.value, pass.value).then((res) => {
                     if (res.status === 200 || res.status === 400) {
                         router.go('/chat');
                     } else {
