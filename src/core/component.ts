@@ -3,6 +3,7 @@ import { templateCompiler } from './template-compiler.js';
 import { IComponent, Meta } from '../interfaces/component.js';
 import { renderChild } from '../utils/render-child.js';
 import { destroyChild } from '../utils/destroy-child.js';
+import { censor } from '../utils/utils.js';
 
 export class Component implements IComponent {
     private _element: HTMLElement | null = null;
@@ -50,8 +51,8 @@ export class Component implements IComponent {
 
     private _componentDidUpdate(oldProps: Props, newProps: Props): void {
         const response = this.componentDidUpdate(oldProps, newProps);
-        const wasChange = JSON.stringify(oldProps) !== JSON.stringify(newProps);
-        this.props = this._makePropsProxy(newProps);
+        const wasChange = JSON.stringify(oldProps, censor(oldProps)) !== JSON.stringify(newProps, censor(newProps));
+        this.props = newProps;
 
         if (response && wasChange) {
             this.subject.next(EVENTS.FLOW_RENDER);
@@ -77,10 +78,6 @@ export class Component implements IComponent {
 
     public _render(): void {
         const block = this.render();
-
-        Object.values(this.props).forEach(item => {
-
-        });
 
         const props = renderChild(this.props);
 

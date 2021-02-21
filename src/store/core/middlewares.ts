@@ -23,10 +23,10 @@ export const thunkMiddleware: Middleware = ({dispatch, getState}) => next => act
 };
 
 export const loggingMiddleware: Middleware = ({getState}) => next => action => {
-    // console.info('before', getState());
+    console.info('before', getState());
     console.info('action', action);
     const result = next(action);
-    // console.info('after', getState());
+    console.info('after', getState());
     return result;
 };
 

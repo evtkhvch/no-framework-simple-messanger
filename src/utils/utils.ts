@@ -1,3 +1,5 @@
+import { Component } from '../core/component.js';
+
 export const queryStringify = (data: { [name: string]: unknown }): string => {
     if (!data) {
         return '';
@@ -10,3 +12,14 @@ export const queryStringify = (data: { [name: string]: unknown }): string => {
         return `?${params}`;
     }
 };
+
+export const censor = <T>(censor: T) => {
+    return (key: keyof T, value: any) => {
+        if (value instanceof Component) {
+            return value.props;
+        }
+
+        return value;
+    }
+}
+

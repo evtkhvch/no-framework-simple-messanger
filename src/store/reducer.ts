@@ -5,8 +5,7 @@ import { Action, Reducer } from './interfaces/store.js';
 export enum ACTION {
     INIT = '@@redux/INIT',
     SET_USER = 'SET_USER',
-    GET_CHAT_LIST = 'GET_CHAT_LIST',
-    GET_CHAT_LIST_SUCCESS = 'GET_CHAT_LIST_SUCCESS',
+    SET_CHAT_LIST = 'SET_CHAT_LIST',
     SET_CHAT = 'SET_CHAT'
 }
 
@@ -27,7 +26,10 @@ export const reducer: Reducer = (state = initialState, action: Action) => {
         case ACTION.SET_USER:
             return { ...state, user: { ...state.user, ...action.props } };
 
-        case ACTION.GET_CHAT_LIST:
+        case ACTION.SET_CHAT:
+            return { ...state, chat: action.props };
+
+        case ACTION.SET_CHAT_LIST:
             return { ...state, chatList: action.props };
 
         default:

@@ -1,8 +1,46 @@
 import { Component, Props } from '../../../../core/component.js';
+import { EmptyValidator, FormControl } from '../../../../core/validator.js';
+import { FormGroupControl } from '../../../../core/form-group-control.js';
+import { Chat, ChatApi, ChatUserReq } from '../../../../api/chat-api.js';
+import { store } from '../../../../store/store.js';
 
 export class AddUserDialog extends Component {
+    private chat: Chat | undefined | null;
+    private chatApi = new ChatApi();
+    private subscription: (() => void) | undefined;
+
     constructor(public props: Props) {
         super('div', props);
+    }
+
+    public componentDidMount(): void {
+        const dialog: HTMLDialogElement | null = document.querySelector('.add-user-dialog');
+        const form: HTMLFontElement | null = document.querySelector('.add-user-dialog .modal-dialog__form');
+        const formState = { addUserTitle: new FormControl('', false, new EmptyValidator()) };
+        const formGroup = new FormGroupControl(form, formState);
+
+        formGroup.initialize();
+        form?.addEventListener('submit', (event: Event) => {
+            event.preventDefault();
+            const value = Number(formGroup.state.addUserTitle.value);
+            const data: ChatUserReq = { users: [value], chatId: this.chat?.id! };
+            this.chatApi.addUsersToChat(data).then(() => dialog?.close());
+        });
+
+        this.initListener();
+    }
+
+    private initListener(): void {
+        this.subscription = store.subscribe(() => {
+            const { chat } = store.getState();
+            this.chat = chat;
+        });
+    }
+
+    public destroy(): void {
+        if (this.subscription) {
+            this.subscription();
+        }
     }
 
     public render(): string {
