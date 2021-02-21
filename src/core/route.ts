@@ -1,11 +1,10 @@
-import { Component, Props } from './component.js';
+import { Component } from './component.js';
 import { render } from './render.js';
-import { Constructable } from './interfaces.js';
 
 export class Route {
     private _component: Component | null = null;
 
-    constructor(private pathname: string, public component: Constructable<Component>, private props: Props, private rootQuery: string) {
+    constructor(private pathname: string, public component: Component, private rootQuery: string) {
     }
 
     public navigate(pathname: string): void {
@@ -27,10 +26,9 @@ export class Route {
 
     public render(): void {
         if (!this._component) {
-            this._component = new this.component(this.props);
-        } else {
-            this._component.init();
+            this._component = this.component;
         }
+        this._component._render();
         render(this.rootQuery, this._component);
     }
 }

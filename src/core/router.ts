@@ -1,6 +1,5 @@
 import { Route } from './route.js';
-import { Component, Props } from './component.js';
-import { Constructable } from './interfaces.js';
+import { Component } from './component.js';
 
 export class Router {
     public routes: Route[] = [];
@@ -16,8 +15,8 @@ export class Router {
         Router.__instance = this;
     }
 
-    public use(pathname: string, component: Constructable<Component>, props: Props): Router {
-        const route = new Route(pathname, component, props, this._rootQuery);
+    public use(pathname: string, component: Component): Router {
+        const route = new Route(pathname, component, this._rootQuery);
         this.routes.push(route);
 
         return this;

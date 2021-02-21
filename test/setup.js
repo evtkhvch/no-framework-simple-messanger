@@ -1,24 +1,10 @@
-let jsdom = require('jsdom');
-let Handlebars = require('handlebars');
-let { JSDOM } = jsdom;
+const { JSDOM } = require('jsdom');
+const path = require('path');
+const Handlebars = require('handlebars');
+const fs = require('fs');
 
-let { document } = (new JSDOM(`
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <title>Index</title>
-        <meta charset="utf-8">
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="/styles/index.css">
-    </head>
-    <body>
-        <div class="app"></div>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js"></script>
-            <script type="module" src="/index.js"></script>
-        </body>
-    </html>
-`)).window;
+const html = fs.readFileSync(path.join(__dirname, '../dist/src/index.html')).toString();
+const { document } = (new JSDOM(html)).window;
 
 global.document = document;
 global.window = document.defaultView;

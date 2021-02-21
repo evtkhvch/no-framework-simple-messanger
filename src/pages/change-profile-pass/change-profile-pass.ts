@@ -3,28 +3,32 @@ import template from './change-pass.template.js';
 import { Button } from '../../components/button/button.js';
 import { EmptyValidator, FormControl, FormState } from '../../core/validator.js';
 import { FormGroupControl } from '../../core/form-group-control.js';
+import { store } from '../../store/store.js';
+import { ACTION } from '../../store/reducer.js';
 import { Router } from '../../core/router.js';
-import { UserApi } from '../../api/user-api.js';
-import { ACTION, store } from '../../core/store.js';
 import { AuthApi } from '../../api/auth-api.js';
+import { UserApi } from '../../api/user-api.js';
 
-export class ChangeProfilePassComponent extends Component {
+class ChangeProfilePassComponent extends Component {
     private formGroup: FormGroupControl<ChangeProfileGroup> | undefined;
-    private router: Router | undefined;
     private formElement: HTMLElement | null = null;
-    private userApi = new UserApi();
-    private authApi = new AuthApi();
     private subscription: (() => void) | undefined;
+    private authApi = new AuthApi();
+    private userApi = new UserApi();
+    private router = new Router('.app');
 
     constructor(public props: Props) {
         super('div', props, 'profile');
-        this.router = new Router('.app');
     }
 
     public componentDidMount(): void {
-        this.authApi.user().then(value => {
-            store.dispatch({ type: ACTION.SET_USER, props: value });
-        });
+        this.authApi.user().then(res => {
+            if (res.status === 200) {
+                store.dispatch({ type: ACTION.SET_USER, props: JSON.parse(res.response) });
+            } else {
+                throw new Error(res.response)
+            }
+        }).catch((err) => console.error(err));
 
         this.subscription = store.subscribe(() => {
             const { user } = store.getState();
@@ -39,7 +43,7 @@ export class ChangeProfilePassComponent extends Component {
         const navButton: HTMLElement | null = document.querySelector('.profile__nav-button');
 
         if (navButton) {
-            navButton.onclick = () => { this.router?.go('/profile'); }
+            navButton.onclick = () => { this.router.go('/profile'); }
         }
     }
 
@@ -49,9 +53,13 @@ export class ChangeProfilePassComponent extends Component {
             const old = this.formGroup?.state.pass.value || '';
             const newPass = this.formGroup?.state.newPassMore.value || '';
 
-            this.userApi.changeProfilePassword(old, newPass).then(() => {
-                this.router?.go('/profile');
-            });
+            this.userApi.changeProfilePassword(old, newPass).then((res) => {
+                if (res.status === 200) {
+                    this.router.go('/profile');
+                } else {
+                    throw new Error(res.response)
+                }
+            }).catch((err) => console.error(err));
         });
     }
 
@@ -71,14 +79,14 @@ export class ChangeProfilePassComponent extends Component {
     }
 }
 
-export const changeProfilePassProps = {
+export const changeProfilePassComponent = new ChangeProfilePassComponent({
     name: 'Иван',
     button: new Button({
         type: 'submit',
         class: 'profile__form-submit default-button',
         name: 'Сохранить'
-    }).elementToString
-};
+    })
+});
 
 interface ChangeProfileGroup extends FormState {
     pass: FormControl;

@@ -5,6 +5,46 @@ export class Menu extends Component {
         super('div', props);
     }
 
+    public componentDidMount(): void {
+        const navMenu = document.querySelector('.chat__options.nav-menu');
+
+        navMenu?.addEventListener('click', () => {
+            const target = navMenu.querySelector('.drop-down');
+            target?.classList.toggle('closed');
+        }, false)
+
+        this.initAddChatDialog();
+        this.initAddUserDialog();
+        this.initRemoveUserDialog();
+    }
+
+    private initAddChatDialog(): void {
+        const addChat = document.querySelector('.add-chat');
+        const dialog: HTMLDialogElement | null = document.querySelector('.add-chat-dialog');
+
+        if (addChat) {
+            addChat.addEventListener('click', () => { dialog?.showModal() });
+        }
+    }
+
+    private initAddUserDialog(): void {
+        const addUser = document.querySelector('.add-user');
+        const dialog: HTMLDialogElement | null = document.querySelector('.add-user-dialog');
+
+        if (addUser) {
+            addUser.addEventListener('click', () => { dialog?.showModal() });
+        }
+    }
+
+    private initRemoveUserDialog(): void {
+        const removeUser = document.querySelector('.remove-user');
+        const dialog: HTMLDialogElement | null = document.querySelector('.remove-user-dialog');
+
+        if (removeUser) {
+            removeUser.addEventListener('click', () => { dialog?.showModal() });
+        }
+    }
+
     public render(): string {
         return `
             <nav class="chat__options nav-menu">

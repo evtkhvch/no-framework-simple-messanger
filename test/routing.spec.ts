@@ -1,20 +1,18 @@
-import { Router } from '../src/core/router.js';
-import { LoginComponent, loginProps } from '../src/pages/login/login.js';
 import { expect } from 'chai';
+import { Router } from '../src/core/router.js';
+import { loginComponent } from '../src/pages/login/login.js';
 
 describe('Routing', async () => {
     it('Router use returns this', () => {
         const router = new Router('.app');
-
-        const use = router.use('/login', LoginComponent, loginProps)
+        const use = router.use('/login', loginComponent);
 
         expect(use).to.be.an.instanceof(Router);
     });
 
     it('Router use push route', () => {
         const router = new Router('.app');
-
-        router.use('/login', LoginComponent, loginProps);
+        router.use('/login', loginComponent);
         const route = router.getRoute('/login');
 
         expect(router.routes).to.include(route);

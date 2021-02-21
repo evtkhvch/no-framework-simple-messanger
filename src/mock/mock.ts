@@ -1,4 +1,9 @@
-import { Message } from './interfaces.js';
+type MessageClassName = 'incoming' | 'outgoing';
+
+export class Message {
+    constructor(public id: number, public className: MessageClassName, public text: string, public date: string) {
+    }
+}
 
 export const MESSAGE_LIST: Message[] = [
     new Message(

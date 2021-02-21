@@ -1,19 +1,18 @@
 import { Component, Props } from '../../core/component.js';
 import { Router } from '../../core/router.js';
 
-export class ErrorComponent extends Component {
-    public router: Router | null = null;
+class ErrorComponent extends Component {
+    private router = new Router('.app');
 
     constructor(public props: Props) {
         super('div', props, 'not-found');
-        this.router = new Router('.app');
     }
 
     public componentDidMount(): void {
         const back: HTMLFormElement | null = document.querySelector('.not-found__back');
 
         if (back) {
-            back.onclick = () => { this.router?.go('/chat'); };
+            back.onclick = () => { this.router.go('/chat'); };
         }
     }
 
@@ -26,4 +25,4 @@ export class ErrorComponent extends Component {
     }
 }
 
-export const errorProps = {};
+export const errorComponent = new ErrorComponent({});

@@ -13,14 +13,13 @@ import { FormGroupControl } from '../../core/form-group-control.js';
 import { Router } from '../../core/router.js';
 import { AuthApi } from '../../api/auth-api.js';
 
-export class RegistrationComponent extends Component {
+class RegistrationComponent extends Component {
+    private router = new Router('.app');
     private validator: FormGroupControl<RegistrationFormGroup> | undefined;
-    private router: Router | undefined;
     private authApi = new AuthApi();
 
     constructor(public props: Props) {
         super('div', props, 'sign');
-        this.router = new Router('.app');
     }
 
     public componentDidMount(): void {
@@ -41,7 +40,7 @@ export class RegistrationComponent extends Component {
 
         if (registrationLink) {
             registrationLink.onclick = () => {
-                this.router?.go('/login');
+                this.router.go('/login');
             };
         }
 
@@ -58,7 +57,13 @@ export class RegistrationComponent extends Component {
                     email: data.mail.value,
                     password: data.passOneMoreTime.value,
                     phone: data.phone.value
-                }).then(() => { this.router?.go('/chat'); })
+                }).then((res) => {
+                    if (res.status === 200) {
+                        this.router.go('/chat');
+                    } else {
+                        throw new Error(res.response);
+                    }
+                }).catch((err) => console.error(err));
             };
         }
     }
@@ -68,15 +73,15 @@ export class RegistrationComponent extends Component {
     }
 }
 
-export const registrationProps = {
+export const registrationComponent = new RegistrationComponent({
     registrationForm: new RegistrationForm({
         button: new Button({
             type: 'submit',
             name: 'Зарегистрироваться',
             class: 'sign__submit default-button'
-        }).elementToString
-    }).elementToString
-};
+        })
+    })
+});
 
 interface RegistrationFormGroup extends FormState {
     mail: FormControl;

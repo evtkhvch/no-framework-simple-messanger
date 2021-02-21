@@ -1,20 +1,24 @@
 import { Component, Props } from '../../core/component.js';
 import template from './change-data-template.js';
-import { EmailValidator, EmptyValidator, FormControl, FormState, ValidatorComposer } from '../../core/validator.js';
+import { EmailValidator, EmptyValidator, FormControl, ValidatorComposer } from '../../core/validator.js';
 import { FormGroupControl } from '../../core/form-group-control.js';
 import { Button } from '../../components/button/button.js';
+import { ACTION } from '../../store/reducer.js';
+import { store } from '../../store/store.js';
+import { getProfile } from './core/utils.js';
+import { ChangeProfileGroup } from './core/interfaces.js';
+import { User } from '../../interfaces/user.js';
 import { Router } from '../../core/router.js';
-import { ACTION, store } from '../../core/store.js';
-import { AuthApi, User } from '../../api/auth-api.js';
+import { AuthApi } from '../../api/auth-api.js';
 import { UserApi } from '../../api/user-api.js';
 
-export class ChangeProfileDataComponent extends Component {
+class ChangeProfileDataComponent extends Component {
     private formGroup: FormGroupControl<ChangeProfileGroup> | undefined;
-    private router: Router = new Router('.app');
-    private authApi = new AuthApi();
-    private userApi = new UserApi();
     private formElement: HTMLElement | null = null;
     private subscription: (() => void) | undefined;
+    private router = new Router('.app');
+    private authApi = new AuthApi();
+    private userApi = new UserApi();
 
     constructor(public props: Props) {
         super('div', props, 'profile');
@@ -27,26 +31,38 @@ export class ChangeProfileDataComponent extends Component {
         const navButton: HTMLElement | null = document.querySelector('.profile__nav-button');
         const input: HTMLInputElement | null = document.querySelector('.profile__change-img');
 
-        input?.addEventListener('change', () => {
-            const selectedFile = input.files ? input?.files[0] : null;
+        if (input) {
+            input.addEventListener('change', () => {
+                const selectedFile = input.files ? input?.files[0] : null;
 
-            if (selectedFile) {
-                let formData = new FormData();
-                formData.set('avatar', selectedFile);
+                if (selectedFile) {
+                    let formData = new FormData();
+                    formData.set('avatar', selectedFile);
 
-                this.userApi.changeProfileAvatar(formData).then(res => {
-                    store.dispatch({ type: ACTION.SET_USER, props: res });
-                });
-            }
-        });
+                    this.userApi.changeProfileAvatar(formData).then(res => {
+                        if (res.status === 200) {
+                            store.dispatch({ type: ACTION.SET_USER, props: JSON.parse(res.response) });
+                        } else {
+                            throw new Error(res.response);
+                        }
+                    }).catch((err) => console.error(err));
+                }
+            });
+        }
 
-        navButton?.addEventListener('click', () => this.router?.go('/profile'));
+        if (navButton) {
+            navButton.addEventListener('click', () => this.router.go('/profile'));
+        }
     }
 
     private initListeners(): void {
-        this.authApi.user().then(value => {
-            store.dispatch({ type: ACTION.SET_USER, props: value });
-        });
+        this.authApi.user().then(res => {
+            if (res.status === 200) {
+                store.dispatch({ type: ACTION.SET_USER, props: JSON.parse(res.response) });
+            } else {
+                throw new Error(res.response);
+            }
+        }).catch((err) => console.error(err));
 
         this.subscription = store.subscribe(() => {
             const { user } = store.getState();
@@ -59,10 +75,14 @@ export class ChangeProfileDataComponent extends Component {
             const profile = getProfile(this.formGroup?.state);
 
             this.userApi.changeProfile(profile).then((res) => {
-                store.dispatch({ type: ACTION.SET_USER, props: res });
+                if (res.status === 200) {
+                    store.dispatch({ type: ACTION.SET_USER, props: JSON.parse(res.response) });
 
-                return this.router?.go('/profile');
-            });
+                    this.router.go('/profile');
+                } else {
+                    throw new Error(res.response)
+                }
+            }).catch((err) => console.error(err));
         });
     }
 
@@ -91,32 +111,12 @@ export class ChangeProfileDataComponent extends Component {
     }
 }
 
-const getProfile = (data: ChangeProfileGroup | undefined) => {
-    return {
-        first_name: data?.userName.value || '',
-        second_name: data?.surname.value || '',
-        display_name: data?.nameInChat.value || '',
-        login: data?.login.value || '',
-        email: data?.mail.value || '',
-        phone: data?.phone.value || ''
-    };
-};
-
-export const changeProfileDataProps = {
+export const changeProfileDataComponent = new ChangeProfileDataComponent({
     avatar: '',
     name: '',
     button: new Button({
         type: 'submit',
         class: 'profile__form-submit default-button',
         name: 'Сохранить'
-    }).elementToString
-};
-
-interface ChangeProfileGroup extends FormState {
-    mail: FormControl;
-    login: FormControl;
-    userName: FormControl;
-    surname: FormControl;
-    nameInChat: FormControl;
-    phone: FormControl;
-}
+    })
+});
