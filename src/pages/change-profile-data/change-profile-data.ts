@@ -7,15 +7,16 @@ import { ACTION } from '../../store/reducer.js';
 import { store } from '../../store/store.js';
 import { getProfile } from './core/utils.js';
 import { ChangeProfileGroup } from './core/interfaces.js';
-import { router } from '../../index.js';
 import { User } from '../../interfaces/user.js';
 import { authApi } from '../../api/auth-api.js';
 import { userApi } from '../../api/user-api.js';
+import { Router } from '../../core/router.js';
 
 class ChangeProfileDataComponent extends Component {
     private formGroup: FormGroupControl<ChangeProfileGroup> | undefined;
     private formElement: HTMLElement | null = null;
     private subscription: (() => void) | undefined;
+    private router = new Router('.app');
 
     constructor(public props: Props) {
         super('div', props, 'profile');
@@ -48,7 +49,7 @@ class ChangeProfileDataComponent extends Component {
         }
 
         if (navButton) {
-            navButton.addEventListener('click', () => router.go('/profile'));
+            navButton.addEventListener('click', () => this.router.go('/profile'));
         }
     }
 
@@ -75,7 +76,7 @@ class ChangeProfileDataComponent extends Component {
                 if (res.status === 200) {
                     store.dispatch({ type: ACTION.SET_USER, props: JSON.parse(res.response) });
 
-                    router.go('/profile');
+                    this.router.go('/profile');
                 } else {
                     throw new Error(res.response)
                 }

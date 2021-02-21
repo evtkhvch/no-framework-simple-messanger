@@ -1,7 +1,9 @@
 import { Component, Props } from '../../core/component.js';
-import { router } from '../../index.js';
+import { Router } from '../../core/router.js';
 
 class ErrorComponent extends Component {
+    private router = new Router('.app');
+
     constructor(public props: Props) {
         super('div', props, 'not-found');
     }
@@ -10,7 +12,7 @@ class ErrorComponent extends Component {
         const back: HTMLFormElement | null = document.querySelector('.not-found__back');
 
         if (back) {
-            back.onclick = () => { router.go('/chat'); };
+            back.onclick = () => { this.router.go('/chat'); };
         }
     }
 

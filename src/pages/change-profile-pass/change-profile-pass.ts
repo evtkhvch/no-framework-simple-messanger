@@ -5,14 +5,15 @@ import { EmptyValidator, FormControl, FormState } from '../../core/validator.js'
 import { FormGroupControl } from '../../core/form-group-control.js';
 import { store } from '../../store/store.js';
 import { ACTION } from '../../store/reducer.js';
-import { router } from '../../index.js';
 import { authApi } from '../../api/auth-api.js';
 import { userApi } from '../../api/user-api.js';
+import { Router } from '../../core/router.js';
 
 class ChangeProfilePassComponent extends Component {
     private formGroup: FormGroupControl<ChangeProfileGroup> | undefined;
     private formElement: HTMLElement | null = null;
     private subscription: (() => void) | undefined;
+    private router = new Router('.app');
 
     constructor(public props: Props) {
         super('div', props, 'profile');
@@ -40,7 +41,7 @@ class ChangeProfilePassComponent extends Component {
         const navButton: HTMLElement | null = document.querySelector('.profile__nav-button');
 
         if (navButton) {
-            navButton.onclick = () => { router?.go('/profile'); }
+            navButton.onclick = () => { this.router.go('/profile'); }
         }
     }
 
@@ -52,7 +53,7 @@ class ChangeProfilePassComponent extends Component {
 
             userApi.changeProfilePassword(old, newPass).then((res) => {
                 if (res.status === 200) {
-                    router.go('/profile');
+                    this.router.go('/profile');
                 } else {
                     throw new Error(res.response)
                 }

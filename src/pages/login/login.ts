@@ -3,10 +3,11 @@ import { Button } from '../../components/button/button.js';
 import { EmptyValidator, FormControl, FormState, ValidatorComposer } from '../../core/validator.js';
 import { FormGroupControl } from '../../core/form-group-control.js';
 import template from './login.template.js';
-import { router } from '../../index.js';
 import { authApi } from '../../api/auth-api.js';
+import { Router } from '../../core/router.js';
 
 class LoginComponent extends Component {
+    private router = new Router('.app');
     private validator: FormGroupControl<LoginFormGroup> | undefined;
 
     constructor(public props: Props) {
@@ -27,7 +28,7 @@ class LoginComponent extends Component {
 
         if (registrationLink) {
             registrationLink.onclick = () => {
-                router.go('/registration');
+                this.router.go('/registration');
             };
         }
 
@@ -38,7 +39,7 @@ class LoginComponent extends Component {
 
                 authApi.signIn(login.value, pass.value).then((res) => {
                     if (res.status === 200 || res.status === 400) {
-                        router.go('/chat');
+                        this.router.go('/chat');
                     } else {
                         throw new Error(res.response);
                     }

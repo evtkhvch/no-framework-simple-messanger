@@ -10,10 +10,11 @@ import {
     ValidatorComposer
 } from '../../core/validator.js';
 import { FormGroupControl } from '../../core/form-group-control.js';
-import { router } from '../../index.js';
 import { authApi } from '../../api/auth-api.js';
+import { Router } from '../../core/router.js';
 
 class RegistrationComponent extends Component {
+    private router = new Router('.app');
     private validator: FormGroupControl<RegistrationFormGroup> | undefined;
 
     constructor(public props: Props) {
@@ -38,7 +39,7 @@ class RegistrationComponent extends Component {
 
         if (registrationLink) {
             registrationLink.onclick = () => {
-                router.go('/login');
+                this.router.go('/login');
             };
         }
 
@@ -57,7 +58,7 @@ class RegistrationComponent extends Component {
                     phone: data.phone.value
                 }).then((res) => {
                     if (res.status === 200) {
-                        router.go('/chat');
+                        this.router.go('/chat');
                     } else {
                         throw new Error(res.response);
                     }
