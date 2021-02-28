@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import { Button } from '../src/components/button/button.js';
-import { templateCompiler } from '../src/core/template-compiler.js';
+import { Button } from '../src/components/button/button';
+import { templateCompiler } from '../src/core/template-compiler';
 
 describe('Components', async () => {
     it('Button component', () => {

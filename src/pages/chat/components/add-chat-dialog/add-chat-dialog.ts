@@ -1,10 +1,10 @@
-import { Component, Props } from '../../../../core/component.js';
-import { EmptyValidator, FormControl } from '../../../../core/validator.js';
-import { FormGroupControl } from '../../../../core/form-group-control.js';
-import { store } from '../../../../store/store.js';
-import { ACTION } from '../../../../store/reducer.js';
-import { Chat } from '../../../../interfaces/chat.js';
-import { ChatApi } from '../../../../api/chat-api.js';
+import { Component, Props } from '../../../../core/component';
+import { EmptyValidator, FormControl } from '../../../../core/validator';
+import { FormGroupControl } from '../../../../core/form-group-control';
+import { store } from '../../../../store/store';
+import { ACTION } from '../../../../store/reducer';
+import { Chat } from '../../../../interfaces/chat';
+import { ChatApi } from '../../../../api/chat-api';
 
 export class AddChatDialog extends Component {
     private chat: Chat | undefined | null;

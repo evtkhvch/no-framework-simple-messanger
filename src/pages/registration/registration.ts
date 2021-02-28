@@ -1,6 +1,6 @@
-import { Component, Props } from '../../core/component.js';
-import { Button } from '../../components/button/button.js';
-import { RegistrationForm } from './components/registration-form/registration-form.js';
+import { Component, Props } from '../../core/component';
+import { Button } from '../../components/button/button';
+import { RegistrationForm } from './components/registration-form/registration-form';
 import {
     EmailValidator,
     EmptyValidator,
@@ -8,10 +8,10 @@ import {
     FormState,
     PhoneNumberValidator,
     ValidatorComposer
-} from '../../core/validator.js';
-import { FormGroupControl } from '../../core/form-group-control.js';
-import { Router } from '../../core/router.js';
-import { AuthApi } from '../../api/auth-api.js';
+} from '../../core/validator';
+import { FormGroupControl } from '../../core/form-group-control';
+import { Router } from '../../core/router';
+import { AuthApi } from '../../api/auth-api';
 
 class RegistrationComponent extends Component {
     private router = new Router('.app');

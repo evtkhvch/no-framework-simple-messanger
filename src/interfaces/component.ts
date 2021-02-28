@@ -1,4 +1,4 @@
-import { Props } from '../core/component.js';
+import { Props } from '../core/component';
 
 export interface Meta {
     tagName: string;

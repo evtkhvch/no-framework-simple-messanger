@@ -1,5 +1,5 @@
-import { Route } from './route.js';
-import { Component } from './component.js';
+import { Route } from './route';
+import { Component } from './component';
 
 export class Router {
     public routes: Route[] = [];

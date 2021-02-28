@@ -1,9 +1,9 @@
-import { Component, Props } from '../../../../core/component.js';
-import { EmptyValidator, FormControl } from '../../../../core/validator.js';
-import { FormGroupControl } from '../../../../core/form-group-control.js';
-import { ChatApi, ChatUserReq } from '../../../../api/chat-api.js';
-import { store } from '../../../../store/store.js';
-import { Chat } from '../../../../interfaces/chat.js';
+import { Component, Props } from '../../../../core/component';
+import { EmptyValidator, FormControl } from '../../../../core/validator';
+import { FormGroupControl } from '../../../../core/form-group-control';
+import { ChatApi, ChatUserReq } from '../../../../api/chat-api';
+import { store } from '../../../../store/store';
+import { Chat } from '../../../../interfaces/chat';
 
 export class RemoveUserDialog extends Component {
     private chat: Chat | undefined | null;

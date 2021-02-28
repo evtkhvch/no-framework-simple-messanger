@@ -1,4 +1,4 @@
-import { Action, Middleware, MiddlewareData } from '../interfaces/store.js';
+import { Action, Middleware, MiddlewareData } from '../interfaces/store';
 
 export const applyMiddleware = (...middlewares: Middleware[]) => (store: MiddlewareData) => {
     if (middlewares.length === 0) {

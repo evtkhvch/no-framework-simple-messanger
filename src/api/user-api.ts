@@ -1,6 +1,6 @@
-import { HTTPClient } from '../core/http-client.js';
-import { environment } from '../enviroment/enviroment.js';
-import { Profile } from '../interfaces/profile.js';
+import { HTTPClient } from '../core/http-client';
+import { environment } from '../enviroment/enviroment';
+import { Profile } from '../interfaces/profile';
 
 export class UserApi {
     private httpClient = new HTTPClient();

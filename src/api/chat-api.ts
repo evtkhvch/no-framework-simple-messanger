@@ -1,5 +1,5 @@
-import { HTTPClient } from '../core/http-client.js';
-import { environment } from '../enviroment/enviroment.js';
+import { HTTPClient } from '../core/http-client';
+import { environment } from '../enviroment/enviroment';
 
 export class ChatApi {
     private httpClient = new HTTPClient();

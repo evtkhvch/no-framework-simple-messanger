@@ -1,5 +1,5 @@
-import { Component, Props } from '../../core/component.js';
-import { Router } from '../../core/router.js';
+import { Component, Props } from '../../core/component';
+import { Router } from '../../core/router';
 
 class ErrorComponent extends Component {
     private router = new Router('.app');

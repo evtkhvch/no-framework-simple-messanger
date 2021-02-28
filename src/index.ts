@@ -1,12 +1,13 @@
-import { Router } from './core/router.js';
-import { loginComponent } from './pages/login/login.js';
-import { registrationComponent } from './pages/registration/registration.js';
-import { profileComponent } from './pages/profile/profile.js';
-import { chatComponent } from './pages/chat/chat.js';
-import { changeProfilePassComponent } from './pages/change-profile-pass/change-profile-pass.js';
-import { changeProfileDataComponent } from './pages/change-profile-data/change-profile-data.js';
-import { errorComponent } from './pages/error-page/error-page.js';
-import { notFoundComponent } from './pages/not-found-page/not-found-page.js';
+import { Router } from './core/router';
+import { loginComponent } from './pages/login/login';
+import { registrationComponent } from './pages/registration/registration';
+import { profileComponent } from './pages/profile/profile';
+import { chatComponent } from './pages/chat/chat';
+import { changeProfilePassComponent } from './pages/change-profile-pass/change-profile-pass';
+import { changeProfileDataComponent } from './pages/change-profile-data/change-profile-data';
+import { errorComponent } from './pages/error-page/error-page';
+import { notFoundComponent } from './pages/not-found-page/not-found-page';
+import "./styles/index.sass";
 
 const ROUTES: string[] = [ '/login', '/registration', '/profile', '/chat', '/change-profile-pass', '/change-profile-data', '/error', '/not-found', '/' ];
 

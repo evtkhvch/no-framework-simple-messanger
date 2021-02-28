@@ -1,13 +1,13 @@
-import { Component, Props } from '../../core/component.js';
-import template from './change-pass.template.js';
-import { Button } from '../../components/button/button.js';
-import { EmptyValidator, FormControl, FormState } from '../../core/validator.js';
-import { FormGroupControl } from '../../core/form-group-control.js';
-import { store } from '../../store/store.js';
-import { ACTION } from '../../store/reducer.js';
-import { Router } from '../../core/router.js';
-import { AuthApi } from '../../api/auth-api.js';
-import { UserApi } from '../../api/user-api.js';
+import { Component, Props } from '../../core/component';
+import template from './change-pass.template';
+import { Button } from '../../components/button/button';
+import { EmptyValidator, FormControl, FormState } from '../../core/validator';
+import { FormGroupControl } from '../../core/form-group-control';
+import { store } from '../../store/store';
+import { ACTION } from '../../store/reducer';
+import { Router } from '../../core/router';
+import { AuthApi } from '../../api/auth-api';
+import { UserApi } from '../../api/user-api';
 
 class ChangeProfilePassComponent extends Component {
     private formGroup: FormGroupControl<ChangeProfileGroup> | undefined;

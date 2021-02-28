@@ -1,4 +1,4 @@
-import { ACTION, State } from '../reducer.js';
+import { ACTION, State } from '../reducer';
 
 export interface Store {
     dispatch: (action: Action) => void;

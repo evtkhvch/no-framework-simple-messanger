@@ -1,4 +1,4 @@
-import { Component, Props } from '../../core/component.js';
+import { Component, Props } from '../../core/component';
 
 export class Button extends Component {
     constructor(public props: Props) {

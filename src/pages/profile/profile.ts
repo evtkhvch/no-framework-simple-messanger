@@ -1,12 +1,12 @@
-import { Component, Props } from '../../core/component.js';
-import template from './profile.template.js';
-import { EmptyValidator, FormControl, FormState } from '../../core/validator.js';
-import { FormGroupControl } from '../../core/form-group-control.js';
-import { store } from '../../store/store.js';
-import { ACTION } from '../../store/reducer.js';
-import { User } from '../../interfaces/user.js';
-import { Router } from '../../core/router.js';
-import { AuthApi } from '../../api/auth-api.js';
+import { Component, Props } from '../../core/component';
+import template from './profile.template';
+import { EmptyValidator, FormControl, FormState } from '../../core/validator';
+import { FormGroupControl } from '../../core/form-group-control';
+import { store } from '../../store/store';
+import { ACTION } from '../../store/reducer';
+import { User } from '../../interfaces/user';
+import { Router } from '../../core/router';
+import { AuthApi } from '../../api/auth-api';
 
 class ProfileComponent extends Component {
     private formGroup: FormGroupControl<ProfileGroup> | undefined;

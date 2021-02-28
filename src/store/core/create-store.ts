@@ -1,5 +1,5 @@
-import { ACTION, State } from '../reducer.js';
-import { Action, Middleware, Reducer, Store } from '../interfaces/store.js';
+import { ACTION, State } from '../reducer';
+import { Action, Middleware, Reducer, Store } from '../interfaces/store';
 
 export const createStore = (reducer: Reducer, middleware: Middleware): Store => {
     let state: State;
