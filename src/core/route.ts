@@ -1,5 +1,5 @@
-import { Component } from './component.js';
-import { render } from './render.js';
+import { Component } from './component';
+import { render } from './render';
 
 export class Route {
     private _component: Component | null = null;

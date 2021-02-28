@@ -1,5 +1,5 @@
-import { templateCompiler } from '../core/template-compiler.js';
-import { Component, Props } from '../core/component.js';
+import { templateCompiler } from '../core/template-compiler';
+import { Component, Props } from '../core/component';
 
 export const renderChild = (props: Props): Props => {
     return Object.entries(props).reduce((acc, curr) => {

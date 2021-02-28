@@ -1,16 +1,16 @@
-import { Component, Props } from '../../core/component.js';
-import template from './change-data-template.js';
-import { EmailValidator, EmptyValidator, FormControl, ValidatorComposer } from '../../core/validator.js';
-import { FormGroupControl } from '../../core/form-group-control.js';
-import { Button } from '../../components/button/button.js';
-import { ACTION } from '../../store/reducer.js';
-import { store } from '../../store/store.js';
-import { getProfile } from './core/utils.js';
-import { ChangeProfileGroup } from './core/interfaces.js';
-import { User } from '../../interfaces/user.js';
-import { Router } from '../../core/router.js';
-import { AuthApi } from '../../api/auth-api.js';
-import { UserApi } from '../../api/user-api.js';
+import { Component, Props } from '../../core/component';
+import template from './change-data-template';
+import { EmailValidator, EmptyValidator, FormControl, ValidatorComposer } from '../../core/validator';
+import { FormGroupControl } from '../../core/form-group-control';
+import { Button } from '../../components/button/button';
+import { ACTION } from '../../store/reducer';
+import { store } from '../../store/store';
+import { getProfile } from './core/utils';
+import { ChangeProfileGroup } from './core/interfaces';
+import { User } from '../../interfaces/user';
+import { Router } from '../../core/router';
+import { AuthApi } from '../../api/auth-api';
+import { UserApi } from '../../api/user-api';
 
 class ChangeProfileDataComponent extends Component {
     private formGroup: FormGroupControl<ChangeProfileGroup> | undefined;

@@ -1,5 +1,5 @@
-import { FormState } from './validator.js';
-import { sanitize } from './sanitize.js';
+import { FormState } from './validator';
+import { sanitize } from './sanitize';
 
 export class FormGroupControl<T extends FormState> {
     constructor(public form: HTMLElement | null, public state: T) {

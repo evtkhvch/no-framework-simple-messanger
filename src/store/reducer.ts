@@ -1,6 +1,6 @@
-import { Action, Reducer } from './interfaces/store.js';
-import { Chat } from '../interfaces/chat.js';
-import { User } from '../interfaces/user.js';
+import { Action, Reducer } from './interfaces/store';
+import { Chat } from '../interfaces/chat';
+import { User } from '../interfaces/user';
 
 export enum ACTION {
     INIT = '@@redux/INIT',

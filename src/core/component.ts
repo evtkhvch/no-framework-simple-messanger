@@ -1,9 +1,9 @@
-import { Observable } from './observable.js';
-import { templateCompiler } from './template-compiler.js';
-import { IComponent, Meta } from '../interfaces/component.js';
-import { renderChild } from '../utils/render-child.js';
-import { destroyChild } from '../utils/destroy-child.js';
-import { censor } from '../utils/utils.js';
+import { Observable } from './observable';
+import { templateCompiler } from './template-compiler';
+import { IComponent, Meta } from '../interfaces/component';
+import { renderChild } from '../utils/render-child';
+import { destroyChild } from '../utils/destroy-child';
+import { censor } from '../utils/utils';
 
 export class Component implements IComponent {
     private _element: HTMLElement | null = null;

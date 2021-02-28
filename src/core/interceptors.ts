@@ -1,4 +1,4 @@
-import { Router } from './router.js';
+import { Router } from './router';
 
 interface HttpHandler {
     handle(req: Promise<XMLHttpRequest>): Promise<XMLHttpRequest>

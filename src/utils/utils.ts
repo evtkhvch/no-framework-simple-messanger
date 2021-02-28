@@ -1,4 +1,4 @@
-import { Component } from '../core/component.js';
+import { Component } from '../core/component';
 
 export const queryStringify = (data: { [name: string]: unknown }): string => {
     if (!data) {

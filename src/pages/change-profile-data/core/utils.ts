@@ -1,4 +1,4 @@
-import { ChangeProfileGroup } from './interfaces.js';
+import { ChangeProfileGroup } from './interfaces';
 
 export const getProfile = (data: ChangeProfileGroup | undefined) => {
     return {

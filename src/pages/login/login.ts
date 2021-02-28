@@ -1,10 +1,10 @@
-import { Component, Props } from '../../core/component.js';
-import { Button } from '../../components/button/button.js';
-import { EmptyValidator, FormControl, FormState, ValidatorComposer } from '../../core/validator.js';
-import { FormGroupControl } from '../../core/form-group-control.js';
-import template from './login.template.js';
-import { Router } from '../../core/router.js';
-import { AuthApi } from '../../api/auth-api.js';
+import { Component, Props } from '../../core/component';
+import { Button } from '../../components/button/button';
+import { EmptyValidator, FormControl, FormState, ValidatorComposer } from '../../core/validator';
+import { FormGroupControl } from '../../core/form-group-control';
+import template from './login.template';
+import { Router } from '../../core/router';
+import { AuthApi } from '../../api/auth-api';
 
 class LoginComponent extends Component {
     private router = new Router('.app');

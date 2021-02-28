@@ -1,4 +1,4 @@
-import { environment } from '../src/enviroment/enviroment.js';
+import { environment } from '../src/enviroment/enviroment';
 
 let chai = require('chai');
 let chaiHttp = require('chai-http');

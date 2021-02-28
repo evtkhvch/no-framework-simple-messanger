@@ -1,4 +1,4 @@
-import { FormControl, FormState } from '../../../core/validator.js';
+import { FormControl, FormState } from '../../../core/validator';
 
 export interface ChangeProfileGroup extends FormState {
     mail: FormControl;

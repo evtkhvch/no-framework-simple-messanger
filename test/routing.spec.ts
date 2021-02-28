@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import { Router } from '../src/core/router.js';
-import { loginComponent } from '../src/pages/login/login.js';
+import { Router } from '../src/core/router';
+import { loginComponent } from '../src/pages/login/login';
 
 describe('Routing', async () => {
     it('Router use returns this', () => {

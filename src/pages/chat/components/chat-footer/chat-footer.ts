@@ -1,4 +1,4 @@
-import { Component, Props } from '../../../../core/component.js';
+import { Component, Props } from '../../../../core/component';
 
 export class ChatFooter extends Component {
     constructor(public props: Props) {

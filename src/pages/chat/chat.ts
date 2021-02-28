@@ -1,18 +1,18 @@
-import { Component, Props } from '../../core/component.js';
-import { ChatsBar } from './components/chats-bar/chats-bar.js';
-import { UserCard } from './components/user-card/user-card.js';
-import { MESSAGE_LIST } from '../../mock/mock.js';
-import { ChatFooter } from './components/chat-footer/chat-footer.js';
-import { Message } from './components/message/message.js';
-import { Menu } from './components/menu/menu.js';
-import { AddChatDialog } from './components/add-chat-dialog/add-chat-dialog.js';
-import template from './chat.template.js';
-import { RemoveUserDialog } from './components/remove-user-dialog/remove-user-dialog.js';
-import { AddUserDialog } from './components/add-user-dialog/add-user-dialog.js';
-import { store } from '../../store/store.js';
-import { ACTION } from '../../store/reducer.js';
-import { Chat } from '../../interfaces/chat.js';
-import { ChatApi } from '../../api/chat-api.js';
+import { Component, Props } from '../../core/component';
+import { ChatsBar } from './components/chats-bar/chats-bar';
+import { UserCard } from './components/user-card/user-card';
+import { MESSAGE_LIST } from '../../mock/mock';
+import { ChatFooter } from './components/chat-footer/chat-footer';
+import { Message } from './components/message/message';
+import { Menu } from './components/menu/menu';
+import { AddChatDialog } from './components/add-chat-dialog/add-chat-dialog';
+import template from './chat.template';
+import { RemoveUserDialog } from './components/remove-user-dialog/remove-user-dialog';
+import { AddUserDialog } from './components/add-user-dialog/add-user-dialog';
+import { store } from '../../store/store';
+import { ACTION } from '../../store/reducer';
+import { Chat } from '../../interfaces/chat';
+import { ChatApi } from '../../api/chat-api';
 
 class ChatComponent extends Component {
     private subscription: (() => void) | undefined;

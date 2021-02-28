@@ -1,6 +1,6 @@
-import { ErrorInterceptor } from './interceptors.js';
-import { queryStringify } from '../utils/utils.js';
-import { Http, HTTPClientOptions, METHOD, RequestOptions } from '../interfaces/http.js';
+import { ErrorInterceptor } from './interceptors';
+import { queryStringify } from '../utils/utils';
+import { Http, HTTPClientOptions, METHOD, RequestOptions } from '../interfaces/http';
 
 export class HTTPClient implements Http {
     public interceptor = new ErrorInterceptor();
