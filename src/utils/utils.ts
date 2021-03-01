@@ -13,8 +13,10 @@ export const queryStringify = (data: { [name: string]: unknown }): string => {
     }
 };
 
+// eslint-disable-next-line
 export const censor = <T>(censor: T) => {
-    return (key: keyof T, value: any) => {
+    // eslint-disable-next-line
+    return (key: keyof T, value: any): any => {
         if (value instanceof Component) {
             return value.props;
         }

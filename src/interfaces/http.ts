@@ -6,13 +6,15 @@ export interface Http {
 }
 
 export interface HTTPClientOptions {
-    headers?: any;
+    headers?: { [name: string]: string };
+    // eslint-disable-next-line
     data: any;
     timeout?: number;
 }
 
 export interface RequestOptions {
     method: METHOD;
+    // eslint-disable-next-line
     data: any;
     headers?: { [name: string]: string };
 }

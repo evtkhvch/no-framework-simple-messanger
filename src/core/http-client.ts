@@ -32,7 +32,7 @@ export class HTTPClient implements Http {
             xhr.withCredentials = true;
             xhr.open(method, url);
             if (headers) {
-                for (let key in headers) {
+                for (const key in headers) {
                     if (headers.hasOwnProperty(key)) {
                         xhr.setRequestHeader(key, headers[key]);
                     }

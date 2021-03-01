@@ -58,7 +58,7 @@ export class Component implements IComponent {
             this.subject.next(EVENTS.FLOW_RENDER);
         }
     }
-
+    // eslint-disable-next-line
     public componentDidUpdate(oldProps: Props, newProps: Props): boolean {
         return true;
     }

@@ -11,7 +11,7 @@ interface HttpInterceptor {
 export class ErrorInterceptor implements HttpInterceptor {
     private router = new Router('.app');
 
-    public intercept(req: Promise<XMLHttpRequest>, next?: HttpHandler): Promise<XMLHttpRequest> {
+    public intercept(req: Promise<XMLHttpRequest>): Promise<XMLHttpRequest> {
         req.then(res => {
             if (res.status === 401) {
                 this.router.go('/login');

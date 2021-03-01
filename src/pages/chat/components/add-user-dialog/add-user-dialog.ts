@@ -24,14 +24,16 @@ export class AddUserDialog extends Component {
         form?.addEventListener('submit', (event: Event) => {
             event.preventDefault();
             const value = Number(formGroup.state.addUserTitle.value);
-            const data: ChatUserReq = { users: [value], chatId: this.chat?.id! };
-            this.chatApi.addUsersToChat(data).then((res) => {
-                if (res.status === 200) {
-                    dialog?.close();
-                } else {
-                    throw new Error(res.response);
-                }
-            }).catch((err) => console.error(err));
+            if (this.chat) {
+                const data: ChatUserReq = { users: [value], chatId: this.chat.id };
+                this.chatApi.addUsersToChat(data).then((res) => {
+                    if (res.status === 200) {
+                        dialog?.close();
+                    } else {
+                        throw new Error(res.response);
+                    }
+                }).catch((err) => console.error(err));
+            }
         });
 
         this.initListener();

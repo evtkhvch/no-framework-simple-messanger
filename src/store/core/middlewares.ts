@@ -1,6 +1,7 @@
 import { Action, Middleware, MiddlewareData } from '../interfaces/store';
 
-export const applyMiddleware = (...middlewares: Middleware[]) => (store: MiddlewareData) => {
+// eslint-disable-next-line
+export const applyMiddleware = (...middlewares: Middleware[]) => (store: MiddlewareData): any => {
     if (middlewares.length === 0) {
         return (dispatch: (action: Action) => void) => dispatch;
     }

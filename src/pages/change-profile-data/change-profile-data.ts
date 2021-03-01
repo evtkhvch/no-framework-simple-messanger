@@ -36,7 +36,7 @@ class ChangeProfileDataComponent extends Component {
                 const selectedFile = input.files ? input?.files[0] : null;
 
                 if (selectedFile) {
-                    let formData = new FormData();
+                    const formData = new FormData();
                     formData.set('avatar', selectedFile);
 
                     this.userApi.changeProfileAvatar(formData).then(res => {

@@ -25,6 +25,7 @@ export class EmptyValidator implements Validator<string> {
 
 export class PhoneNumberValidator implements Validator<string> {
     public isValid(value: string): boolean {
+        // eslint-disable-next-line
         const re = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
         return re.test(String(value).toLowerCase());
     }
@@ -72,7 +73,7 @@ export class MinLengthValidator implements Validator<string> {
 }
 
 export class ValidatorComposer<T> implements Validator<T> {
-    private description: string = '';
+    private description = '';
 
     constructor(public validatorList: Validator<T>[]) {
     }

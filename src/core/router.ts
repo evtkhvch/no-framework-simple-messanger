@@ -24,8 +24,10 @@ export class Router {
 
     public start(): void {
         window.onpopstate = (event: PopStateEvent) => {
-            // @ts-ignore
-            this._onRoute(event.currentTarget.location.pathname);
+            if (event && event.currentTarget) {
+                // eslint-disable-next-line
+                this._onRoute((event.currentTarget as any).location.pathname);
+            }
         };
         this._onRoute(window.location.pathname);
     }

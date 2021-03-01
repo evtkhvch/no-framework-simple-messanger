@@ -18,7 +18,7 @@ export const renderChild = (props: Props): Props => {
         return { ...acc, [key]: value }
     }, {});
 }
-
+// eslint-disable-next-line
 const renderArray = (array: any[]): string => {
     return array.reduce((acc, curr) => {
         const childProps = renderChild(curr.props);
