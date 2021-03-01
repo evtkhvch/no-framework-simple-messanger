@@ -9,7 +9,7 @@
 
 ## Описание
 
-#### [DEMO](https://xenodochial-lichterman-2d4fe3.netlify.app)
+#### [DEMO](https://yandex-messanger.herokuapp.com)
 
 #### [Прототипы экранов](https://www.figma.com/file/Fw4ZvmCMuridYDJRSGodY2/%5BPRACTICUM%5D-CHAT?node-id=0%3A1)
 
