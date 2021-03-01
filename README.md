@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.com/evtkhvch/mf.messenger.praktikum.yandex.svg?token=scbVAVx9wp9QLfnvc4eM&branch=deploy)](https://travis-ci.com/evtkhvch/mf.messenger.praktikum.yandex)
-
+[![Heroku CI Status](https://yandex-messanger.herokuapp.com/last.svg)](https://dashboard.heroku.com/pipelines/38ea0951-cb96-476c-a4a0-5ba2f6bafda3/tests)
 ## Установка
 
 - `npm install` — установка стабильной версии
