@@ -1,6 +1,6 @@
-FROM node:14
+FROM node:12.18.3
 
-WORKDIR /server
+WORKDIR /app
 
 COPY package*.json ./
 
@@ -9,7 +9,5 @@ RUN npm install
 COPY . .
 
 RUN npm run build
-
-EXPOSE 8080
 
 CMD [ "node", "./server/server.js" ]

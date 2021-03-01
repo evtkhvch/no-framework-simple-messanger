@@ -6,8 +6,7 @@
   "scripts": {
     "test": "mocha -r test/setup.js -r babel-polyfill",
     "start": "cross-env NODE_ENV=development webpack serve",
-    "build": "cross-env NODE_ENV=production webpack --mode production",
-    "server": "npm run build & node ./server/server.js"
+    "build": "cross-env NODE_ENV=production webpack --mode production"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.16",
