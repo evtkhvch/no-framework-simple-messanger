@@ -1,6 +1,3 @@
 /.idea
 /node_modules/
-
-dist/*
-!dist/src/assets
-!dist/src/index.html
+/dist/
