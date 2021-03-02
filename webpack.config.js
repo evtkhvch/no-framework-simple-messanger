@@ -12,7 +12,7 @@ module.exports = {
     entry: './src/index.ts',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: filename('js'),
+        filename: filename('js')
     },
     resolve: {
         alias: {
@@ -23,12 +23,13 @@ module.exports = {
     devtool: isDev ? 'source-map' : false,
     devServer: {
         port: 3000,
-        hot: isDev
+        hot: isDev,
+        historyApiFallback: true
     },
     plugins: [
         new CleanWebpackPlugin(),
         new HTMLWebpackPlugin({
-            template: './src/index.html',
+            template: path.join(__dirname, 'src/index.html'),
             minify: {
                 removeComments: isProd,
                 collapseWhitespace: isProd
