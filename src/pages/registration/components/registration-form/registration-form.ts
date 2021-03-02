@@ -1,12 +1,12 @@
 import { Component, Props } from '../../../../core/component';
 
 export class RegistrationForm extends Component {
-    constructor(public props: Props) {
-        super('div', props);
-    }
+  constructor(public props: Props) {
+    super('div', props);
+  }
 
-    public render(): string {
-        return `
+  public render(): string {
+    return `
             <form class="sign__box registration__box">
                 <div class="sign__content">
                     <div class="sign__title">Регистрация</div>
@@ -52,5 +52,5 @@ export class RegistrationForm extends Component {
                 </div>
             </form>
         `;
-    }
+  }
 }

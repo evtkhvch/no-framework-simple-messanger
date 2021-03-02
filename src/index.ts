@@ -7,27 +7,37 @@ import { changeProfilePassComponent } from './pages/change-profile-pass/change-p
 import { changeProfileDataComponent } from './pages/change-profile-data/change-profile-data';
 import { errorComponent } from './pages/error-page/error-page';
 import { notFoundComponent } from './pages/not-found-page/not-found-page';
-import "./styles/index.sass";
+import './styles/index.sass';
 
-const ROUTES: string[] = [ '/login', '/registration', '/profile', '/chat', '/change-profile-pass', '/change-profile-data', '/error', '/not-found', '/' ];
+const ROUTES: string[] = [
+  '/login',
+  '/registration',
+  '/profile',
+  '/chat',
+  '/change-profile-pass',
+  '/change-profile-data',
+  '/error',
+  '/not-found',
+  '/'
+];
 
 const router = new Router('.app');
 
 router
-    .use('/login', loginComponent)
-    .use('/registration', registrationComponent)
-    .use('/profile', profileComponent)
-    .use('/chat', chatComponent)
-    .use('/change-profile-pass', changeProfilePassComponent)
-    .use('/change-profile-data', changeProfileDataComponent)
-    .use('/error', errorComponent)
-    .use('/not-found', notFoundComponent)
-    .start();
+  .use('/login', loginComponent)
+  .use('/registration', registrationComponent)
+  .use('/profile', profileComponent)
+  .use('/chat', chatComponent)
+  .use('/change-profile-pass', changeProfilePassComponent)
+  .use('/change-profile-data', changeProfileDataComponent)
+  .use('/error', errorComponent)
+  .use('/not-found', notFoundComponent)
+  .start();
 
 if (window.location.pathname === '/') {
-    router.go('/login');
+  router.go('/login');
 }
 
 if (!ROUTES.includes(window.location.pathname)) {
-    router.go('/not-found');
+  router.go('/not-found');
 }

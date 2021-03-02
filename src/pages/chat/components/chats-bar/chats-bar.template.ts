@@ -11,4 +11,4 @@ export default `
             {{{ cardList }}}
         </ul>
     </div>
-`
+`;

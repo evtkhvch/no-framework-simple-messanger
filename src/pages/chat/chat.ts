@@ -15,81 +15,94 @@ import { Chat } from '../../interfaces/chat';
 import { ChatApi } from '../../api/chat-api';
 
 class ChatComponent extends Component {
-    private subscription: (() => void) | undefined;
-    private chatList: Chat[] = [];
-    private chatApi = new ChatApi();
+  private subscription: (() => void) | undefined;
 
-    constructor(public props: Props) {
-        super('div', props, 'chat-list');
-    }
+  private chatList: Chat[] = [];
 
-    public componentDidMount() {
-        const userCardList: HTMLElement | null = document.querySelector('.user-card__list');
+  private chatApi = new ChatApi();
 
-        userCardList?.addEventListener('click', (event: Event) => {
-            const target = (event.target as Element).closest('li');
-            const chat = this.getChat(Number(target?.dataset.id));
-            store.dispatch({ type: ACTION.SET_CHAT, props: chat });
-        }, true);
+  constructor(public props: Props) {
+    super('div', props, 'chat-list');
+  }
 
-        this.chatApi.chats().then(res => {
-            if (res.status === 200) {
-                store.dispatch({ type: ACTION.SET_CHAT_LIST, props: JSON.parse(res.response) });
-            } else {
-                throw new Error(res.response);
-            }
-        }).catch((err) => console.error(err));
+  public componentDidMount() {
+    const userCardList: HTMLElement | null = document.querySelector('.user-card__list');
 
-        this.initListener();
-    }
+    userCardList?.addEventListener(
+      'click',
+      (event: Event) => {
+        const target = (event.target as Element).closest('li');
+        const chat = this.getChat(Number(target?.dataset.id));
+        store.dispatch({ type: ACTION.SET_CHAT, props: chat });
+      },
+      true
+    );
 
-    private getChat(id: number): Chat | undefined {
-        return this.chatList.find(val => val.id === id);
-    }
-
-    private initListener(): void {
-        this.subscription = store.subscribe(() => {
-            const { chatList, chat } = store.getState();
-            const messageList = MESSAGE_LIST.map(item => new Message({ ...item }));
-            const cardList = chatList.map(item => new UserCard({
-                ...item,
-                avatar: item.avatar ? `https://ya-praktikum.tech${item.avatar}` : null
-            }));
-
-            this.chatList = chatList;
-
-            this.setProps({
-                isChat: Boolean(chat),
-                messageList,
-                name: chat?.title,
-                chatsBar: new ChatsBar({
-                    cardList: cardList
-                })
-            });
-        });
-    }
-
-    public destroy(): void {
-        if (this.subscription) {
-            this.subscription();
+    this.chatApi
+      .chats()
+      .then((res) => {
+        if (res.status === 200) {
+          store.dispatch({ type: ACTION.SET_CHAT_LIST, props: JSON.parse(res.response) });
+        } else {
+          throw new Error(res.response);
         }
-    }
+      })
+      // eslint-disable-next-line no-console
+      .catch((err) => console.error(err));
 
-    public render(): string {
-        return template;
+    this.initListener();
+  }
+
+  private getChat(id: number): Chat | undefined {
+    return this.chatList.find((val) => val.id === id);
+  }
+
+  private initListener(): void {
+    this.subscription = store.subscribe(() => {
+      const { chatList, chat } = store.getState();
+      const messageList = MESSAGE_LIST.map((item) => new Message({ ...item }));
+      const cardList = chatList.map(
+        (item) =>
+          new UserCard({
+            ...item,
+            avatar: item.avatar ? `https://ya-praktikum.tech${item.avatar}` : null
+          })
+      );
+
+      this.chatList = chatList;
+
+      this.setProps({
+        isChat: Boolean(chat),
+        messageList,
+        name: chat?.title,
+        chatsBar: new ChatsBar({
+          cardList
+        })
+      });
+    });
+  }
+
+  public destroy(): void {
+    if (this.subscription) {
+      this.subscription();
     }
+  }
+
+  public render(): string {
+    return template;
+  }
 }
 
 export const chatComponent = new ChatComponent({
-    name: '',
-    isChat: false,
-    messageList: [],
-    chatsBar: new ChatsBar({
-        cardList: []
-    }),
-    menu: new Menu({}),
-    addChatDialog: new AddChatDialog({}),
-    removeUserDialog: new RemoveUserDialog({}),
-    addUserDialog: new AddUserDialog({}),
-    footer: new ChatFooter({})
+  name: '',
+  isChat: false,
+  messageList: [],
+  chatsBar: new ChatsBar({
+    cardList: []
+  }),
+  menu: new Menu({}),
+  addChatDialog: new AddChatDialog({}),
+  removeUserDialog: new RemoveUserDialog({}),
+  addUserDialog: new AddUserDialog({}),
+  footer: new ChatFooter({})
 });
