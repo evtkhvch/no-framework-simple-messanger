@@ -9,7 +9,7 @@
     "plugin:prettier/recommended"
   ],
   "parserOptions": {
-    "project": ["./tsconfig.json"]
+    "project": "tsconfig.json"
   },
   "rules": {
     "@typescript-eslint/no-empty-function": "off",
