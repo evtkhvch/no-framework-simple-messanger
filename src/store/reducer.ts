@@ -6,19 +6,22 @@ export enum ACTION {
   INIT = '@@redux/INIT',
   SET_USER = 'SET_USER',
   SET_CHAT_LIST = 'SET_CHAT_LIST',
-  SET_CHAT = 'SET_CHAT'
+  SET_CHAT = 'SET_CHAT',
+  SET_CHAT_TOKEN = 'SET_CHAT_TOKEN'
 }
 
 export interface State {
   user: User | null;
   chatList: Chat[];
   chat: Chat | undefined | null;
+  token: string | null;
 }
 
 export const initialState: State = {
   user: null,
   chatList: [],
-  chat: null
+  chat: null,
+  token: null
 };
 
 export const reducer: Reducer = (state = initialState, action: Action) => {
@@ -31,6 +34,9 @@ export const reducer: Reducer = (state = initialState, action: Action) => {
 
     case ACTION.SET_CHAT_LIST:
       return { ...state, chatList: action.props };
+
+    case ACTION.SET_CHAT_TOKEN:
+      return { ...state, token: action.props };
 
     default:
       return state;

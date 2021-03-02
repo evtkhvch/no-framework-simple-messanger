@@ -31,6 +31,13 @@ export class ChatApi {
       headers: { 'Content-Type': 'application/json' }
     });
   }
+
+  public getChatToken(id: number): Promise<XMLHttpRequest> {
+    return this.httpClient.post(`${environment.praktikum}/chats/token/${id}`, {
+      data: JSON.stringify({}),
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
 }
 
 export interface ChatUserReq {

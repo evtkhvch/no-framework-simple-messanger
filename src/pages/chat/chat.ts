@@ -13,13 +13,13 @@ import { store } from '../../store/store';
 import { ACTION } from '../../store/reducer';
 import { Chat } from '../../interfaces/chat';
 import { ChatApi } from '../../api/chat-api';
+import { AuthApi } from '../../api/auth-api';
 
 class ChatComponent extends Component {
   private subscription: (() => void) | undefined;
-
   private chatList: Chat[] = [];
-
   private chatApi = new ChatApi();
+  private authApi = new AuthApi();
 
   constructor(public props: Props) {
     super('div', props, 'chat-list');
@@ -34,9 +34,27 @@ class ChatComponent extends Component {
         const target = (event.target as Element).closest('li');
         const chat = this.getChat(Number(target?.dataset.id));
         store.dispatch({ type: ACTION.SET_CHAT, props: chat });
+        if (chat) {
+          this.chatApi.getChatToken(chat.id).then((res) => {
+            if (res.status === 200) {
+              const response = JSON.parse(res.response);
+              store.dispatch({ type: ACTION.SET_CHAT_TOKEN, props: response.token });
+            } else {
+              throw new Error(res.response);
+            }
+          });
+        }
       },
       true
     );
+
+    this.authApi.user().then((res) => {
+      if (res.status === 200) {
+        store.dispatch({ type: ACTION.SET_USER, props: JSON.parse(res.response) });
+      } else {
+        throw new Error(res.response);
+      }
+    });
 
     this.chatApi
       .chats()
@@ -53,13 +71,46 @@ class ChatComponent extends Component {
     this.initListener();
   }
 
+  private getMessageList(userId: number, chatId: number, token: string): void {
+    const socket = new WebSocket(`wss://ya-praktikum.tech/ws/chats/${userId}/${chatId}/${token}`);
+
+    socket.addEventListener('open', () => {
+      console.log('Соединение установлено');
+      socket.send(
+        JSON.stringify({
+          content: '0',
+          type: 'get old'
+        })
+      );
+    });
+
+    socket.addEventListener('close', (event) => {
+      if (event.wasClean) {
+        console.log('Соединение закрыто чисто');
+      } else {
+        console.log('Обрыв соединения');
+      }
+
+      console.log(`Код: ${event.code} | Причина: ${event.reason}`);
+    });
+
+    socket.addEventListener('message', (event) => {
+      console.log(JSON.parse(event.data));
+    });
+
+    socket.addEventListener('error', (event) => {
+      // @ts-ignore
+      console.log('Ошибка', event.message);
+    });
+  }
+
   private getChat(id: number): Chat | undefined {
     return this.chatList.find((val) => val.id === id);
   }
 
   private initListener(): void {
     this.subscription = store.subscribe(() => {
-      const { chatList, chat } = store.getState();
+      const { chatList, chat, user, token } = store.getState();
       const messageList = MESSAGE_LIST.map((item) => new Message({ ...item }));
       const cardList = chatList.map(
         (item) =>
@@ -68,6 +119,10 @@ class ChatComponent extends Component {
             avatar: item.avatar ? `https://ya-praktikum.tech${item.avatar}` : null
           })
       );
+
+      if (user && chat && token) {
+        this.getMessageList(user.id, chat.id, token);
+      }
 
       this.chatList = chatList;
 
