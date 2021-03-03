@@ -26,6 +26,18 @@ class ChangeProfilePassComponent extends Component {
     super('div', props, 'profile');
   }
 
+  public afterViewInit(): void {
+    this.formElement = document.querySelector('.profile__form.profile__container');
+
+    const navButton: HTMLElement | null = document.querySelector('.profile__nav-button');
+
+    if (navButton) {
+      navButton.onclick = () => {
+        this.router.go('/profile');
+      };
+    }
+  }
+
   public componentDidMount(): void {
     this.authApi
       .user()
@@ -45,17 +57,8 @@ class ChangeProfilePassComponent extends Component {
       this.setProps({ name: user?.display_name, avatar: `https://ya-praktikum.tech${user?.avatar}` });
     });
 
-    this.formElement = document.querySelector('.profile__form.profile__container');
     this.initListeners();
     this.initForm();
-
-    const navButton: HTMLElement | null = document.querySelector('.profile__nav-button');
-
-    if (navButton) {
-      navButton.onclick = () => {
-        this.router.go('/profile');
-      };
-    }
   }
 
   private initListeners(): void {

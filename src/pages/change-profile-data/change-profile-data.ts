@@ -14,15 +14,10 @@ import { UserApi } from '../../api/user-api';
 
 class ChangeProfileDataComponent extends Component {
   private formGroup: FormGroupControl<ChangeProfileGroup> | undefined;
-
   private formElement: HTMLElement | null = null;
-
   private subscription: (() => void) | undefined;
-
   private router = new Router('.app');
-
   private authApi = new AuthApi();
-
   private userApi = new UserApi();
 
   constructor(public props: Props) {
@@ -32,7 +27,14 @@ class ChangeProfileDataComponent extends Component {
   public componentDidMount(): void {
     this.formElement = document.querySelector('.profile__form.profile__container');
     this.initListeners();
+    this.handleEventListeners();
+  }
 
+  public afterViewInit(): void {
+    this.handleEventListeners();
+  }
+
+  private handleEventListeners(): void {
     const navButton: HTMLElement | null = document.querySelector('.profile__nav-button');
     const input: HTMLInputElement | null = document.querySelector('.profile__change-img');
 

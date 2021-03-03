@@ -17,7 +17,7 @@ class LoginComponent extends Component {
     super('div', props, 'sign');
   }
 
-  public componentDidMount(): void {
+  public afterViewInit(): void {
     const formElement: HTMLFormElement | null = document.querySelector('.sign__box.login__box');
     const formState: LoginFormGroup = {
       login: new FormControl('', false, new EmptyValidator()),

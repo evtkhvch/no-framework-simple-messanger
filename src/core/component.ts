@@ -86,12 +86,13 @@ export class Component implements IComponent {
     if (this._element) {
       this._element.innerHTML = templateCompiler(block, props);
     }
-    this.subject.next(EVENTS.AFTER_VIEW_INIT);
+
+    setTimeout(() => {
+      this.subject.next(EVENTS.AFTER_VIEW_INIT);
+    });
 
     if (update) {
-      setTimeout(() => {
-        this.subject.next(EVENTS.FLOW_CDM);
-      });
+      this.subject.next(EVENTS.FLOW_CDM);
     }
   }
 

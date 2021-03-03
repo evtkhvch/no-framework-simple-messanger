@@ -26,38 +26,6 @@ class ChatComponent extends Component {
   }
 
   public afterViewInit(): void {
-    console.log('after view init');
-    this.handleCardList();
-  }
-
-  public componentDidMount() {
-    console.log('did mount');
-    this.handleCardList();
-
-    this.authApi.user().then((res) => {
-      if (res.status === 200) {
-        store.dispatch({ type: ACTION.SET_USER, props: JSON.parse(res.response) });
-      } else {
-        throw new Error(res.response);
-      }
-    });
-
-    this.chatApi
-      .chats()
-      .then((res) => {
-        if (res.status === 200) {
-          store.dispatch({ type: ACTION.SET_CHAT_LIST, props: JSON.parse(res.response) });
-        } else {
-          throw new Error(res.response);
-        }
-      })
-      // eslint-disable-next-line no-console
-      .catch((err) => console.error(err));
-
-    this.initListener();
-  }
-
-  private handleCardList(): void {
     const userCardList: HTMLElement | null = document.querySelector('.user-card__list');
 
     userCardList?.addEventListener(
@@ -79,6 +47,30 @@ class ChatComponent extends Component {
       },
       true
     );
+  }
+
+  public componentDidMount() {
+    this.authApi.user().then((res) => {
+      if (res.status === 200) {
+        store.dispatch({ type: ACTION.SET_USER, props: JSON.parse(res.response) });
+      } else {
+        throw new Error(res.response);
+      }
+    });
+
+    this.chatApi
+      .chats()
+      .then((res) => {
+        if (res.status === 200) {
+          store.dispatch({ type: ACTION.SET_CHAT_LIST, props: JSON.parse(res.response) });
+        } else {
+          throw new Error(res.response);
+        }
+      })
+      // eslint-disable-next-line no-console
+      .catch((err) => console.error(err));
+
+    this.initListener();
   }
 
   private getMessageList(userId: number, chatId: number, token: string): void {
