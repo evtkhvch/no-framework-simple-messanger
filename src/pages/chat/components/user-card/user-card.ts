@@ -1,12 +1,12 @@
 import { Component, Props } from '../../../../core/component';
 
 export class UserCard extends Component {
-    constructor(public props: Props) {
-        super('div', props);
-    }
+  constructor(public props: Props) {
+    super('div', props);
+  }
 
-    public render(): string {
-        return `
+  public render(): string {
+    return `
             <li data-id="{{ id }}" class="user-card">
                 <div class="user-card__avatar">
                     <div class="user-card__dot">
@@ -22,5 +22,5 @@ export class UserCard extends Component {
                 </div>
             </li>
         `;
-    }
+  }
 }

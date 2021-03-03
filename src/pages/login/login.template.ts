@@ -18,4 +18,4 @@ export default `
             <a class="sign__account">Нет аккаунта?</a>
         </div>
     </form>
-`
+`;

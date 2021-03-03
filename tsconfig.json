@@ -1,7 +1,5 @@
 {
   "compilerOptions": {
-    "outDir": "dist",
-    "rootDirs": ["src", "test"],
     "target": "es2016",
     "moduleResolution": "node",
     "declaration": false,
