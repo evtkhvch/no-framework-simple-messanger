@@ -7,16 +7,14 @@ import { Chat } from '../../../../interfaces/chat';
 
 export class AddUserDialog extends Component {
   private chat: Chat | undefined | null;
-
   private subscription: (() => void) | undefined;
-
   private chatApi = new ChatApi();
 
   constructor(public props: Props) {
     super('div', props);
   }
 
-  public componentDidMount(): void {
+  public afterViewInit(): void {
     const dialog: HTMLDialogElement | null = document.querySelector('.add-user-dialog');
     const form: HTMLFontElement | null = document.querySelector('.add-user-dialog .modal-dialog__form');
     const formState = { addUserTitle: new FormControl('', false, new EmptyValidator()) };
@@ -41,11 +39,9 @@ export class AddUserDialog extends Component {
           .catch((err) => console.error(err));
       }
     });
-
-    this.initListener();
   }
 
-  private initListener(): void {
+  public componentDidMount(): void {
     this.subscription = store.subscribe(() => {
       const { chat } = store.getState();
       this.chat = chat;

@@ -8,9 +8,7 @@ import { AuthApi } from '../../api/auth-api';
 
 class LoginComponent extends Component {
   private router = new Router('.app');
-
   private validator: FormGroupControl<LoginFormGroup> | undefined;
-
   private authApi = new AuthApi();
 
   constructor(public props: Props) {

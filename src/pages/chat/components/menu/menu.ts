@@ -5,7 +5,7 @@ export class Menu extends Component {
     super('div', props);
   }
 
-  public componentDidMount(): void {
+  public afterViewInit(): void {
     const navMenu = document.querySelector('.chat__options.nav-menu');
 
     navMenu?.addEventListener(

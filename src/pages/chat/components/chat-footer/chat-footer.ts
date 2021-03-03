@@ -5,7 +5,7 @@ export class ChatFooter extends Component {
     super('div', props);
   }
 
-  public componentDidMount(): void {
+  public afterViewInit(): void {
     const message: HTMLInputElement | null = document.querySelector('.chat__footer-message');
     const button: HTMLElement | null = document.querySelector('.chat__footer-submit');
 

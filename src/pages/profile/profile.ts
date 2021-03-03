@@ -10,20 +10,15 @@ import { AuthApi } from '../../api/auth-api';
 
 class ProfileComponent extends Component {
   private formGroup: FormGroupControl<ProfileGroup> | undefined;
-
   private subscription: (() => void) | undefined;
-
   private router = new Router('.app');
-
   private authApi = new AuthApi();
 
   constructor(public props: Props) {
     super('div', props, 'profile');
   }
 
-  public componentDidMount(): void {
-    this.initListeners();
-
+  public afterViewInit(): void {
     const profileNav: HTMLFormElement | null = document.querySelector('.profile__nav-button');
     const exit: HTMLFormElement | null = document.querySelector('.profile__option-exit');
     const changePass: HTMLFormElement | null = document.querySelector('.profile__option-change-pass');
@@ -47,22 +42,7 @@ class ProfileComponent extends Component {
     );
   }
 
-  private setForm(userData: User): void {
-    const formElement: HTMLFormElement | null = document.querySelector('.profile__form.profile__container');
-    const formState: ProfileGroup = {
-      mail: new FormControl(userData.email || '', true, new EmptyValidator()),
-      login: new FormControl(userData.login || '', true, new EmptyValidator()),
-      userName: new FormControl(userData.first_name || '', true, new EmptyValidator()),
-      surname: new FormControl(userData.second_name || '', true, new EmptyValidator()),
-      nameInChat: new FormControl(userData.display_name || '', true, new EmptyValidator()),
-      phone: new FormControl(userData.phone || '', true, new EmptyValidator())
-    };
-    this.formGroup = new FormGroupControl(formElement, formState);
-
-    this.formGroup.initialize();
-  }
-
-  private initListeners(): void {
+  public componentDidMount(): void {
     this.authApi
       .user()
       .then((res) => {
@@ -83,6 +63,21 @@ class ProfileComponent extends Component {
         this.setForm(user);
       }
     });
+  }
+
+  private setForm(userData: User): void {
+    const formElement: HTMLFormElement | null = document.querySelector('.profile__form.profile__container');
+    const formState: ProfileGroup = {
+      mail: new FormControl(userData.email || '', true, new EmptyValidator()),
+      login: new FormControl(userData.login || '', true, new EmptyValidator()),
+      userName: new FormControl(userData.first_name || '', true, new EmptyValidator()),
+      surname: new FormControl(userData.second_name || '', true, new EmptyValidator()),
+      nameInChat: new FormControl(userData.display_name || '', true, new EmptyValidator()),
+      phone: new FormControl(userData.phone || '', true, new EmptyValidator())
+    };
+    this.formGroup = new FormGroupControl(formElement, formState);
+
+    this.formGroup.initialize();
   }
 
   public destroy() {

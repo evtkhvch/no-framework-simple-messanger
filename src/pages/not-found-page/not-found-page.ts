@@ -8,7 +8,7 @@ class NotFoundComponent extends Component {
     super('div', props, 'not-found');
   }
 
-  public componentDidMount(): void {
+  public afterViewInit(): void {
     const back: HTMLFormElement | null = document.querySelector('.not-found__back');
 
     if (back) {

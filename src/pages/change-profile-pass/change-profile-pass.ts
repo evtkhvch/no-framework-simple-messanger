@@ -11,15 +11,10 @@ import { UserApi } from '../../api/user-api';
 
 class ChangeProfilePassComponent extends Component {
   private formGroup: FormGroupControl<ChangeProfileGroup> | undefined;
-
   private formElement: HTMLElement | null = null;
-
   private subscription: (() => void) | undefined;
-
   private authApi = new AuthApi();
-
   private userApi = new UserApi();
-
   private router = new Router('.app');
 
   constructor(public props: Props) {
@@ -28,6 +23,26 @@ class ChangeProfilePassComponent extends Component {
 
   public afterViewInit(): void {
     this.formElement = document.querySelector('.profile__form.profile__container');
+
+    this.formElement?.addEventListener('submit', (event: Event) => {
+      event.preventDefault();
+      const old = this.formGroup?.state.pass.value || '';
+      const newPass = this.formGroup?.state.newPassMore.value || '';
+
+      this.userApi
+        .changeProfilePassword(old, newPass)
+        .then((res) => {
+          if (res.status === 200) {
+            this.router.go('/profile');
+          } else {
+            throw new Error(res.response);
+          }
+        })
+        // eslint-disable-next-line no-console
+        .catch((err) => console.error(err));
+    });
+
+    this.initForm();
 
     const navButton: HTMLElement | null = document.querySelector('.profile__nav-button');
 
@@ -55,29 +70,6 @@ class ChangeProfilePassComponent extends Component {
       const { user } = store.getState();
 
       this.setProps({ name: user?.display_name, avatar: `https://ya-praktikum.tech${user?.avatar}` });
-    });
-
-    this.initListeners();
-    this.initForm();
-  }
-
-  private initListeners(): void {
-    this.formElement?.addEventListener('submit', (event: Event) => {
-      event.preventDefault();
-      const old = this.formGroup?.state.pass.value || '';
-      const newPass = this.formGroup?.state.newPassMore.value || '';
-
-      this.userApi
-        .changeProfilePassword(old, newPass)
-        .then((res) => {
-          if (res.status === 200) {
-            this.router.go('/profile');
-          } else {
-            throw new Error(res.response);
-          }
-        })
-        // eslint-disable-next-line no-console
-        .catch((err) => console.error(err));
     });
   }
 

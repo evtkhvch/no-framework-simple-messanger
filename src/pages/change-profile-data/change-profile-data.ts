@@ -19,22 +19,19 @@ class ChangeProfileDataComponent extends Component {
   private router = new Router('.app');
   private authApi = new AuthApi();
   private userApi = new UserApi();
+  private user: User | null = null;
 
   constructor(public props: Props) {
     super('div', props, 'profile');
   }
 
   public componentDidMount(): void {
-    this.formElement = document.querySelector('.profile__form.profile__container');
     this.initListeners();
-    this.handleEventListeners();
   }
 
   public afterViewInit(): void {
-    this.handleEventListeners();
-  }
-
-  private handleEventListeners(): void {
+    this.formElement = document.querySelector('.profile__form.profile__container');
+    this.setForm(this.user);
     const navButton: HTMLElement | null = document.querySelector('.profile__nav-button');
     const input: HTMLInputElement | null = document.querySelector('.profile__change-img');
 
@@ -64,26 +61,6 @@ class ChangeProfileDataComponent extends Component {
     if (navButton) {
       navButton.addEventListener('click', () => this.router.go('/profile'));
     }
-  }
-
-  private initListeners(): void {
-    this.authApi
-      .user()
-      .then((res) => {
-        if (res.status === 200) {
-          store.dispatch({ type: ACTION.SET_USER, props: JSON.parse(res.response) });
-        } else {
-          throw new Error(res.response);
-        }
-      })
-      // eslint-disable-next-line no-console
-      .catch((err) => console.error(err));
-
-    this.subscription = store.subscribe(() => {
-      const { user } = store.getState();
-      this.setProps({ name: user?.display_name, avatar: `https://ya-praktikum.tech${user?.avatar}` });
-      this.setForm(user);
-    });
 
     this.formElement?.addEventListener('submit', (event: Event) => {
       event.preventDefault();
@@ -102,6 +79,26 @@ class ChangeProfileDataComponent extends Component {
         })
         // eslint-disable-next-line no-console
         .catch((err) => console.error(err));
+    });
+  }
+
+  private initListeners(): void {
+    this.authApi
+      .user()
+      .then((res) => {
+        if (res.status === 200) {
+          store.dispatch({ type: ACTION.SET_USER, props: JSON.parse(res.response) });
+        } else {
+          throw new Error(res.response);
+        }
+      })
+      // eslint-disable-next-line no-console
+      .catch((err) => console.error(err));
+
+    this.subscription = store.subscribe(() => {
+      const { user } = store.getState();
+      this.user = user;
+      this.setProps({ name: user?.display_name, avatar: `https://ya-praktikum.tech${user?.avatar}` });
     });
   }
 

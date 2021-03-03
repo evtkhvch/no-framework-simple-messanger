@@ -8,16 +8,14 @@ import { ChatApi } from '../../../../api/chat-api';
 
 export class AddChatDialog extends Component {
   private chat: Chat | undefined | null;
-
   private subscription: (() => void) | undefined;
-
   private chatApi = new ChatApi();
 
   constructor(public props: Props) {
     super('div', props);
   }
 
-  public componentDidMount(): void {
+  public afterViewInit(): void {
     const dialog: HTMLDialogElement | null = document.querySelector('.add-chat-dialog');
     const form: HTMLFontElement | null = document.querySelector('.add-chat-dialog .modal-dialog__form');
     const formState = { addChatTitle: new FormControl('', false, new EmptyValidator()) };
@@ -39,11 +37,9 @@ export class AddChatDialog extends Component {
         // eslint-disable-next-line no-console
         .catch((err) => console.error(err));
     });
-
-    this.initListener();
   }
 
-  private initListener(): void {
+  public componentDidMount(): void {
     this.subscription = store.subscribe(() => {
       const { chat } = store.getState();
       this.chat = chat;

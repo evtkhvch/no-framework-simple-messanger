@@ -17,7 +17,7 @@ class RegistrationComponent extends Component {
     super('div', props, 'sign');
   }
 
-  public componentDidMount(): void {
+  public afterViewInit(): void {
     const formElement = document.querySelector('.sign__box.registration__box') as HTMLFormElement;
     const formState: RegistrationFormGroup = {
       mail: new FormControl('', false, new ValidatorComposer([new EmptyValidator(), new EmailValidator()])),

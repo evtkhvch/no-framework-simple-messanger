@@ -9,7 +9,7 @@ export class ChatsBar extends Component {
     super('div', props);
   }
 
-  public componentDidMount(): void {
+  public afterViewInit(): void {
     const profileTitle: HTMLElement | null = document.querySelector('.chats-bar__header-title');
 
     if (profileTitle) {

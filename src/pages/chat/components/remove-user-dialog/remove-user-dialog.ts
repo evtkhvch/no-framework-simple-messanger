@@ -16,7 +16,7 @@ export class RemoveUserDialog extends Component {
     super('div', props);
   }
 
-  public componentDidMount(): void {
+  public afterViewInit(): void {
     const dialog: HTMLDialogElement | null = document.querySelector('.remove-user-dialog');
     const form: HTMLFontElement | null = document.querySelector('.remove-user-dialog .modal-dialog__form');
     const formState = { removeUserTitle: new FormControl('', false, new EmptyValidator()) };
@@ -41,11 +41,9 @@ export class RemoveUserDialog extends Component {
           .catch((err) => console.error(err));
       }
     });
-
-    this.initListener();
   }
 
-  private initListener(): void {
+  public componentDidMount(): void {
     this.subscription = store.subscribe(() => {
       const { chat } = store.getState();
       this.chat = chat;
