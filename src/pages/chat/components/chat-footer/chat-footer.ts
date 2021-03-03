@@ -1,6 +1,9 @@
 import { Component, Props } from '../../../../core/component';
+import { MessageService } from '../../core/socket';
 
 export class ChatFooter extends Component {
+  private messageService = new MessageService();
+
   constructor(public props: Props) {
     super('div', props);
   }
@@ -12,7 +15,7 @@ export class ChatFooter extends Component {
     if (button) {
       button.onclick = () => {
         // eslint-disable-next-line no-console
-        console.log(message?.value);
+        this.messageService.sendMessage(message?.value ?? '');
       };
     }
   }

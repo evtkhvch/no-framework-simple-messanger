@@ -14,12 +14,14 @@ import { ACTION } from '../../store/reducer';
 import { Chat } from '../../interfaces/chat';
 import { ChatApi } from '../../api/chat-api';
 import { AuthApi } from '../../api/auth-api';
+import { MessageService } from './core/socket';
 
 class ChatComponent extends Component {
   private subscription: (() => void) | undefined;
   private chatList: Chat[] = [];
   private chatApi = new ChatApi();
   private authApi = new AuthApi();
+  private messageService = new MessageService();
 
   constructor(public props: Props) {
     super('div', props, 'chat-list');
@@ -73,39 +75,6 @@ class ChatComponent extends Component {
     this.initListener();
   }
 
-  private getMessageList(userId: number, chatId: number, token: string): void {
-    const socket = new WebSocket(`wss://ya-praktikum.tech/ws/chats/${userId}/${chatId}/${token}`);
-
-    socket.addEventListener('open', () => {
-      console.log('Соединение установлено');
-      socket.send(
-        JSON.stringify({
-          content: '0',
-          type: 'get old'
-        })
-      );
-    });
-
-    socket.addEventListener('close', (event) => {
-      if (event.wasClean) {
-        console.log('Соединение закрыто чисто');
-      } else {
-        console.log('Обрыв соединения');
-      }
-
-      console.log(`Код: ${event.code} | Причина: ${event.reason}`);
-    });
-
-    socket.addEventListener('message', (event) => {
-      console.log(JSON.parse(event.data));
-    });
-
-    socket.addEventListener('error', (event) => {
-      // @ts-ignore
-      console.log('Ошибка', event.message);
-    });
-  }
-
   private getChat(id: number): Chat | undefined {
     return this.chatList.find((val) => val.id === id);
   }
@@ -123,7 +92,7 @@ class ChatComponent extends Component {
       );
 
       if (user && chat && token) {
-        this.getMessageList(user.id, chat.id, token);
+        this.messageService.openSocket(`wss://ya-praktikum.tech/ws/chats/${user.id}/${chat.id}/${token}`);
       }
 
       this.chatList = chatList;
