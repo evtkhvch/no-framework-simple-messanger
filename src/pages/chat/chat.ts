@@ -1,7 +1,6 @@
 import { Component, Props } from '../../core/component';
 import { ChatsBar } from './components/chats-bar/chats-bar';
 import { UserCard } from './components/user-card/user-card';
-import { MESSAGE_LIST } from '../../mock/mock';
 import { ChatFooter } from './components/chat-footer/chat-footer';
 import { Message } from './components/message/message';
 import { Menu } from './components/menu/menu';
@@ -15,6 +14,7 @@ import { Chat } from '../../interfaces/chat';
 import { ChatApi } from '../../api/chat-api';
 import { AuthApi } from '../../api/auth-api';
 import { MessageService } from './core/socket';
+import { getMessageList } from './core/parse-message-list';
 
 class ChatComponent extends Component {
   private subscription: (() => void) | undefined;
@@ -81,8 +81,10 @@ class ChatComponent extends Component {
 
   private initListener(): void {
     this.subscription = store.subscribe(() => {
-      const { chatList, chat, user, token } = store.getState();
-      const messageList = MESSAGE_LIST.map((item) => new Message({ ...item }));
+      const { chatList, chat, user, token, messageList } = store.getState();
+
+      this.chatList = chatList;
+
       const cardList = chatList.map(
         (item) =>
           new UserCard({
@@ -92,14 +94,20 @@ class ChatComponent extends Component {
       );
 
       if (user && chat && token) {
-        this.messageService.openSocket(`wss://ya-praktikum.tech/ws/chats/${user.id}/${chat.id}/${token}`);
+        this.messageService.openSocket(`wss://ya-praktikum.tech/ws/chats/${user.id}/${chat.id}/${token}`).then(() => {
+          this.messageService.getMessageList();
+
+          this.messageService.listenMessageList((data) => {
+            const parsed = getMessageList(data, user.id);
+            store.dispatch({ type: ACTION.SET_MESSAGE_LIST, props: parsed });
+          });
+        });
       }
 
-      this.chatList = chatList;
-
       this.setProps({
+        ...this.props,
+        messageList: messageList.map((item) => new Message({ ...item })),
         isChat: Boolean(chat),
-        messageList,
         name: chat?.title,
         chatsBar: new ChatsBar({
           cardList

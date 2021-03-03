@@ -1,4 +1,6 @@
 /* eslint-disable no-console */
+import { SocketMessage } from '../models/message';
+
 export class MessageService {
   private static __instance: MessageService;
   private socket: WebSocket | undefined;
@@ -12,51 +14,58 @@ export class MessageService {
   }
 
   public getMessageList(from = 0): void {
-    if (this.socket) {
-      this.socket.send(
-        JSON.stringify({
-          content: `${from}`,
-          type: 'get old'
-        })
-      );
-    }
-  }
-
-  public sendMessage(content: string): void {
-    if (this.socket) {
-      this.socket.send(
-        JSON.stringify({
-          content,
-          type: 'message'
-        })
-      );
-    }
-  }
-
-  public openSocket(url: string): void {
-    this.socket = new WebSocket(url);
-
-    this.socket.addEventListener('open', () => {
-      console.log('Соединение установлено');
+    this.waitForConnection().then(() => {
+      JSON.stringify({
+        content: `${from}`,
+        type: 'get old'
+      });
     });
+  }
 
-    this.socket.addEventListener('close', (event) => {
-      if (event.wasClean) {
-        console.log('Соединение закрыто чисто');
+  // public sendMessage(content: string): void {
+  //   this.waitForConnection(() => {
+  //     if (this.socket) {
+  //       this.socket.send(
+  //         JSON.stringify({
+  //           content,
+  //           type: 'message'
+  //         })
+  //       );
+  //     }
+  //   });
+  // }
+
+  public listenMessageList(callback: (data: SocketMessage[]) => void): void {
+    if (this.socket) {
+      this.socket.addEventListener('message', (event) => {
+        console.log(event.data);
+        callback(JSON.parse(event.data));
+      });
+    }
+  }
+
+  public waitForConnection(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      if (this.socket?.readyState === 1) {
+        resolve();
       } else {
-        console.log('Обрыв соединения');
+        reject();
       }
-
-      console.log(`Код: ${event.code} | Причина: ${event.reason}`);
     });
+  }
 
-    this.socket.addEventListener('message', (event) => {
-      console.log(JSON.parse(event.data));
-    });
+  public openSocket(url: string): Promise<void> {
+    return new Promise<void>((resolve) => {
+      if (this.socket) {
+        this.socket.close();
+      }
+      this.socket = new WebSocket(url);
 
-    this.socket.addEventListener('error', (event) => {
-      // @ts-ignore
-      console.log('Ошибка', event.message);
+      this.socket.addEventListener('open', () => {
+        resolve();
+      });
+
+      this.socket.addEventListener('close', () => {});
     });
   }
 }
