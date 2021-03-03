@@ -28,6 +28,7 @@ export class Component implements IComponent {
     subject.subscribe(EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     subject.subscribe(EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
     subject.subscribe(EVENTS.FLOW_RENDER, this._render.bind(this));
+    subject.subscribe(EVENTS.AFTER_VIEW_INIT, this._afterViewInit.bind(this));
     subject.subscribe(EVENTS.DESTROY, this.destroy.bind(this));
   }
 
@@ -56,7 +57,7 @@ export class Component implements IComponent {
     this.props = newProps;
 
     if (response && wasChange) {
-      this.subject.next(EVENTS.FLOW_RENDER);
+      this.subject.next(EVENTS.FLOW_RENDER, false);
     }
   }
   // eslint-disable-next-line
@@ -77,7 +78,7 @@ export class Component implements IComponent {
     return this._element;
   }
 
-  public _render(): void {
+  public _render(update: boolean): void {
     const block = this.render();
 
     const props = renderChild(this.props);
@@ -85,14 +86,20 @@ export class Component implements IComponent {
     if (this._element) {
       this._element.innerHTML = templateCompiler(block, props);
     }
-    setTimeout(() => {
-      this._afterViewInit();
-    });
+    this.subject.next(EVENTS.AFTER_VIEW_INIT);
+
+    if (update) {
+      setTimeout(() => {
+        this.subject.next(EVENTS.FLOW_CDM);
+      });
+    }
   }
 
   private _afterViewInit(): void {
-    this.subject.next(EVENTS.FLOW_CDM);
+    this.afterViewInit();
   }
+
+  public afterViewInit(): void {}
 
   public render(): string {
     return '';
@@ -145,7 +152,8 @@ enum EVENTS {
   FLOW_CDM = 'flow:component-did-mount',
   FLOW_CDU = 'flow:component-did-update',
   FLOW_RENDER = 'flow:render',
-  DESTROY = 'destroy'
+  DESTROY = 'destroy',
+  AFTER_VIEW_INIT = 'after-view-init'
 }
 
 export interface Props {

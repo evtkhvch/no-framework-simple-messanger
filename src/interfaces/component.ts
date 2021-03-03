@@ -11,11 +11,12 @@ export interface IComponent {
   componentDidMount(): void;
   setProps(nextProps: Props): void;
   componentDidUpdate(oldProps: Props, newProps: Props): boolean;
-  _render(): void;
+  _render(update: boolean): void;
   render(): string;
   show(): void;
   hide(): void;
   _destroy(): void;
   destroy(): void;
+  afterViewInit(): void;
   element: HTMLElement | null;
 }

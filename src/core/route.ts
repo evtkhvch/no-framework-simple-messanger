@@ -27,7 +27,7 @@ export class Route {
     if (!this._component) {
       this._component = this.component;
     }
-    this._component._render();
+    this._component._render(true);
     render(this.rootQuery, this._component);
   }
 }

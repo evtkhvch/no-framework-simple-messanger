@@ -7,7 +7,7 @@ export const renderChild = (props: Props): Props => {
 
     if (value instanceof Component) {
       const childProps = renderChild(value.props);
-      value._render();
+      value._render(true);
       return { ...acc, [key]: templateCompiler(value.render(), childProps) };
     }
 
@@ -23,7 +23,7 @@ const renderArray = (array: any[]): string => {
   return array
     .reduce((acc, curr) => {
       const childProps = renderChild(curr.props);
-      curr._render();
+      curr._render(true);
       return [...acc, templateCompiler(curr.render(), childProps)];
     }, [])
     .join('');

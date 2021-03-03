@@ -25,28 +25,14 @@ class ChatComponent extends Component {
     super('div', props, 'chat-list');
   }
 
-  public componentDidMount() {
-    const userCardList: HTMLElement | null = document.querySelector('.user-card__list');
+  public afterViewInit(): void {
+    console.log('after view init');
+    this.handleCardList();
+  }
 
-    userCardList?.addEventListener(
-      'click',
-      (event: Event) => {
-        const target = (event.target as Element).closest('li');
-        const chat = this.getChat(Number(target?.dataset.id));
-        store.dispatch({ type: ACTION.SET_CHAT, props: chat });
-        if (chat) {
-          this.chatApi.getChatToken(chat.id).then((res) => {
-            if (res.status === 200) {
-              const response = JSON.parse(res.response);
-              store.dispatch({ type: ACTION.SET_CHAT_TOKEN, props: response.token });
-            } else {
-              throw new Error(res.response);
-            }
-          });
-        }
-      },
-      true
-    );
+  public componentDidMount() {
+    console.log('did mount');
+    this.handleCardList();
 
     this.authApi.user().then((res) => {
       if (res.status === 200) {
@@ -69,6 +55,30 @@ class ChatComponent extends Component {
       .catch((err) => console.error(err));
 
     this.initListener();
+  }
+
+  private handleCardList(): void {
+    const userCardList: HTMLElement | null = document.querySelector('.user-card__list');
+
+    userCardList?.addEventListener(
+      'click',
+      (event: Event) => {
+        const target = (event.target as Element).closest('li');
+        const chat = this.getChat(Number(target?.dataset.id));
+        store.dispatch({ type: ACTION.SET_CHAT, props: chat });
+        if (chat) {
+          this.chatApi.getChatToken(chat.id).then((res) => {
+            if (res.status === 200) {
+              const response = JSON.parse(res.response);
+              store.dispatch({ type: ACTION.SET_CHAT_TOKEN, props: response.token });
+            } else {
+              throw new Error(res.response);
+            }
+          });
+        }
+      },
+      true
+    );
   }
 
   private getMessageList(userId: number, chatId: number, token: string): void {
