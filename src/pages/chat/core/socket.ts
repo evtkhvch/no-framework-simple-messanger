@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { OutgoingMessage, SocketMessage } from '../models/message';
+import { MessageItem, MessageListItem } from '../models/message';
 
 export class MessageService {
   public socket: WebSocket | null = null;
@@ -35,7 +35,7 @@ export class MessageService {
     }
   }
 
-  public listenMessage(listCallback: (data: SocketMessage[]) => void, messageCallback: (data: OutgoingMessage) => void): void {
+  public listenMessage(listCallback: (data: MessageListItem[]) => void, messageCallback: (data: MessageItem) => void): void {
     if (this.socket) {
       this.socket.addEventListener('message', (event) => {
         if (Array.isArray(JSON.parse(event.data))) {

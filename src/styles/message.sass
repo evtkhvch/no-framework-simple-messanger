@@ -7,18 +7,21 @@
   position: relative
   font-size: 12px
   color: #1E1E1E
+  margin-bottom: 5px
+
+.message__footer
+  display: flex
+  flex-direction: row-reverse
 
 .message__date
-  position: absolute
-  bottom: 0
-  right: 0
   font-size: $small
   color: $grey
 
 .message__content
+  flex-grow: 1
   max-width: 400px
   margin-bottom: 10px
-  padding: 11px
+  padding: 5px 10px
 
 .outgoing.message
   flex-direction: row-reverse

@@ -10,23 +10,25 @@ export class ChatFooter extends Component {
 
   public afterViewInit(): void {
     const message: HTMLInputElement | null = document.querySelector('.chat__footer-message');
-    const button: HTMLElement | null = document.querySelector('.chat__footer-submit');
+    const form: HTMLElement | null = document.querySelector('.chat__footer');
 
-    if (button) {
-      button.onclick = () => {
-        // eslint-disable-next-line no-console
-        this.messageService.sendMessage(message?.value ?? '');
-      };
+    if (form) {
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        if (message && message.value) {
+          this.messageService.sendMessage(message.value);
+        }
+      });
     }
   }
 
   public render(): string {
     return `
-            <footer class="chat__footer">
+            <form class="chat__footer">
                 <button class="chat__footer-icon"></button>
                 <input class="chat__footer-message" type="text" placeholder="Сообщение">
-                <button type="button" class="chat__footer-submit"></button>
-            </footer>
+                <button type="submit" class="chat__footer-submit"></button>
+            </form>
         `;
   }
 }
