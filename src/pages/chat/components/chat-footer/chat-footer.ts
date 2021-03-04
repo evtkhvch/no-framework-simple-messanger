@@ -15,9 +15,8 @@ export class ChatFooter extends Component {
     if (form) {
       form.addEventListener('submit', (event) => {
         event.preventDefault();
-        if (message) {
-          const value = message.value.trim();
-          this.messageService.sendMessage(value);
+        if (message && message.value) {
+          this.messageService.sendMessage(message.value);
         }
       });
     }

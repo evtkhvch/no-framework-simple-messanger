@@ -9,8 +9,8 @@ export class Message extends Component {
     return `
             <div class="message {{ className }}">
                 <div class="message__content">
-                    <div class="message__text">
-                        {{ text }}
+                    <div class="message__text">{{ text }}</div>
+                    <div class="message__footer">
                         <div class="message__date">{{ date }}</div>
                     </div>
                 </div>
