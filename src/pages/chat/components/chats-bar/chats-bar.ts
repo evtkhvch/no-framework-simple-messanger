@@ -17,6 +17,19 @@ export class ChatsBar extends Component {
         this.router.go('/profile');
       };
     }
+
+    this.initAddChatDialog();
+  }
+
+  private initAddChatDialog(): void {
+    const addChat = document.querySelector('.add-chat');
+    const dialog: HTMLDialogElement | null = document.querySelector('.add-chat-dialog');
+
+    if (addChat) {
+      addChat.addEventListener('click', () => {
+        dialog?.showModal();
+      });
+    }
   }
 
   public render(): string {
