@@ -12,3 +12,11 @@ export interface SocketMessage {
 export class Message {
   constructor(public id: number, public className: MessageClassName, public text: string, public date: string) {}
 }
+
+export interface OutgoingMessage {
+  content: string;
+  id: number;
+  time: string;
+  type: string;
+  userId: number;
+}

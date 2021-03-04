@@ -14,7 +14,7 @@ import { Chat } from '../../interfaces/chat';
 import { ChatApi } from '../../api/chat-api';
 import { AuthApi } from '../../api/auth-api';
 import { MessageService } from './core/socket';
-import { getMessageList } from './core/parse-message-list';
+import { getMessage, getMessageList } from './core/message-parser';
 
 class ChatComponent extends Component {
   private subscription: (() => void) | undefined;
@@ -94,16 +94,22 @@ class ChatComponent extends Component {
           })
       );
 
-      if (this.token !== token && user && chat && token) {
+      if (token && this.token !== token && user && chat) {
         this.token = token;
         this.messageService.close();
         this.messageService.openSocket(`wss://ya-praktikum.tech/ws/chats/${user.id}/${chat.id}/${token}`).then(() => {
           this.messageService.getMessageList();
 
-          this.messageService.listenMessageList((data) => {
-            const parsed = getMessageList(data, user.id);
-            store.dispatch({ type: ACTION.SET_MESSAGE_LIST, props: parsed });
-          });
+          this.messageService.listenMessage(
+            (data) => {
+              const parsed = getMessageList(data, user.id);
+              store.dispatch({ type: ACTION.SET_MESSAGE_LIST, props: parsed });
+            },
+            (msg) => {
+              const parsed = getMessage(msg, user.id);
+              store.dispatch({ type: ACTION.SET_MESSAGE, props: parsed });
+            }
+          );
         });
       }
 

@@ -9,7 +9,8 @@ export enum ACTION {
   SET_CHAT_LIST = 'SET_CHAT_LIST',
   SET_CHAT = 'SET_CHAT',
   SET_CHAT_TOKEN = 'SET_CHAT_TOKEN',
-  SET_MESSAGE_LIST = 'SET_MESSAGE_LIST'
+  SET_MESSAGE_LIST = 'SET_MESSAGE_LIST',
+  SET_MESSAGE = 'SET_MESSAGE'
 }
 
 export interface State {
@@ -44,6 +45,9 @@ export const reducer: Reducer = (state = initialState, action: Action) => {
 
     case ACTION.SET_MESSAGE_LIST:
       return { ...state, messageList: action.props };
+
+    case ACTION.SET_MESSAGE:
+      return { ...state, messageList: [...state.messageList, action.props] };
 
     default:
       return state;
