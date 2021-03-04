@@ -2,8 +2,8 @@
 import { SocketMessage } from '../models/message';
 
 export class MessageService {
+  public socket: WebSocket | null = null;
   private static __instance: MessageService;
-  private socket: WebSocket | undefined;
 
   constructor() {
     if (MessageService.__instance) {
@@ -14,26 +14,26 @@ export class MessageService {
   }
 
   public getMessageList(from = 0): void {
-    this.waitForConnection().then(() => {
-      JSON.stringify({
-        content: `${from}`,
-        type: 'get old'
-      });
-    });
+    if (this.socket) {
+      this.socket.send(
+        JSON.stringify({
+          content: `${from}`,
+          type: 'get old'
+        })
+      );
+    }
   }
 
-  // public sendMessage(content: string): void {
-  //   this.waitForConnection(() => {
-  //     if (this.socket) {
-  //       this.socket.send(
-  //         JSON.stringify({
-  //           content,
-  //           type: 'message'
-  //         })
-  //       );
-  //     }
-  //   });
-  // }
+  public sendMessage(content: string): void {
+    if (this.socket) {
+      this.socket.send(
+        JSON.stringify({
+          content,
+          type: 'message'
+        })
+      );
+    }
+  }
 
   public listenMessageList(callback: (data: SocketMessage[]) => void): void {
     if (this.socket) {
@@ -44,28 +44,29 @@ export class MessageService {
     }
   }
 
-  public waitForConnection(): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
-      if (this.socket?.readyState === 1) {
-        resolve();
-      } else {
-        reject();
-      }
-    });
+  public close(): void {
+    if (this.socket) {
+      this.socket.close();
+      this.socket = null;
+    }
   }
 
   public openSocket(url: string): Promise<void> {
     return new Promise<void>((resolve) => {
-      if (this.socket) {
-        this.socket.close();
-      }
-      this.socket = new WebSocket(url);
+      const socket = new WebSocket(url);
 
-      this.socket.addEventListener('open', () => {
+      socket.addEventListener('open', () => {
+        this.socket = socket;
         resolve();
       });
 
-      this.socket.addEventListener('close', () => {});
+      socket.addEventListener('close', () => {
+        this.socket = null;
+      });
+
+      socket.addEventListener('error', () => {
+        this.socket = null;
+      });
     });
   }
 }

@@ -19,6 +19,7 @@ import { getMessageList } from './core/parse-message-list';
 class ChatComponent extends Component {
   private subscription: (() => void) | undefined;
   private chatList: Chat[] = [];
+  private token: string | null = null;
   private chatApi = new ChatApi();
   private authApi = new AuthApi();
   private messageService = new MessageService();
@@ -93,7 +94,9 @@ class ChatComponent extends Component {
           })
       );
 
-      if (user && chat && token) {
+      if (this.token !== token && user && chat && token) {
+        this.token = token;
+        this.messageService.close();
         this.messageService.openSocket(`wss://ya-praktikum.tech/ws/chats/${user.id}/${chat.id}/${token}`).then(() => {
           this.messageService.getMessageList();
 
