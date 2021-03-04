@@ -102,7 +102,7 @@ class ChatComponent extends Component {
 
           this.messageService.listenMessage(
             (data) => {
-              const parsed = getMessageList(data, user.id);
+              const parsed = getMessageList(data, user.id).reverse();
               store.dispatch({ type: ACTION.SET_MESSAGE_LIST, props: parsed });
             },
             (msg) => {
