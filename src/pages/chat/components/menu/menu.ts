@@ -17,20 +17,8 @@ export class Menu extends Component {
       false
     );
 
-    this.initAddChatDialog();
     this.initAddUserDialog();
     this.initRemoveUserDialog();
-  }
-
-  private initAddChatDialog(): void {
-    const addChat = document.querySelector('.add-chat');
-    const dialog: HTMLDialogElement | null = document.querySelector('.add-chat-dialog');
-
-    if (addChat) {
-      addChat.addEventListener('click', () => {
-        dialog?.showModal();
-      });
-    }
   }
 
   private initAddUserDialog(): void {
@@ -61,7 +49,6 @@ export class Menu extends Component {
               <div class="drop-down closed">
                 <div class="icon"></div>
                 <ul class="list">
-                    <li class="add-chat">Добавить чат</li>
                     <li class="add-user">Добавить пользователя</li>
                     <li class="remove-user">Удалить пользователя</li>                 
                 </ul>
