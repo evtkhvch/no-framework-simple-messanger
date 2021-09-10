@@ -15,4 +15,5 @@ npm build # to build project for production
 npm test # to launch the tests
 ```
 
-### 👻 [Figma](https://www.figma.com/file/Fw4ZvmCMuridYDJRSGodY2/%5BPRACTICUM%5D-CHAT?node-id=0%3A1) prototypes
+## Mockups
+Figma WIP is accessible [here](https://www.figma.com/file/Fw4ZvmCMuridYDJRSGodY2/%5BPRACTICUM%5D-CHAT?node-id=0%3A1)
