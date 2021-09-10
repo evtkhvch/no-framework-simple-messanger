@@ -1,4 +1,4 @@
-# Practicum by Yandex Chat
+# Practicum by Yandex Messenger
 
 [![Build Status](https://travis-ci.com/evtkhvch/mf.messenger.praktikum.yandex.svg?token=scbVAVx9wp9QLfnvc4eM&branch=deploy)](https://travis-ci.com/evtkhvch/mf.messenger.praktikum.yandex)
 
