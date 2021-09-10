@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.com/evtkhvch/mf.messenger.praktikum.yandex.svg?token=scbVAVx9wp9QLfnvc4eM&branch=deploy)](https://travis-ci.com/evtkhvch/mf.messenger.praktikum.yandex)
-
 # Practicum by Yandex Chat
+
+[![Build Status](https://travis-ci.com/evtkhvch/mf.messenger.praktikum.yandex.svg?token=scbVAVx9wp9QLfnvc4eM&branch=deploy)](https://travis-ci.com/evtkhvch/mf.messenger.praktikum.yandex)
 
 ### 🎉 See the final result on [Heroku](https://yandex-messanger.herokuapp.com)
 
