@@ -1,4 +1,4 @@
-# No Framework simple Messanger
+# No Framework Simple Messanger
 
 [![Build Status](https://travis-ci.com/evtkhvch/mf.messenger.praktikum.yandex.svg?token=scbVAVx9wp9QLfnvc4eM&branch=deploy)](https://travis-ci.com/evtkhvch/mf.messenger.praktikum.yandex)
 
