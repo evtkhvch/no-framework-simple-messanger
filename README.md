@@ -1,4 +1,4 @@
-# Practicum by Yandex Messenger
+# No Framework simple Messanger
 
 [![Build Status](https://travis-ci.com/evtkhvch/mf.messenger.praktikum.yandex.svg?token=scbVAVx9wp9QLfnvc4eM&branch=deploy)](https://travis-ci.com/evtkhvch/mf.messenger.praktikum.yandex)
 
@@ -7,10 +7,7 @@
 ## Getting started
 
 ```
-gh repo clone evtkhvch/mf.messenger.praktikum.yandex
-npm install
 npm start # to launch development server at localhost:3000
-
 npm build # to build project for production
 npm test # to launch the tests
 ```
